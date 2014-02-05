@@ -1,0 +1,98 @@
+﻿@model FarmManager.ViewModels.CowBirthVM
+
+@{
+    ViewBag.Title = "Add Cow Birth";
+}
+
+<h2 class="hTop">New Calf Birth</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <div id="formMyStyle">
+    <fieldset>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TagNo)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.TagNo, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.TagNo)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Breed)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("Breed", (IEnumerable<SelectListItem>)ViewData["Breeds"], 
+            new { id = "SubCategoryId", @class = "form-control" })        
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BirthDate)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.BirthDate, new { @class = "form-control", })
+            @Html.ValidationMessageFor(model => model.BirthDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.MotherTagNo)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("MotherTagNo", (IEnumerable<SelectListItem>)ViewData["tags"],  new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.MotherTagNo)        
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SireTagNo)
+        </div>
+        <div class="editor-field">
+            @*@Html.DropDownList("SireTagNo", (IEnumerable<SelectListItem>)ViewData["bullTags"],  new {  @class = "form-control" })*@
+             <select name="SireTagNo" class="form-control">
+                <option value="-Please Select-" selected>-Please Select-</option>
+                <option value="01890">01890</option>
+                <option value="01574">01574</option>
+                <option value="01673">01673</option>
+                <option value="02546">02546</option>
+                <option value="01675">01675</option>
+            </select>
+            @Html.ValidationMessageFor(model => model.SireTagNo) 
+                      
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Sex)
+        </div>
+        <div class="editor-field">
+            <select name="Sex" class="form-control">
+                <option value="-Please Select-" selected>-Please Select-</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+            @Html.ValidationMessageFor(model => model.Sex) 
+        </div>
+
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Notes)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Notes, new { @class ="form-control" })
+            @Html.ValidationMessageFor(model => model.Notes)         
+        </div>
+        <br />
+        <p>
+            <input type="submit" class="btn btn-info" value="Create" />
+            @Html.ActionLink("Cancel","Index","Cows",null, new { @class="btn btn-default"})
+        </p>
+    </fieldset>
+        </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

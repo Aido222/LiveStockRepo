@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FarmManagementDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="FarmManagementDBModelStoreContainer">
+    <EntitySet Name="AnimalNotes" EntityType="FarmManagementDBModel.Store.AnimalNotes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Animals" EntityType="FarmManagementDBModel.Store.Animals" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Births" EntityType="FarmManagementDBModel.Store.Births" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Breeds" EntityType="FarmManagementDBModel.Store.Breeds" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DeathCauses" EntityType="FarmManagementDBModel.Store.DeathCauses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Deaths" EntityType="FarmManagementDBModel.Store.Deaths" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Medicines" EntityType="FarmManagementDBModel.Store.Medicines" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Purchases" EntityType="FarmManagementDBModel.Store.Purchases" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Sales" EntityType="FarmManagementDBModel.Store.Sales" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Treatments" EntityType="FarmManagementDBModel.Store.Treatments" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="AnimalNotes">
+    <Key>
+      <PropertyRef Name="NoteId" />
+    </Key>
+    <Property Name="NoteId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TagNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="Note" Type="nvarchar(max)" />
+    <Property Name="Date" Type="date" />
+  </EntityType>
+  <EntityType Name="Animals">
+    <Key>
+      <PropertyRef Name="AnimalId" />
+    </Key>
+    <Property Name="AnimalId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="TagNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="Species" Type="varchar" MaxLength="50" />
+    <Property Name="Sex" Type="varchar" MaxLength="50" />
+    <Property Name="Breed" Type="varchar" MaxLength="50" />
+    <Property Name="Age" Type="int" />
+    <Property Name="DOB" Type="date" />
+    <Property Name="OwnershipStatus" Type="varchar" MaxLength="50" />
+    <Property Name="DateAdded" Type="date" />
+    <Property Name="Origin" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Births">
+    <Key>
+      <PropertyRef Name="BirthId" />
+    </Key>
+    <Property Name="BirthId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="TagNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="MotherTagNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="SireTagNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="BirthDate" Type="date" />
+    <Property Name="Notes" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Breeds">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Breed" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="DeathCauses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="DeathCauses" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Deaths">
+    <Key>
+      <PropertyRef Name="DeathId" />
+    </Key>
+    <Property Name="DeathId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TagNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="DOD" Type="date" />
+    <Property Name="Cause" Type="nvarchar(max)" />
+    <Property Name="Notes" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Medicines">
+    <Key>
+      <PropertyRef Name="MedicineId" />
+    </Key>
+    <Property Name="MedicineId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="MedicineName" Type="nvarchar" MaxLength="50" />
+    <Property Name="MedicineBrand" Type="nvarchar" MaxLength="50" />
+    <Property Name="BatchNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="ExpiryDate" Type="date" />
+    <Property Name="WithdrawalPeriod" Type="int" />
+    <Property Name="BreachPeriod" Type="int" />
+    <Property Name="Notes" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Purchases">
+    <Key>
+      <PropertyRef Name="PurchaseID" />
+    </Key>
+    <Property Name="PurchaseID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="TagNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="Location" Type="nvarchar(max)" />
+    <Property Name="DateBought" Type="date" />
+    <Property Name="BoughtFrom" Type="nvarchar(max)" />
+    <Property Name="Notes" Type="nvarchar(max)" />
+    <Property Name="Price" Type="money" />
+  </EntityType>
+  <EntityType Name="Sales">
+    <Key>
+      <PropertyRef Name="SaleID" />
+    </Key>
+    <Property Name="SaleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="50" />
+    <Property Name="TagNo" Type="nchar" MaxLength="10" />
+    <Property Name="LocationSold" Type="nvarchar(max)" />
+    <Property Name="DateSold" Type="date" />
+    <Property Name="SoldTo" Type="nvarchar(max)" />
+    <Property Name="Notes" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Treatments">
+    <Key>
+      <PropertyRef Name="TreatmentId" />
+    </Key>
+    <Property Name="TreatmentId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TagNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="TreatmentDate" Type="date" />
+    <Property Name="Notes" Type="nvarchar(max)" />
+    <Property Name="MedicineId" Type="int" />
+    <Property Name="DosageAmount" Type="numeric" />
+    <Property Name="Administrator" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+</Schema>

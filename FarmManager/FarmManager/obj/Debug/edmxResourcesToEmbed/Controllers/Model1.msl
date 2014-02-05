@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FarmManagementDBModelStoreContainer" CdmEntityContainer="FarmManagementDBEntities">
+    <EntitySetMapping Name="AnimalNotes">
+      <EntityTypeMapping TypeName="FarmManagementDBModel.AnimalNote">
+        <MappingFragment StoreEntitySet="AnimalNotes">
+          <ScalarProperty Name="NoteId" ColumnName="NoteId" />
+          <ScalarProperty Name="TagNo" ColumnName="TagNo" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Animals">
+      <EntityTypeMapping TypeName="FarmManagementDBModel.Animal">
+        <MappingFragment StoreEntitySet="Animals">
+          <ScalarProperty Name="AnimalId" ColumnName="AnimalId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="TagNo" ColumnName="TagNo" />
+          <ScalarProperty Name="Species" ColumnName="Species" />
+          <ScalarProperty Name="Breed" ColumnName="Breed" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="OwnershipStatus" ColumnName="OwnershipStatus" />
+          <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Births">
+      <EntityTypeMapping TypeName="FarmManagementDBModel.Birth">
+        <MappingFragment StoreEntitySet="Births">
+          <ScalarProperty Name="BirthId" ColumnName="BirthId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="TagNo" ColumnName="TagNo" />
+          <ScalarProperty Name="MotherTagNo" ColumnName="MotherTagNo" />
+          <ScalarProperty Name="SireTagNo" ColumnName="SireTagNo" />
+          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Deaths">
+      <EntityTypeMapping TypeName="FarmManagementDBModel.Death">
+        <MappingFragment StoreEntitySet="Deaths">
+          <ScalarProperty Name="DeathId" ColumnName="DeathId" />
+          <ScalarProperty Name="TagNo" ColumnName="TagNo" />
+          <ScalarProperty Name="DOD" ColumnName="DOD" />
+          <ScalarProperty Name="Cause" ColumnName="Cause" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Medicines">
+      <EntityTypeMapping TypeName="FarmManagementDBModel.Medicine">
+        <MappingFragment StoreEntitySet="Medicines">
+          <ScalarProperty Name="MedicineId" ColumnName="MedicineId" />
+          <ScalarProperty Name="MedicineName" ColumnName="MedicineName" />
+          <ScalarProperty Name="MedicineBrand" ColumnName="MedicineBrand" />
+          <ScalarProperty Name="BatchNo" ColumnName="BatchNo" />
+          <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+          <ScalarProperty Name="WithdrawalPeriod" ColumnName="WithdrawalPeriod" />
+          <ScalarProperty Name="BreachPeriod" ColumnName="BreachPeriod" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Purchases">
+      <EntityTypeMapping TypeName="FarmManagementDBModel.Purchase">
+        <MappingFragment StoreEntitySet="Purchases">
+          <ScalarProperty Name="PurchaseID" ColumnName="PurchaseID" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="TagNo" ColumnName="TagNo" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="DateBought" ColumnName="DateBought" />
+          <ScalarProperty Name="BoughtFrom" ColumnName="BoughtFrom" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sales">
+      <EntityTypeMapping TypeName="FarmManagementDBModel.Sale">
+        <MappingFragment StoreEntitySet="Sales">
+          <ScalarProperty Name="SaleID" ColumnName="SaleID" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="TagNo" ColumnName="TagNo" />
+          <ScalarProperty Name="LocationSold" ColumnName="LocationSold" />
+          <ScalarProperty Name="DateSold" ColumnName="DateSold" />
+          <ScalarProperty Name="SoldTo" ColumnName="SoldTo" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Treatments">
+      <EntityTypeMapping TypeName="FarmManagementDBModel.Treatment">
+        <MappingFragment StoreEntitySet="Treatments">
+          <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
+          <ScalarProperty Name="TagNo" ColumnName="TagNo" />
+          <ScalarProperty Name="TreatmentDate" ColumnName="TreatmentDate" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="MedicineId" ColumnName="MedicineId" />
+          <ScalarProperty Name="DosageAmount" ColumnName="DosageAmount" />
+          <ScalarProperty Name="Administrator" ColumnName="Administrator" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

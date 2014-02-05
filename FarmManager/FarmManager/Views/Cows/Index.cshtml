@@ -1,0 +1,54 @@
+﻿@model IEnumerable<FarmManager.Models.Animal>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="hTop">Cows</h2>
+
+<p>
+    @Html.ActionLink("Create Purchase", "CreatePurchase",null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Create Birth", "CreateCowBirth",null, new { @class = "btn btn-success" })
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TagNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Breed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Age)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateAdded)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TagNo)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Breed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Age)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateAdded)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AnimalId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AnimalId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AnimalId }) |
+            @Html.ActionLink("Record Death", "CowDeath", new { id=item.TagNo })
+        </td>
+    </tr>
+}
+
+</table>

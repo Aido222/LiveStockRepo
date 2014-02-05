@@ -1,0 +1,75 @@
+﻿@model FarmManager.Models.Animal
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2 class="hGreen">Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Animal</legend>
+
+<div class="editor-label">
+            @Html.LabelFor(model => model.TagNo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TagNo)
+            @Html.ValidationMessageFor(model => model.TagNo)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Breed)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Breed)
+            @Html.ValidationMessageFor(model => model.Breed)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Age)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Age)
+            @Html.ValidationMessageFor(model => model.Age)
+        </div>
+        <div class="editor-label">
+            <label>Bought From</label>
+        </div>
+        <div class="editor-field">
+            <input type='text' name='PurchasedFrom' />
+        </div>
+        <div class="editor-label">
+            <label>Location Bought</label>
+        </div>
+        <div class="editor-field">
+            <input type='text' name='PurchaseLocation' />
+        </div>
+        <div class="editor-label">
+            <label>Price</label>
+        </div>
+        <div class="editor-field">
+            <input type='text' name='Price' />
+        </div>
+        <div class="editor-label">
+            <label>Notes</label>
+        </div>
+        <div class="editor-field">
+            @Html.TextArea("Notes", new { rows=4, columns=5 })
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

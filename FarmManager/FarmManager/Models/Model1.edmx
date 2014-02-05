@@ -1,0 +1,414 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FarmManagementDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="FarmManagementDBModelStoreContainer">
+          <EntitySet Name="AnimalNotes" EntityType="FarmManagementDBModel.Store.AnimalNotes" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Animals" EntityType="FarmManagementDBModel.Store.Animals" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Births" EntityType="FarmManagementDBModel.Store.Births" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Breeds" EntityType="FarmManagementDBModel.Store.Breeds" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DeathCauses" EntityType="FarmManagementDBModel.Store.DeathCauses" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Deaths" EntityType="FarmManagementDBModel.Store.Deaths" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Medicines" EntityType="FarmManagementDBModel.Store.Medicines" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Purchases" EntityType="FarmManagementDBModel.Store.Purchases" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Sales" EntityType="FarmManagementDBModel.Store.Sales" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Treatments" EntityType="FarmManagementDBModel.Store.Treatments" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="AnimalNotes">
+          <Key>
+            <PropertyRef Name="NoteId" />
+          </Key>
+          <Property Name="NoteId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TagNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Note" Type="nvarchar(max)" />
+          <Property Name="Date" Type="date" />
+        </EntityType>
+        <EntityType Name="Animals">
+          <Key>
+            <PropertyRef Name="AnimalId" />
+          </Key>
+          <Property Name="AnimalId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="TagNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Species" Type="varchar" MaxLength="50" />
+          <Property Name="Sex" Type="varchar" MaxLength="50" />
+          <Property Name="Breed" Type="varchar" MaxLength="50" />
+          <Property Name="Age" Type="int" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="OwnershipStatus" Type="varchar" MaxLength="50" />
+          <Property Name="DateAdded" Type="date" />
+          <Property Name="Origin" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Births">
+          <Key>
+            <PropertyRef Name="BirthId" />
+          </Key>
+          <Property Name="BirthId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="TagNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="MotherTagNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="SireTagNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="BirthDate" Type="date" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Breeds">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Breed" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DeathCauses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DeathCauses" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Deaths">
+          <Key>
+            <PropertyRef Name="DeathId" />
+          </Key>
+          <Property Name="DeathId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TagNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="DOD" Type="date" />
+          <Property Name="Cause" Type="nvarchar(max)" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Medicines">
+          <Key>
+            <PropertyRef Name="MedicineId" />
+          </Key>
+          <Property Name="MedicineId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MedicineName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MedicineBrand" Type="nvarchar" MaxLength="50" />
+          <Property Name="BatchNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="ExpiryDate" Type="date" />
+          <Property Name="WithdrawalPeriod" Type="int" />
+          <Property Name="BreachPeriod" Type="int" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Purchases">
+          <Key>
+            <PropertyRef Name="PurchaseID" />
+          </Key>
+          <Property Name="PurchaseID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="TagNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Location" Type="nvarchar(max)" />
+          <Property Name="DateBought" Type="date" />
+          <Property Name="BoughtFrom" Type="nvarchar(max)" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="Price" Type="money" />
+        </EntityType>
+        <EntityType Name="Sales">
+          <Key>
+            <PropertyRef Name="SaleID" />
+          </Key>
+          <Property Name="SaleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="50" />
+          <Property Name="TagNo" Type="nchar" MaxLength="10" />
+          <Property Name="LocationSold" Type="nvarchar(max)" />
+          <Property Name="DateSold" Type="date" />
+          <Property Name="SoldTo" Type="nvarchar(max)" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Treatments">
+          <Key>
+            <PropertyRef Name="TreatmentId" />
+          </Key>
+          <Property Name="TreatmentId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TagNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="TreatmentDate" Type="date" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="MedicineId" Type="int" />
+          <Property Name="DosageAmount" Type="numeric" />
+          <Property Name="Administrator" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FarmManagementDBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="FarmManagementDBEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="AnimalNotes" EntityType="FarmManagementDBModel.AnimalNote" />
+          <EntitySet Name="Animals" EntityType="FarmManagementDBModel.Animal" />
+          <EntitySet Name="Births" EntityType="FarmManagementDBModel.Birth" />
+          <EntitySet Name="Breeds" EntityType="FarmManagementDBModel.Breed" />
+          <EntitySet Name="DeathCauses" EntityType="FarmManagementDBModel.DeathCaus" />
+          <EntitySet Name="Deaths" EntityType="FarmManagementDBModel.Death" />
+          <EntitySet Name="Medicines" EntityType="FarmManagementDBModel.Medicine" />
+          <EntitySet Name="Purchases" EntityType="FarmManagementDBModel.Purchase" />
+          <EntitySet Name="Sales" EntityType="FarmManagementDBModel.Sale" />
+          <EntitySet Name="Treatments" EntityType="FarmManagementDBModel.Treatment" />
+        </EntityContainer>
+        <EntityType Name="AnimalNote">
+          <Key>
+            <PropertyRef Name="NoteId" />
+          </Key>
+          <Property Name="NoteId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="TagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Note" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="Animal">
+          <Key>
+            <PropertyRef Name="AnimalId" />
+          </Key>
+          <Property Name="AnimalId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="TagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Species" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Sex" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Breed" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="OwnershipStatus" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="DateAdded" Type="DateTime" Precision="0" />
+          <Property Name="Origin" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Birth">
+          <Key>
+            <PropertyRef Name="BirthId" />
+          </Key>
+          <Property Name="BirthId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="TagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="MotherTagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="SireTagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="BirthDate" Type="DateTime" Precision="0" />
+          <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Breed">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Breed1" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="DeathCaus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="DeathCauses" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Death">
+          <Key>
+            <PropertyRef Name="DeathId" />
+          </Key>
+          <Property Name="DeathId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="TagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="DOD" Type="DateTime" Precision="0" />
+          <Property Name="Cause" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Medicine">
+          <Key>
+            <PropertyRef Name="MedicineId" />
+          </Key>
+          <Property Name="MedicineId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="MedicineName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="MedicineBrand" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="BatchNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ExpiryDate" Type="DateTime" Precision="0" />
+          <Property Name="WithdrawalPeriod" Type="Int32" />
+          <Property Name="BreachPeriod" Type="Int32" />
+          <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Purchase">
+          <Key>
+            <PropertyRef Name="PurchaseID" />
+          </Key>
+          <Property Name="PurchaseID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="TagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Location" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="DateBought" Type="DateTime" Precision="0" />
+          <Property Name="BoughtFrom" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="Sale">
+          <Key>
+            <PropertyRef Name="SaleID" />
+          </Key>
+          <Property Name="SaleID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="TagNo" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="LocationSold" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="DateSold" Type="DateTime" Precision="0" />
+          <Property Name="SoldTo" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Treatment">
+          <Key>
+            <PropertyRef Name="TreatmentId" />
+          </Key>
+          <Property Name="TreatmentId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="TagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="TreatmentDate" Type="DateTime" Precision="0" />
+          <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="MedicineId" Type="Int32" />
+          <Property Name="DosageAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Administrator" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FarmManagementDBModelStoreContainer" CdmEntityContainer="FarmManagementDBEntities">
+          <EntitySetMapping Name="AnimalNotes">
+            <EntityTypeMapping TypeName="FarmManagementDBModel.AnimalNote">
+              <MappingFragment StoreEntitySet="AnimalNotes">
+                <ScalarProperty Name="NoteId" ColumnName="NoteId" />
+                <ScalarProperty Name="TagNo" ColumnName="TagNo" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Animals">
+            <EntityTypeMapping TypeName="FarmManagementDBModel.Animal">
+              <MappingFragment StoreEntitySet="Animals">
+                <ScalarProperty Name="AnimalId" ColumnName="AnimalId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TagNo" ColumnName="TagNo" />
+                <ScalarProperty Name="Species" ColumnName="Species" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Breed" ColumnName="Breed" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="OwnershipStatus" ColumnName="OwnershipStatus" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="Origin" ColumnName="Origin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Births">
+            <EntityTypeMapping TypeName="FarmManagementDBModel.Birth">
+              <MappingFragment StoreEntitySet="Births">
+                <ScalarProperty Name="BirthId" ColumnName="BirthId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TagNo" ColumnName="TagNo" />
+                <ScalarProperty Name="MotherTagNo" ColumnName="MotherTagNo" />
+                <ScalarProperty Name="SireTagNo" ColumnName="SireTagNo" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Breeds">
+            <EntityTypeMapping TypeName="FarmManagementDBModel.Breed">
+              <MappingFragment StoreEntitySet="Breeds">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Breed1" ColumnName="Breed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeathCauses">
+            <EntityTypeMapping TypeName="FarmManagementDBModel.DeathCaus">
+              <MappingFragment StoreEntitySet="DeathCauses">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DeathCauses" ColumnName="DeathCauses" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Deaths">
+            <EntityTypeMapping TypeName="FarmManagementDBModel.Death">
+              <MappingFragment StoreEntitySet="Deaths">
+                <ScalarProperty Name="DeathId" ColumnName="DeathId" />
+                <ScalarProperty Name="TagNo" ColumnName="TagNo" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DOD" ColumnName="DOD" />
+                <ScalarProperty Name="Cause" ColumnName="Cause" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Medicines">
+            <EntityTypeMapping TypeName="FarmManagementDBModel.Medicine">
+              <MappingFragment StoreEntitySet="Medicines">
+                <ScalarProperty Name="MedicineId" ColumnName="MedicineId" />
+                <ScalarProperty Name="MedicineName" ColumnName="MedicineName" />
+                <ScalarProperty Name="MedicineBrand" ColumnName="MedicineBrand" />
+                <ScalarProperty Name="BatchNo" ColumnName="BatchNo" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="WithdrawalPeriod" ColumnName="WithdrawalPeriod" />
+                <ScalarProperty Name="BreachPeriod" ColumnName="BreachPeriod" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Purchases">
+            <EntityTypeMapping TypeName="FarmManagementDBModel.Purchase">
+              <MappingFragment StoreEntitySet="Purchases">
+                <ScalarProperty Name="PurchaseID" ColumnName="PurchaseID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TagNo" ColumnName="TagNo" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="DateBought" ColumnName="DateBought" />
+                <ScalarProperty Name="BoughtFrom" ColumnName="BoughtFrom" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sales">
+            <EntityTypeMapping TypeName="FarmManagementDBModel.Sale">
+              <MappingFragment StoreEntitySet="Sales">
+                <ScalarProperty Name="SaleID" ColumnName="SaleID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TagNo" ColumnName="TagNo" />
+                <ScalarProperty Name="LocationSold" ColumnName="LocationSold" />
+                <ScalarProperty Name="DateSold" ColumnName="DateSold" />
+                <ScalarProperty Name="SoldTo" ColumnName="SoldTo" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Treatments">
+            <EntityTypeMapping TypeName="FarmManagementDBModel.Treatment">
+              <MappingFragment StoreEntitySet="Treatments">
+                <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
+                <ScalarProperty Name="TagNo" ColumnName="TagNo" />
+                <ScalarProperty Name="TreatmentDate" ColumnName="TreatmentDate" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="MedicineId" ColumnName="MedicineId" />
+                <ScalarProperty Name="DosageAmount" ColumnName="DosageAmount" />
+                <ScalarProperty Name="Administrator" ColumnName="Administrator" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

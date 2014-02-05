@@ -1,0 +1,71 @@
+﻿@model FarmManager.Models.Animal
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2 class="hTop">Details</h2>
+
+<fieldset>
+    <legend>Animal</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UserId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TagNo)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TagNo)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Species)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Species)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Breed)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Breed)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Age)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Age)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DOB)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DOB)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.OwnershipStatus)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.OwnershipStatus)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DateAdded)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DateAdded)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.AnimalId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

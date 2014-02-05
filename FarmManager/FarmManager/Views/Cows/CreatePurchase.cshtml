@@ -1,0 +1,93 @@
+﻿@model FarmManager.ViewModels.CowPurchVM
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2 class="hTop">New cow purchase</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <div id="formMyStyle">
+    <fieldset>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TagNo)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.TagNo, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.TagNo)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Breed)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("Breed", (IEnumerable<SelectListItem>)ViewData["Breeds"], 
+new { id = "SubCategoryId", @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Breed)
+
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Age)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Age, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Age)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Sex)
+        </div>
+        <div class="editor-field">
+            <select name="Sex" class="form-control">
+                <option value="-Please Select-" selected>-Please Select-</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>      
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BoughtFrom)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.BoughtFrom, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.BoughtFrom)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Location)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Location, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Location)        
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Price)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Price, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Price)        
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Notes)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Notes, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Notes)         
+        </div>
+        <br />
+        <p>
+            <input class="btn btn-info" type="submit" value="Create" />
+            @Html.ActionLink("Cancel","Index","Cows",null, new { @class="btn btn-default"})
+        </p>
+    </fieldset>
+        </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

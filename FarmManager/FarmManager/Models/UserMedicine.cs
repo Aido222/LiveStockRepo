@@ -12,10 +12,16 @@ namespace FarmManager.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Breed
+    public partial class UserMedicine
     {
-        public int id { get; set; }
-        public Nullable<int> SpeciesID { get; set; }
-        public string Breed1 { get; set; }
+        public int UserMedicineID { get; set; }
+        public Nullable<int> MedicineID { get; set; }
+        public string BatchNo { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
+        public Nullable<System.DateTime> OpenDate { get; set; }
+        public Nullable<int> BottleSize { get; set; }
+        public string SuppliedBy { get; set; }
+        public Nullable<System.DateTime> DateOfPurchase { get; set; }
+        public string Notes { get; set; }
     }
 }

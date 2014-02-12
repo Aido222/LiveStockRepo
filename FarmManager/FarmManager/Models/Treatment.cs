@@ -15,11 +15,12 @@ namespace FarmManager.Models
     public partial class Treatment
     {
         public int TreatmentId { get; set; }
+        public Nullable<int> UserMedicineID { get; set; }
         public string TagNo { get; set; }
         public Nullable<System.DateTime> TreatmentDate { get; set; }
         public string Notes { get; set; }
-        public Nullable<int> MedicineId { get; set; }
         public Nullable<decimal> DosageAmount { get; set; }
+        public string PrescribingVet { get; set; }
         public string Administrator { get; set; }
     }
 }

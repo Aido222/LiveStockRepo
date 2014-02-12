@@ -17,13 +17,12 @@ namespace FarmManager.Models
         public int AnimalId { get; set; }
         public Nullable<int> UserId { get; set; }
         public string TagNo { get; set; }
-        public string Species { get; set; }
-        public string Sex { get; set; }
-        public string Breed { get; set; }
-        public Nullable<int> Age { get; set; }
+        public Nullable<int> Species { get; set; }
+        public Nullable<bool> Sex { get; set; }
+        public Nullable<int> Breed { get; set; }
         public Nullable<System.DateTime> DOB { get; set; }
-        public string OwnershipStatus { get; set; }
+        public Nullable<int> OwnershipStatus { get; set; }
         public Nullable<System.DateTime> DateAdded { get; set; }
-        public string Origin { get; set; }
+        public Nullable<bool> BornOnFarm { get; set; }
     }
 }

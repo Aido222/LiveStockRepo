@@ -11,17 +11,14 @@ namespace FarmManager.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class Death
     {
         public int DeathId { get; set; }
         public string TagNo { get; set; }
         public Nullable<int> UserId { get; set; }
-        [Required]
         public Nullable<System.DateTime> DOD { get; set; }
-        [Required]
-        public string Cause { get; set; }
+        public Nullable<int> Cause { get; set; }
         public string Notes { get; set; }
     }
 }

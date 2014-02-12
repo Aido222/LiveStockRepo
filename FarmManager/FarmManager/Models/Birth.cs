@@ -19,7 +19,7 @@ namespace FarmManager.Models
         public string TagNo { get; set; }
         public string MotherTagNo { get; set; }
         public string SireTagNo { get; set; }
-        public Nullable<System.DateTime> BirthDate { get; set; }
+        public Nullable<bool> Difficult { get; set; }
         public string Notes { get; set; }
     }
 }

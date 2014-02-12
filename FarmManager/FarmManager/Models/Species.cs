@@ -12,10 +12,9 @@ namespace FarmManager.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Breed
+    public partial class Species
     {
-        public int id { get; set; }
-        public Nullable<int> SpeciesID { get; set; }
-        public string Breed1 { get; set; }
+        public int SpeciesID { get; set; }
+        public string Species1 { get; set; }
     }
 }

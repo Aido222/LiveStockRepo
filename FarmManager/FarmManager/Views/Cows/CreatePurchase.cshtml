@@ -22,14 +22,13 @@
             @Html.LabelFor(model => model.Breed)
         </div>
         <div class="editor-field">
-            @Html.DropDownList("Breed", (IEnumerable<SelectListItem>)ViewData["Breeds"], 
-new { id = "SubCategoryId", @class = "form-control" })
+           @Html.DropDownListFor(model => model.Breed, Model.BreedsList,  new { @class = "form-control" } )
             @Html.ValidationMessageFor(model => model.Breed)
 
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Age)
+            <label>Age in Years</label>
         </div>
         <div class="editor-field">
             @Html.TextBoxFor(model => model.Age, new { @class = "form-control" })
@@ -42,8 +41,8 @@ new { id = "SubCategoryId", @class = "form-control" })
         <div class="editor-field">
             <select name="Sex" class="form-control">
                 <option value="-Please Select-" selected>-Please Select-</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
+                <option value="1">Male</option>
+                <option value="0">Female</option>
             </select>      
         </div>
 

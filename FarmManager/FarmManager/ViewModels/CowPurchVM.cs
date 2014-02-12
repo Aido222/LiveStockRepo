@@ -23,6 +23,9 @@ namespace FarmManager.ViewModels
         public Nullable<decimal> Price { get; set; }
         public string Notes { get; set; }
 
+        public IEnumerable<SelectListItem> BreedsList { get; set; }
+
+
 
     }
 }

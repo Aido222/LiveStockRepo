@@ -29,10 +29,16 @@ namespace FarmManager.Controllers
         {
             //return View(db.Animals.);
 
+            //List<Animal> Animal1 = (from animals in db.Animals
+              //                where animals.Species = 2 & animals.OwnershipStatus = 1 &
+                //              animals.UserId = (int)WebSecurity.CurrentUserId
+                  //            select animals).ToList();
+
+
             List<Animal> Animal1 = (from animals in db.Animals
-                              where animals.Species == "Cow" && animals.OwnershipStatus == "Owned" &&
-                              animals.UserId == (int)WebSecurity.CurrentUserId
-                              select animals).ToList();
+                                        where animals.Species == 2 & animals.OwnershipStatus == 1
+                                        & animals.UserId == WebSecurity.CurrentUserId
+                                        select animals).ToList();
 
             return View(Animal1);
         }
@@ -71,11 +77,12 @@ namespace FarmManager.Controllers
 
 
 
-                animal.Species = "Cow";
-                animal.OwnershipStatus = "Owned";
+                animal.Species = 2;
+                animal.OwnershipStatus = 1;
                 animal.DateAdded = DateTime.Now;
                 animal.UserId = (int)WebSecurity.CurrentUserId;
-                animal.Sex = collection["Sex"];
+                //animal.Sex = collection["Sex"];
+                animal.Sex = animal.Sex;
 
                 db.Animals.Add(animal);
                 db.SaveChanges();
@@ -165,6 +172,8 @@ namespace FarmManager.Controllers
         [Authorize]
         public ActionResult CreatePurchase()
         {
+
+            CowPurchVM cowPurch = new CowPurchVM();
             /*var breeds = (from t in db.Breeds
                           select new SelectListItem()
                           {
@@ -176,22 +185,23 @@ namespace FarmManager.Controllers
 
 
 
-            List<SelectListItem> BreedList= new List<SelectListItem>();
+            List<SelectListItem> BreedList = new List<SelectListItem>();
             BreedList.Add(new SelectListItem { Text = "-Please select-", Value = "Selects items" });
-            var breedsList = (from b in db.Breeds select b).ToArray();
+            var breedsList = (from b in db.Breeds where b.SpeciesID == 2 select b).ToArray();
             for (int i = 0; i < breedsList.Length; i++)
             {
                 BreedList.Add(new SelectListItem
                 {
                     Text = breedsList[i].Breed1,
-                    Value = breedsList[i].Breed1.ToString(),
+                    Value = breedsList[i].id.ToString(),
                     Selected = (breedsList[i].id == 1)
                 });
             }
 
-            ViewData["Breeds"] = BreedList;
+            cowPurch.BreedsList = BreedList;
 
-            return View();
+
+            return View(cowPurch);
         }
 
 
@@ -201,22 +211,27 @@ namespace FarmManager.Controllers
         [Authorize]
         public ActionResult CreatePurchase(CowPurchVM cowPurc, FormCollection fCollection)
         {
+            
 
-
-            List<SelectListItem> BreedList = new List<SelectListItem>();
+        
+           /* List<SelectListItem> BreedList = new List<SelectListItem>();
             BreedList.Add(new SelectListItem { Text = "-Please select-", Value = "Selects items" });
-            var breedsList = (from b in db.Breeds select b).ToArray();
+            var breedsList = (from b in db.Breeds where b.SpeciesID == 2 select b).ToArray();
             for (int i = 0; i < breedsList.Length; i++)
             {
                 BreedList.Add(new SelectListItem
                 {
                     Text = breedsList[i].Breed1,
-                    Value = breedsList[i].Breed1.ToString(),
+                    Value = breedsList[i].id.ToString(),
                     Selected = (breedsList[i].id == 1)
                 });
             }
 
-            ViewData["Breeds"] = BreedList;
+            ViewData["Breeds"] = BreedList;*/
+
+
+
+
 
 
             if (ModelState.IsValid)
@@ -224,14 +239,30 @@ namespace FarmManager.Controllers
                 Animal animal = new Animal();
 
                 animal.TagNo = cowPurc.TagNo;
-                animal.Breed = cowPurc.Breed;
-                animal.Age = cowPurc.Age;
-                animal.Sex = cowPurc.Sex;
-                animal.Species = "Cow";
-                animal.OwnershipStatus = "Owned";
+                animal.Breed = Convert.ToInt32(cowPurc.Breed);
+
+                if (Convert.ToInt32(cowPurc.Sex) == 0)
+                {
+                    animal.Sex = false;
+                }
+                else
+                {
+                    animal.Sex = true;
+                }
+
+
+
+                animal.Species = 2;
+                animal.OwnershipStatus = 1;
                 animal.DateAdded = DateTime.Now;
                 animal.UserId = (int)WebSecurity.CurrentUserId;
-                animal.Origin = "Purchased";
+                animal.BornOnFarm = false;
+
+                //set animals dob
+                int age = Convert.ToInt32(cowPurc.Age);
+                var todaysDate = DateTime.Now;
+                var birthDate = todaysDate.AddYears(-age);
+                animal.DOB = birthDate;
 
                 db.Animals.Add(animal);
                 db.SaveChanges();
@@ -261,28 +292,30 @@ namespace FarmManager.Controllers
         [Authorize]
         public ActionResult CreateCowBirth()
         {
+            CowBirthVM cowBirth = new CowBirthVM();
+
 
             List<SelectListItem> BreedList = new List<SelectListItem>();
             BreedList.Add(new SelectListItem { Text = "-Please select-", Value = "Selects items" });
-            var breedsList = (from b in db.Breeds select b).ToArray();
+            var breedsList = (from b in db.Breeds where b.SpeciesID == 2 select b).ToArray();
             for (int i = 0; i < breedsList.Length; i++)
             {
                 BreedList.Add(new SelectListItem
                 {
                     Text = breedsList[i].Breed1,
-                    Value = breedsList[i].Breed1.ToString(),
+                    Value = breedsList[i].id.ToString(),
                     Selected = (breedsList[i].id == 1)
                 });
             }
 
-            ViewData["Breeds"] = BreedList;
+            cowBirth.BreedList = BreedList;
 
 
 
             List<SelectListItem> MotherList = new List<SelectListItem>();
             MotherList.Add(new SelectListItem { Text = "-Please select-", Value = "Selects items" });
             var motherList = (from b in db.Animals
-                                  where b.Sex=="Female" && b.UserId == (int)WebSecurity.CurrentUserId
+                                  where b.Sex== false && b.UserId == (int)WebSecurity.CurrentUserId
                                   select b).ToArray();
             for (int i = 0; i < motherList.Length; i++)
             {
@@ -295,10 +328,10 @@ namespace FarmManager.Controllers
             }
 
 
-            ViewData["tags"] = MotherList;
+            cowBirth.MotherTagList = MotherList;
 
 
-
+            cowBirth.SireTagList = MotherList;
           
  
             /*
@@ -320,14 +353,14 @@ namespace FarmManager.Controllers
             ViewData["bullTags"] = BullList;
             */
 
-            return View();
+            return View(cowBirth);
         }
 
         [Authorize]
         [HttpPost]
         public ActionResult CreateCowBirth(CowBirthVM cowBith, FormCollection fCollection)
         {
-
+            /*
             List<SelectListItem> BreedList = new List<SelectListItem>();
             BreedList.Add(new SelectListItem { Text = "-Please select-", Value = "Selects items" });
             var breedsList = (from b in db.Breeds select b).ToArray();
@@ -348,7 +381,7 @@ namespace FarmManager.Controllers
             List<SelectListItem> MotherList = new List<SelectListItem>();
             MotherList.Add(new SelectListItem { Text = "-Please select-", Value = "Selects items" });
             var motherList = (from b in db.Animals
-                              where b.Sex == "Female" && b.UserId == (int)WebSecurity.CurrentUserId
+                              where b.Sex == false && b.UserId == (int)WebSecurity.CurrentUserId
                               select b).ToArray();
             for (int i = 0; i < motherList.Length; i++)
             {
@@ -365,10 +398,10 @@ namespace FarmManager.Controllers
 
 
 
-            /*List<SelectListItem> BullList = new List<SelectListItem>();
+            List<SelectListItem> BullList = new List<SelectListItem>();
             BullList.Add(new SelectListItem { Text = "-Please select-", Value = "Selects items" });
             var bullList = (from b in db.Animals
-                            where b.Sex == "Male" && b.UserId == (int)WebSecurity.CurrentUserId
+                            where b.Sex == false && b.UserId == (int)WebSecurity.CurrentUserId
                             select b).ToArray();
             for (int i = 0; i < bullList.Length; i++)
             {
@@ -380,20 +413,29 @@ namespace FarmManager.Controllers
                 });
             }
 
-            ViewData["bullTags"] = BullList;*/
+            ViewData["bullTags"] = BullList;
 
-
+            */
 
             Animal animal = new Animal();
 
             animal.UserId = (int)WebSecurity.CurrentUserId;
             animal.TagNo = cowBith.TagNo;
-            animal.Species = "Cow";
-            animal.Sex = cowBith.Sex;
-            animal.OwnershipStatus = "Owned";
+            animal.Species = 2;
+
+            if (Convert.ToInt32(cowBith.Sex) == 0)
+            {
+                animal.Sex = false;
+            }
+            else
+            {
+                animal.Sex = true;
+            }
+
+            animal.OwnershipStatus = 1;
             animal.DateAdded = DateTime.Now;
-            animal.Origin = "Born";
-            animal.Breed = cowBith.Breed;
+            animal.BornOnFarm = true;
+            animal.Breed = Convert.ToInt32(cowBith.Breed);
 
 
 
@@ -403,10 +445,15 @@ namespace FarmManager.Controllers
             birth.MotherTagNo = cowBith.MotherTagNo;
             birth.SireTagNo = cowBith.SireTagNo;
             birth.Notes = cowBith.Notes;
-            birth.BirthDate = cowBith.BirthDate;
-
-
-
+            //Determine wether birth was difficult
+            if (Convert.ToInt32(cowBith.Difficult) == 1)
+            {
+                birth.Difficult = true;
+            }
+            else
+            {
+                birth.Difficult = false;
+            }
 
 
             db.Animals.Add(animal);
@@ -431,7 +478,7 @@ namespace FarmManager.Controllers
                 DeathList.Add(new SelectListItem
                 {
                     Text = deathList[i].DeathCauses,
-                    Value = deathList[i].DeathCauses.ToString(),
+                    Value = deathList[i].Id.ToString()
                     
                 });
             }
@@ -447,29 +494,35 @@ namespace FarmManager.Controllers
         [HttpPost]
         public ActionResult CowDeath(Death death, FormCollection collection)
         {
-            var deathCauses = (from t in db.DeathCauses
-                               select new SelectListItem()
-                               {
-                                   Text = t.DeathCauses,
-                                   Value = t.DeathCauses
-                               }).ToList<SelectListItem>();
+            List<SelectListItem> DeathList = new List<SelectListItem>();
+            DeathList.Add(new SelectListItem { Text = "-Please select-", Value = "Selects items" });
+            var deathList = (from b in db.DeathCauses select b).ToArray();
+            for (int i = 0; i < deathList.Length; i++)
+            {
+                DeathList.Add(new SelectListItem
+                {
+                    Text = deathList[i].DeathCauses,
+                    Value = deathList[i].Id.ToString()
 
-            ViewData["Cause"] = deathCauses;
+                });
+            }
+
+            ViewData["Cause"] = DeathList;
 
 
 
             death.UserId = (int)WebSecurity.CurrentUserId;
-            death.Cause = collection["Cause"];
+            death.Cause = death.Cause;
             db.Deaths.Add(death);
             db.SaveChanges();
 
 
             var animalStatus =
-    (from c in db.Animals
-     where c.TagNo == death.TagNo && c.UserId == (int)WebSecurity.CurrentUserId
-     select c).First();
+            (from c in db.Animals
+             where c.TagNo == death.TagNo && c.UserId == (int)WebSecurity.CurrentUserId
+             select c).First();
 
-            animalStatus.OwnershipStatus = "Deceased";
+            animalStatus.OwnershipStatus = 3;
 
             db.SaveChanges();
 

@@ -12,10 +12,15 @@ namespace FarmManager.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Breed
+    public partial class DefaultMedicine
     {
-        public int id { get; set; }
-        public Nullable<int> SpeciesID { get; set; }
-        public string Breed1 { get; set; }
+        public int MedicineID { get; set; }
+        public string MedicineName { get; set; }
+        public string MedicineBrand { get; set; }
+        public Nullable<int> WithdrawalPeriod { get; set; }
+        public Nullable<int> BreachPeriod { get; set; }
+        public Nullable<int> TargetSpecies { get; set; }
+        public string MainUse { get; set; }
+        public string Notes { get; set; }
     }
 }

@@ -12,10 +12,12 @@ namespace FarmManager.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Breed
+    public partial class AI
     {
-        public int id { get; set; }
-        public Nullable<int> SpeciesID { get; set; }
-        public string Breed1 { get; set; }
+        public int AIID { get; set; }
+        public string Date { get; set; }
+        public string TagNo { get; set; }
+        public string BullID { get; set; }
+        public string AIOperator { get; set; }
     }
 }

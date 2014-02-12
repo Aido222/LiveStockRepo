@@ -12,10 +12,11 @@ namespace FarmManager.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Breed
+    public partial class SheepWeight
     {
-        public int id { get; set; }
-        public Nullable<int> SpeciesID { get; set; }
-        public string Breed1 { get; set; }
+        public int WeightID { get; set; }
+        public string TagNo { get; set; }
+        public Nullable<decimal> Weight { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
     }
 }

@@ -1,17 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="FarmManagementDBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="FarmManagementDBEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="AIs" EntityType="FarmManagementDBModel.AI" />
     <EntitySet Name="AnimalNotes" EntityType="FarmManagementDBModel.AnimalNote" />
     <EntitySet Name="Animals" EntityType="FarmManagementDBModel.Animal" />
+    <EntitySet Name="AnimalStatus" EntityType="FarmManagementDBModel.AnimalStatu" />
     <EntitySet Name="Births" EntityType="FarmManagementDBModel.Birth" />
     <EntitySet Name="Breeds" EntityType="FarmManagementDBModel.Breed" />
     <EntitySet Name="DeathCauses" EntityType="FarmManagementDBModel.DeathCaus" />
     <EntitySet Name="Deaths" EntityType="FarmManagementDBModel.Death" />
+    <EntitySet Name="DefaultMedicines" EntityType="FarmManagementDBModel.DefaultMedicine" />
     <EntitySet Name="Medicines" EntityType="FarmManagementDBModel.Medicine" />
     <EntitySet Name="Purchases" EntityType="FarmManagementDBModel.Purchase" />
     <EntitySet Name="Sales" EntityType="FarmManagementDBModel.Sale" />
+    <EntitySet Name="SheepWeights" EntityType="FarmManagementDBModel.SheepWeight" />
+    <EntitySet Name="Species" EntityType="FarmManagementDBModel.Species" />
     <EntitySet Name="Treatments" EntityType="FarmManagementDBModel.Treatment" />
+    <EntitySet Name="UserMedicines" EntityType="FarmManagementDBModel.UserMedicine" />
   </EntityContainer>
+  <EntityType Name="AI">
+    <Key>
+      <PropertyRef Name="AIID" />
+    </Key>
+    <Property Name="AIID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+    <Property Name="TagNo" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="BullID" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="AIOperator" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+  </EntityType>
   <EntityType Name="AnimalNote">
     <Key>
       <PropertyRef Name="NoteId" />
@@ -28,14 +44,20 @@
     <Property Name="AnimalId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
     <Property Name="UserId" Type="Int32" />
     <Property Name="TagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-    <Property Name="Species" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="Sex" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="Breed" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="Age" Type="Int32" />
+    <Property Name="Species" Type="Int32" />
+    <Property Name="Sex" Type="Boolean" />
+    <Property Name="Breed" Type="Int32" />
     <Property Name="DOB" Type="DateTime" Precision="0" />
-    <Property Name="OwnershipStatus" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="OwnershipStatus" Type="Int32" />
     <Property Name="DateAdded" Type="DateTime" Precision="0" />
-    <Property Name="Origin" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="BornOnFarm" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="AnimalStatu">
+    <Key>
+      <PropertyRef Name="StatusID" />
+    </Key>
+    <Property Name="StatusID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="StatusOfAnimal" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
   </EntityType>
   <EntityType Name="Birth">
     <Key>
@@ -46,7 +68,7 @@
     <Property Name="TagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="MotherTagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="SireTagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-    <Property Name="BirthDate" Type="DateTime" Precision="0" />
+    <Property Name="Difficult" Type="Boolean" />
     <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
   </EntityType>
   <EntityType Name="Breed">
@@ -54,6 +76,7 @@
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="SpeciesID" Type="Int32" />
     <Property Name="Breed1" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
   </EntityType>
   <EntityType Name="DeathCaus">
@@ -72,7 +95,20 @@
     <Property Name="TagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="UserId" Type="Int32" />
     <Property Name="DOD" Type="DateTime" Precision="0" />
-    <Property Name="Cause" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Cause" Type="Int32" />
+    <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="DefaultMedicine">
+    <Key>
+      <PropertyRef Name="MedicineID" />
+    </Key>
+    <Property Name="MedicineID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="MedicineName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="MedicineBrand" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="WithdrawalPeriod" Type="Int32" />
+    <Property Name="BreachPeriod" Type="Int32" />
+    <Property Name="TargetSpecies" Type="Int32" />
+    <Property Name="MainUse" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
   </EntityType>
   <EntityType Name="Medicine">
@@ -113,16 +149,47 @@
     <Property Name="SoldTo" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
   </EntityType>
+  <EntityType Name="SheepWeight">
+    <Key>
+      <PropertyRef Name="WeightID" />
+    </Key>
+    <Property Name="WeightID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="TagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Weight" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="Species">
+    <Key>
+      <PropertyRef Name="SpeciesID" />
+    </Key>
+    <Property Name="SpeciesID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Species1" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+  </EntityType>
   <EntityType Name="Treatment">
     <Key>
       <PropertyRef Name="TreatmentId" />
     </Key>
     <Property Name="TreatmentId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="UserMedicineID" Type="Int32" />
     <Property Name="TagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="TreatmentDate" Type="DateTime" Precision="0" />
     <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
-    <Property Name="MedicineId" Type="Int32" />
     <Property Name="DosageAmount" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="PrescribingVet" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="Administrator" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="UserMedicine">
+    <Key>
+      <PropertyRef Name="UserMedicineID" />
+    </Key>
+    <Property Name="UserMedicineID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="MedicineID" Type="Int32" />
+    <Property Name="BatchNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ExpiryDate" Type="DateTime" Precision="0" />
+    <Property Name="OpenDate" Type="DateTime" Precision="0" />
+    <Property Name="BottleSize" Type="Int32" />
+    <Property Name="SuppliedBy" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="DateOfPurchase" Type="DateTime" Precision="0" />
+    <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
   </EntityType>
 </Schema>

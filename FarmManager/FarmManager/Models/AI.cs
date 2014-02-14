@@ -15,9 +15,11 @@ namespace FarmManager.Models
     public partial class AI
     {
         public int AIID { get; set; }
-        public string Date { get; set; }
+        public Nullable<int> UserID { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
         public string TagNo { get; set; }
         public string BullID { get; set; }
         public string AIOperator { get; set; }
+        public Nullable<bool> Born { get; set; }
     }
 }

@@ -15,6 +15,7 @@
     <EntitySet Name="Sales" EntityType="FarmManagementDBModel.Store.Sales" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="SheepWeights" EntityType="FarmManagementDBModel.Store.SheepWeights" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Species" EntityType="FarmManagementDBModel.Store.Species" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="FarmManagementDBModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Treatments" EntityType="FarmManagementDBModel.Store.Treatments" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="UserMedicine" EntityType="FarmManagementDBModel.Store.UserMedicine" store:Type="Tables" Schema="dbo" />
   </EntityContainer>
@@ -23,10 +24,12 @@
       <PropertyRef Name="AIID" />
     </Key>
     <Property Name="AIID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="Date" Type="nchar" MaxLength="10" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="Date" Type="date" />
     <Property Name="TagNo" Type="varchar" MaxLength="50" />
     <Property Name="BullID" Type="varchar" MaxLength="50" />
     <Property Name="AIOperator" Type="varchar" MaxLength="50" />
+    <Property Name="Born" Type="bit" />
   </EntityType>
   <EntityType Name="AnimalNotes">
     <Key>
@@ -68,6 +71,7 @@
     <Property Name="TagNo" Type="nvarchar" MaxLength="50" />
     <Property Name="MotherTagNo" Type="nvarchar" MaxLength="50" />
     <Property Name="SireTagNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="AIID" Type="int" />
     <Property Name="Difficult" Type="bit" />
     <Property Name="Notes" Type="nvarchar(max)" />
   </EntityType>
@@ -164,6 +168,16 @@
     </Key>
     <Property Name="SpeciesID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="Species" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="Treatments">
     <Key>

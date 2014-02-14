@@ -6,19 +6,22 @@
 
 <h2 class="hTop">New Calf Birth</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm(new { id = "FormID" }))
+{
     @Html.ValidationSummary(true)
     <div id="formMyStyle">
-    <fieldset>
+    
 
         <div class="editor-label">
             <label>Conception Type</label>        
         </div>
         <div class="editor-field">
-        <input type="radio" name="InseminationType" value="0">Natural Conception<br>
-        <input type="radio" name="InseminationType" value="1">Artificial Insemination<br />
+        <input type="radio" name="InseminationType" value="0">Natural Insemination<br />
+        <input type="radio" name="InseminationType" value="1">Artificial Insemination
         </div>
         <br />
+
+        <div class="expandingForm collapse">
 
         <div class="editor-label">
             @Html.LabelFor(model => model.TagNo)
@@ -53,13 +56,23 @@
             @Html.ValidationMessageFor(model => model.MotherTagNo)        
         </div>
 
-        <div class="editor-label">
+        <div class="editor-label collapse Natural">
             @Html.LabelFor(model => model.SireTagNo)
         </div>
-        <div class="editor-field">
+        <div class="editor-field collapse Natural">
             @*@Html.DropDownList("SireTagNo", (IEnumerable<SelectListItem>)ViewData["bullTags"],  new {  @class = "form-control" })*@
            @Html.DropDownListFor(model => model.SireTagNo, Model.SireTagList,  new { @class = "form-control" } )
             @Html.ValidationMessageFor(model => model.SireTagNo) 
+                      
+        </div>
+
+        <div class="editor-label collapse AI">
+            <label>Artificially Inseminated Cow</label>
+        </div>
+        <div class="editor-field collapse AI">
+            @*@Html.DropDownList("SireTagNo", (IEnumerable<SelectListItem>)ViewData["bullTags"],  new {  @class = "form-control" })*@
+           @Html.DropDownListFor(model => model.AICow, Model.AIList,  new { @class = "form-control" } )
+            @Html.ValidationMessageFor(model => model.AIList) 
                       
         </div>
         
@@ -68,8 +81,8 @@
             @Html.LabelFor(model => model.Sex)
         </div>
         <div class="editor-field">
-            <select name="Sex" class="form-control">
-                <option value="-Please Select-" selected>-Please Select-</option>
+            <select name="Sex" class="form-control" id="Sex">
+                <option value="-Please Select-" selected>Please select</option>
                 <option value="1">Male</option>
                 <option value="0">Female</option>
             </select>
@@ -80,8 +93,8 @@
             <label>Was the Birth Difficult?</label>
         </div>
         <div class="editor-field">
-            <select name="Difficult" class="form-control">
-                <option value="-Please Select-" selected>-Please Select-</option>
+            <select name="Difficult" class="form-control" id="Difficult">
+                <option value="Please Select" selected>Please select</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -101,8 +114,9 @@
             <input type="submit" class="btn btn-info" value="Create" />
             @Html.ActionLink("Cancel","Index","Cows",null, new { @class="btn btn-default"})
         </p>
-    </fieldset>
-        </div>
+            </div>
+
+    </div>
 }
 
 <div>

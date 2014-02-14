@@ -15,6 +15,7 @@
     <EntitySet Name="Sales" EntityType="FarmManagementDBModel.Sale" />
     <EntitySet Name="SheepWeights" EntityType="FarmManagementDBModel.SheepWeight" />
     <EntitySet Name="Species" EntityType="FarmManagementDBModel.Species" />
+    <EntitySet Name="sysdiagrams" EntityType="FarmManagementDBModel.sysdiagram" />
     <EntitySet Name="Treatments" EntityType="FarmManagementDBModel.Treatment" />
     <EntitySet Name="UserMedicines" EntityType="FarmManagementDBModel.UserMedicine" />
   </EntityContainer>
@@ -23,10 +24,12 @@
       <PropertyRef Name="AIID" />
     </Key>
     <Property Name="AIID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-    <Property Name="Date" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
     <Property Name="TagNo" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
     <Property Name="BullID" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
     <Property Name="AIOperator" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Born" Type="Boolean" />
   </EntityType>
   <EntityType Name="AnimalNote">
     <Key>
@@ -68,6 +71,7 @@
     <Property Name="TagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="MotherTagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="SireTagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="AIID" Type="Int32" />
     <Property Name="Difficult" Type="Boolean" />
     <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
   </EntityType>
@@ -164,6 +168,16 @@
     </Key>
     <Property Name="SpeciesID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
     <Property Name="Species1" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="Treatment">
     <Key>

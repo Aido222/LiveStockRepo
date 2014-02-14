@@ -228,6 +228,9 @@
     <Compile Include="Models\Species.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Treatment.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

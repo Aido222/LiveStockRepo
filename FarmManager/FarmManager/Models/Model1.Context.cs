@@ -39,6 +39,7 @@ namespace FarmManager.Models
         public DbSet<Sale> Sales { get; set; }
         public DbSet<SheepWeight> SheepWeights { get; set; }
         public DbSet<Species> Species { get; set; }
+        public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<Treatment> Treatments { get; set; }
         public DbSet<UserMedicine> UserMedicines { get; set; }
     }

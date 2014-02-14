@@ -12,15 +12,12 @@ namespace FarmManager.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Birth
+    public partial class sysdiagram
     {
-        public int BirthId { get; set; }
-        public Nullable<int> UserId { get; set; }
-        public string TagNo { get; set; }
-        public string MotherTagNo { get; set; }
-        public string SireTagNo { get; set; }
-        public Nullable<int> AIID { get; set; }
-        public Nullable<bool> Difficult { get; set; }
-        public string Notes { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

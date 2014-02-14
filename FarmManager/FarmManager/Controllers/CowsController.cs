@@ -9,6 +9,7 @@ using FarmManager.Models;
 using WebMatrix.WebData;
 using FarmManager.Filters;
 using FarmManager.ViewModels;
+using System.Data.Entity.Validation;
 
 
 
@@ -27,12 +28,6 @@ namespace FarmManager.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            //return View(db.Animals.);
-
-            //List<Animal> Animal1 = (from animals in db.Animals
-              //                where animals.Species = 2 & animals.OwnershipStatus = 1 &
-                //              animals.UserId = (int)WebSecurity.CurrentUserId
-                  //            select animals).ToList();
 
 
             List<Animal> Animal1 = (from animals in db.Animals
@@ -296,7 +291,7 @@ namespace FarmManager.Controllers
 
 
             List<SelectListItem> BreedList = new List<SelectListItem>();
-            BreedList.Add(new SelectListItem { Text = "-Please select-", Value = "Selects items" });
+            BreedList.Add(new SelectListItem { Text = "Please select", Value = "Please Select" });
             var breedsList = (from b in db.Breeds where b.SpeciesID == 2 select b).ToArray();
             for (int i = 0; i < breedsList.Length; i++)
             {
@@ -304,16 +299,15 @@ namespace FarmManager.Controllers
                 {
                     Text = breedsList[i].Breed1,
                     Value = breedsList[i].id.ToString(),
-                    Selected = (breedsList[i].id == 1)
                 });
             }
 
             cowBirth.BreedList = BreedList;
 
 
-
+            //Cow List
             List<SelectListItem> MotherList = new List<SelectListItem>();
-            MotherList.Add(new SelectListItem { Text = "-Please select-", Value = "Selects items" });
+            MotherList.Add(new SelectListItem { Text = "Please select", Value = "Please Select" });
             var motherList = (from b in db.Animals
                                   where b.Sex== false && b.UserId == (int)WebSecurity.CurrentUserId
                                   select b).ToArray();
@@ -323,7 +317,7 @@ namespace FarmManager.Controllers
                 {
                     Text = motherList[i].TagNo,
                     Value = motherList[i].TagNo.ToString(),
-                    Selected = (motherList[i].AnimalId == 1)
+                   // Selected = (motherList[i].AnimalId == 1)
                 });
             }
 
@@ -331,14 +325,14 @@ namespace FarmManager.Controllers
             cowBirth.MotherTagList = MotherList;
 
 
-            cowBirth.SireTagList = MotherList;
+            
           
  
-            /*
+            //Bull List
             List<SelectListItem> BullList = new List<SelectListItem>();
-            BullList.Add(new SelectListItem { Text = "-Please select-", Value = "Selects items" });
+            BullList.Add(new SelectListItem { Text = "Please select", Value = "Please Select" });
             var bullList = (from b in db.Animals
-                            where b.Sex == "Male" && b.UserId == (int)WebSecurity.CurrentUserId
+                            where b.Sex == true && b.UserId == (int)WebSecurity.CurrentUserId
                             select b).ToArray();
             for (int i = 0; i < bullList.Length; i++)
             {
@@ -346,12 +340,38 @@ namespace FarmManager.Controllers
                 {
                     Text = bullList[i].TagNo,
                     Value = bullList[i].TagNo.ToString(),
-                    Selected = (bullList[i].AnimalId == 1)
+                    //Selected = (bullList[i].AnimalId == 1)
                 });
             }
 
-            ViewData["bullTags"] = BullList;
-            */
+            cowBirth.SireTagList = BullList;
+
+
+
+            //Sneds ai list to view
+            DateTime upperDate = DateTime.Now.AddMonths(-10);
+            DateTime lowerDate = DateTime.Now.AddMonths(-4);
+
+            List<SelectListItem> AIList = new List<SelectListItem>();
+            AIList.Add(new SelectListItem { Text = "Please select", Value = "Please Select" });
+            var aiList = (from b in db.AIs
+                          where b.UserID == (int)WebSecurity.CurrentUserId && b.Date > upperDate && b.Date < lowerDate && b.Born == false
+                            select b).ToArray();
+            for (int i = 0; i < aiList.Length; i++)
+            {
+                AIList.Add(new SelectListItem
+                {
+                    Text = aiList[i].TagNo + " (" + aiList[i].Date + ")",
+                    Value = aiList[i].AIID.ToString(),
+                    //Selected = (aiList[i].TagNo.ToString == 1)
+
+                    
+                });
+            }
+
+            cowBirth.AIList = AIList;
+
+            
 
             return View(cowBirth);
         }
@@ -360,64 +380,32 @@ namespace FarmManager.Controllers
         [HttpPost]
         public ActionResult CreateCowBirth(CowBirthVM cowBith, FormCollection fCollection)
         {
-            /*
-            List<SelectListItem> BreedList = new List<SelectListItem>();
-            BreedList.Add(new SelectListItem { Text = "-Please select-", Value = "Selects items" });
-            var breedsList = (from b in db.Breeds select b).ToArray();
-            for (int i = 0; i < breedsList.Length; i++)
-            {
-                BreedList.Add(new SelectListItem
-                {
-                    Text = breedsList[i].Breed1,
-                    Value = breedsList[i].Breed1.ToString(),
-                    Selected = (breedsList[i].id == 1)
-                });
-            }
+            
 
-            ViewData["Breeds"] = BreedList;
-
-
-
-            List<SelectListItem> MotherList = new List<SelectListItem>();
-            MotherList.Add(new SelectListItem { Text = "-Please select-", Value = "Selects items" });
-            var motherList = (from b in db.Animals
-                              where b.Sex == false && b.UserId == (int)WebSecurity.CurrentUserId
-                              select b).ToArray();
-            for (int i = 0; i < motherList.Length; i++)
-            {
-                MotherList.Add(new SelectListItem
-                {
-                    Text = motherList[i].TagNo,
-                    Value = motherList[i].TagNo.ToString(),
-                    Selected = (motherList[i].AnimalId == 1)
-                });
-            }
-
-
-            ViewData["tags"] = MotherList;
-
-
-
-            List<SelectListItem> BullList = new List<SelectListItem>();
-            BullList.Add(new SelectListItem { Text = "-Please select-", Value = "Selects items" });
-            var bullList = (from b in db.Animals
-                            where b.Sex == false && b.UserId == (int)WebSecurity.CurrentUserId
-                            select b).ToArray();
-            for (int i = 0; i < bullList.Length; i++)
-            {
-                BullList.Add(new SelectListItem
-                {
-                    Text = bullList[i].TagNo,
-                    Value = bullList[i].TagNo.ToString(),
-                    Selected = (bullList[i].AnimalId == 1)
-                });
-            }
-
-            ViewData["bullTags"] = BullList;
-
-            */
+            int selectedInseminationType = Convert.ToInt32(fCollection["InseminationType"]);
+            
 
             Animal animal = new Animal();
+            Birth birth = new Birth();
+
+
+            if (selectedInseminationType == 0)
+            {
+                birth.MotherTagNo = cowBith.MotherTagNo;
+                birth.SireTagNo = cowBith.SireTagNo;
+            }
+            else
+            {
+                birth.AIID = Convert.ToInt32(cowBith.AICow);
+
+                //works
+                var aiRecord = (from b in db.AIs
+                                where b.AIID == birth.AIID
+                                select b).ToArray();
+
+                aiRecord[0].Born = true;
+            }
+
 
             animal.UserId = (int)WebSecurity.CurrentUserId;
             animal.TagNo = cowBith.TagNo;
@@ -439,11 +427,9 @@ namespace FarmManager.Controllers
 
 
 
-            Birth birth = new Birth();
             birth.UserId = (int)WebSecurity.CurrentUserId;
             birth.TagNo = animal.TagNo;
-            birth.MotherTagNo = cowBith.MotherTagNo;
-            birth.SireTagNo = cowBith.SireTagNo;
+
             birth.Notes = cowBith.Notes;
             //Determine wether birth was difficult
             if (Convert.ToInt32(cowBith.Difficult) == 1)

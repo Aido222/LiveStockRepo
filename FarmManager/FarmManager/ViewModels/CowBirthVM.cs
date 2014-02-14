@@ -21,10 +21,14 @@ namespace FarmManager.ViewModels
         public string SireTagNo { get; set; }
         public string Notes { get; set; }
         public string Difficult { get; set; }
+        public string AICow { get; set; }
 
+
+        [Required]
         public IEnumerable<SelectListItem> SireTagList { get; set; }
         public IEnumerable<SelectListItem> MotherTagList { get; set; }
         public IEnumerable<SelectListItem> BreedList { get; set; }
+        public IEnumerable<SelectListItem> AIList { get; set; }
 
     }
 }

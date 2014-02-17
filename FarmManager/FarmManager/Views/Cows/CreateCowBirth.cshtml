@@ -30,6 +30,9 @@
             @Html.TextBoxFor(model => model.TagNo, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.TagNo)
         </div>
+        <div id="SameTagWarning" class="alert alert-danger collapse">You already own an animal with this Tag Number</div>
+
+
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Breed)
@@ -131,7 +134,9 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/Mine/ConceptionType.js")
+    @Scripts.Render("~/Scripts/jquery.validate.min.js")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
 }
-
+  
     
 </script>

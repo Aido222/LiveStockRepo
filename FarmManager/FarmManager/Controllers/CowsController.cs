@@ -311,18 +311,23 @@ namespace FarmManager.Controllers
             var motherList = (from b in db.Animals
                                   where b.Sex== false && b.UserId == (int)WebSecurity.CurrentUserId
                                   select b).ToArray();
-            for (int i = 0; i < motherList.Length; i++)
+            //foreach (var item in motherList)
+            //{
+              //  MotherList.Add(new SelectListItem { Text = item.TagNo.ToString(), Value = item.TagNo.ToString() });
+            //}
+            for (int j = 0; j < motherList.Length; j++)
             {
                 MotherList.Add(new SelectListItem
                 {
-                    Text = motherList[i].TagNo,
-                    Value = motherList[i].TagNo.ToString(),
+                    //Assign Values to text
+                    Text = motherList[j].TagNo,
+                    Value = motherList[j].TagNo.ToString(),
                    // Selected = (motherList[i].AnimalId == 1)
                 });
-            }
+        }
 
 
-            cowBirth.MotherTagList = MotherList;
+           cowBirth.MotherTagList = MotherList;
 
 
             
@@ -345,7 +350,6 @@ namespace FarmManager.Controllers
             }
 
             cowBirth.SireTagList = BullList;
-
 
 
             //Sneds ai list to view
@@ -375,6 +379,36 @@ namespace FarmManager.Controllers
 
             return View(cowBirth);
         }
+
+
+
+
+
+        public JsonResult CheckTagNo(FormCollection form)
+        {
+            string name = Convert.ToString(form["TagNumber"]).ToUpper();
+
+            //if (name.Equals("Sumit"))
+              //  return Json(false);
+
+            var dbCows = (from c in db.Animals
+                          where c.TagNo == name && c.UserId == (int)WebSecurity.CurrentUserId
+                          select c).Count();
+
+            
+
+            if (dbCows != 0)
+            {
+                return Json(true);
+            }
+            else
+            {
+                return Json(false);
+            }
+            
+
+        }
+
 
         [Authorize]
         [HttpPost]

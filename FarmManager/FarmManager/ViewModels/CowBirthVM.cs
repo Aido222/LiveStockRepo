@@ -9,7 +9,7 @@ namespace FarmManager.ViewModels
 {
     public class CowBirthVM
     {
-        [Required]
+        //[Required]
         public string TagNo { get; set; }
         [Required]
         public string Sex { get; set; }

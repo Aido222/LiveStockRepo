@@ -359,7 +359,7 @@ namespace FarmManager.Controllers
             List<SelectListItem> AIList = new List<SelectListItem>();
             AIList.Add(new SelectListItem { Text = "Please select", Value = "Please Select" });
             var aiList = (from b in db.AIs
-                          where b.UserID == (int)WebSecurity.CurrentUserId && b.Date > upperDate && b.Date < lowerDate && b.Born == false
+                          where b.UserID == (int)WebSecurity.CurrentUserId && b.Date > upperDate && b.Date < lowerDate
                             select b).ToArray();
             for (int i = 0; i < aiList.Length; i++)
             {
@@ -444,6 +444,7 @@ namespace FarmManager.Controllers
             animal.UserId = (int)WebSecurity.CurrentUserId;
             animal.TagNo = cowBith.TagNo;
             animal.Species = 2;
+            animal.DOB = cowBith.BirthDate;
 
             if (Convert.ToInt32(cowBith.Sex) == 0)
             {

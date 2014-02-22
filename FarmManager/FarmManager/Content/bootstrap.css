@@ -82,6 +82,20 @@ html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
+
+    
+background: #197f0a;  
+background: -moz-linear-gradient(left,  #197f0a 0%, #0eb71f 39%, #0eb71f 52%, #197f0a 100%); 
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,#197f0a), color-stop(39%,#0eb71f), color-stop(52%,#0eb71f), color-stop(100%,#197f0a)); 
+background: -webkit-linear-gradient(left,  #197f0a 0%,#0eb71f 39%,#0eb71f 52%,#197f0a 100%); 
+background: -o-linear-gradient(left,  #197f0a 0%,#0eb71f 39%,#0eb71f 52%,#197f0a 100%); 
+background: -ms-linear-gradient(left,  #197f0a 0%,#0eb71f 39%,#0eb71f 52%,#197f0a 100%); 
+background: linear-gradient(to right,  #197f0a 0%,#0eb71f 39%,#0eb71f 52%,#197f0a 100%); 
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#197f0a', endColorstr='#197f0a',GradientType=1 ); 
+
+  
+
+
 }
 
 body {
@@ -347,8 +361,8 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.428571429;
-  color: #333333;
-  background-color: #ffffff;
+  /*color: #333333;
+  background-color: #ffffff;*/
 }
 
 input,
@@ -829,6 +843,7 @@ pre code {
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+  background-color: white;
 }
 
 .container:before,
@@ -865,7 +880,8 @@ pre code {
 
 @media (min-width: 1200px) {
   .container {
-    width: 1070px;
+    width: 970px;
+
   }
 }
 
@@ -4584,7 +4600,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-nav > li > a {
   padding-top: 10px;
   padding-bottom: 10px;
-  line-height: 20px;
+  /*line-height: 20px;*/
+  line-height: 60px;
 }
 
 @media (max-width: 767px) {
@@ -4745,8 +4762,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-default {
-  background-color: #f8f8f8;
-  border-color: #e7e7e7;
+  background-color: white;
 }
 
 .navbar-default .navbar-brand {
@@ -4764,7 +4780,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-default .navbar-nav > li > a {
-  color: #777777;
+  color: #0059ae;
 }
 
 .navbar-default .navbar-nav > li > a:hover,
@@ -5339,8 +5355,9 @@ a.thumbnail.active {
 }
 
 .alert {
-  padding: 15px;
-  margin-bottom: 20px;
+  padding: 6px;
+  margin-bottom: 5px;
+  margin-top: 5px;
   border: 1px solid transparent;
   border-radius: 4px;
 }

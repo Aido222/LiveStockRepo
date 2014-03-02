@@ -1,4 +1,5 @@
-﻿@model IEnumerable<FarmManager.Models.Animal>
+﻿
+@model IEnumerable<FarmManager.ViewModels.CowIndexVM>
 
 @{
     ViewBag.Title = "Index";
@@ -16,32 +17,33 @@
             @Html.DisplayNameFor(model => model.TagNo)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Breed)
+            @Html.DisplayNameFor(model => model.AnimalBreed)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DateAdded)
         </th>
-        <th></th>
+        <!--<th></th>-->
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.TagNo)
         </td>
 
         <td>
-            @Html.DisplayFor(modelItem => item.Breed)
+            @Html.DisplayFor(modelItem => item.AnimalBreed)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DateAdded)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.AnimalId }) |
+        <!--<td>
+           @* @Html.ActionLink("Edit", "Edit", new { id=item.AnimalId }) |
             @Html.ActionLink("Details", "Details", new { id=item.AnimalId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.AnimalId }) |
-            @Html.ActionLink("Record Death", "CowDeath", new { id=item.TagNo })
-        </td>
+            @Html.ActionLink("Record Death", "CowDeath", new { id=item.TagNo }) *@
+        </td>-->
     </tr>
 }
 

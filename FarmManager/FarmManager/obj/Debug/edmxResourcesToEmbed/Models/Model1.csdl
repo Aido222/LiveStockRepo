@@ -49,7 +49,7 @@
     <Property Name="TagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="Species" Type="Int32" />
     <Property Name="Sex" Type="Boolean" />
-    <Property Name="Breed" Type="Int32" />
+    <Property Name="AnimalBreed" Type="Int32" />
     <Property Name="DOB" Type="DateTime" Precision="0" />
     <Property Name="OwnershipStatus" Type="Int32" />
     <Property Name="DateAdded" Type="DateTime" Precision="0" />

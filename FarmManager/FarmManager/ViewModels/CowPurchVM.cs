@@ -16,14 +16,14 @@ namespace FarmManager.ViewModels
         public string Sex { get; set; }
         [Required]
         public string Breed { get; set; }
-        
-        public Nullable<int> Age { get; set; }
+
+        public Nullable<System.DateTime> BirthDate { get; set; }
         public string Location { get; set; }
         public string BoughtFrom { get; set; }
         public Nullable<decimal> Price { get; set; }
         public string Notes { get; set; }
 
-        public IEnumerable<SelectListItem> BreedsList { get; set; }
+        public IEnumerable<SelectListItem> BreedList { get; set; }
 
 
 

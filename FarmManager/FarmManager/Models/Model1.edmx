@@ -54,7 +54,7 @@
           <Property Name="TagNo" Type="nvarchar" MaxLength="50" />
           <Property Name="Species" Type="int" />
           <Property Name="Sex" Type="bit" />
-          <Property Name="Breed" Type="int" />
+          <Property Name="AnimalBreed" Type="int" />
           <Property Name="DOB" Type="date" />
           <Property Name="OwnershipStatus" Type="int" />
           <Property Name="DateAdded" Type="date" />
@@ -265,7 +265,7 @@
           <Property Name="TagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="Species" Type="Int32" />
           <Property Name="Sex" Type="Boolean" />
-          <Property Name="Breed" Type="Int32" />
+          <Property Name="AnimalBreed" Type="Int32" />
           <Property Name="DOB" Type="DateTime" Precision="0" />
           <Property Name="OwnershipStatus" Type="Int32" />
           <Property Name="DateAdded" Type="DateTime" Precision="0" />
@@ -459,7 +459,7 @@
                 <ScalarProperty Name="TagNo" ColumnName="TagNo" />
                 <ScalarProperty Name="Species" ColumnName="Species" />
                 <ScalarProperty Name="Sex" ColumnName="Sex" />
-                <ScalarProperty Name="Breed" ColumnName="Breed" />
+                <ScalarProperty Name="AnimalBreed" ColumnName="AnimalBreed" />
                 <ScalarProperty Name="DOB" ColumnName="DOB" />
                 <ScalarProperty Name="OwnershipStatus" ColumnName="OwnershipStatus" />
                 <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />

@@ -32,7 +32,7 @@
           <ScalarProperty Name="TagNo" ColumnName="TagNo" />
           <ScalarProperty Name="Species" ColumnName="Species" />
           <ScalarProperty Name="Sex" ColumnName="Sex" />
-          <ScalarProperty Name="Breed" ColumnName="Breed" />
+          <ScalarProperty Name="AnimalBreed" ColumnName="AnimalBreed" />
           <ScalarProperty Name="DOB" ColumnName="DOB" />
           <ScalarProperty Name="OwnershipStatus" ColumnName="OwnershipStatus" />
           <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />

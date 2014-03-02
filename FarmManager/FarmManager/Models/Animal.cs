@@ -19,10 +19,12 @@ namespace FarmManager.Models
         public string TagNo { get; set; }
         public Nullable<int> Species { get; set; }
         public Nullable<bool> Sex { get; set; }
-        public Nullable<int> Breed { get; set; }
+        public Nullable<int> AnimalBreed { get; set; }
         public Nullable<System.DateTime> DOB { get; set; }
         public Nullable<int> OwnershipStatus { get; set; }
         public Nullable<System.DateTime> DateAdded { get; set; }
         public Nullable<bool> BornOnFarm { get; set; }
+
+        public virtual Breed Breed { get; set; }
     }
 }

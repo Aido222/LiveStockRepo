@@ -6,7 +6,10 @@
 
     //Date picker...
 
-    $('.datepicker').datepicker();
+    $('.datepicker').datepicker({
+
+        format: 'yyyy/mm/dd'
+    });
 
     $('#BirthDate').datepicker()
    .on('changeDate', function(ev){

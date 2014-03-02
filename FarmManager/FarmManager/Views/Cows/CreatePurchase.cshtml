@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Create";
 }
+<link href="~/Content/datepicker.css" rel="stylesheet" />
+
 
 <h2 class="hTop">New cow purchase</h2>
 
@@ -17,34 +19,42 @@
             @Html.TextBoxFor(model => model.TagNo, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.TagNo)
         </div>
+        <div id="SameTagWarning" class="alert alert-danger collapse">You already own an animal with this Tag Number</div>
+        <div id="EnterTagWarning" class="alert alert-danger collapse">Please enter the calf tag number</div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Breed)
         </div>
         <div class="editor-field">
-           @Html.DropDownListFor(model => model.Breed, Model.BreedsList,  new { @class = "form-control" } )
+           @Html.DropDownListFor(model => model.Breed, Model.BreedList,  new { @class = "form-control" } )
             @Html.ValidationMessageFor(model => model.Breed)
-
         </div>
+        <div id="selectBreedWarning" class="alert alert-danger collapse">You must select an animal breed</div>
+
 
         <div class="editor-label">
-            <label>Age in Years</label>
+            <label>Date of Birth</label>
         </div>
         <div class="editor-field">
-            @Html.TextBoxFor(model => model.Age, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Age)
+            <input name="BirthDate" class="datepicker form-control" id="BirthDate" size="16" type="text" value="Please select">
+            @Html.ValidationMessageFor(model => model.BirthDate)
         </div>
+        <div id="enterAgeWarning" class="alert alert-danger collapse">Please enter the animals age</div>
+        <div id="greaterDateWarning" class="alert alert-danger collapse">The Purchase date cannot be after todays date</div>
+
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Sex)
         </div>
         <div class="editor-field">
-            <select name="Sex" class="form-control">
-                <option value="-Please Select-" selected>-Please Select-</option>
+            <select id="Sex" name="Sex" class="form-control">
+                <option value="-Please Select-" selected>Please select</option>
                 <option value="1">Male</option>
                 <option value="0">Female</option>
             </select>      
         </div>
+        <div id="selectSexWarning" class="alert alert-danger collapse">Please select cow sex</div>
+
 
         <div class="editor-label">
             @Html.LabelFor(model => model.BoughtFrom)
@@ -53,6 +63,9 @@
             @Html.TextBoxFor(model => model.BoughtFrom, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.BoughtFrom)
         </div>
+        <div id="selectBoughtFromWarning" class="alert alert-danger collapse">Please enter who previously owned animal</div>
+
+
         <div class="editor-label">
             @Html.LabelFor(model => model.Location)
         </div>
@@ -60,6 +73,9 @@
             @Html.TextBoxFor(model => model.Location, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.Location)        
         </div>
+        <div id="selectLocationWarning" class="alert alert-danger collapse">Please enter where the animal was purchased</div>
+
+
         <div class="editor-label">
             @Html.LabelFor(model => model.Price)
         </div>
@@ -67,6 +83,8 @@
             @Html.TextBoxFor(model => model.Price, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.Price)        
         </div>
+        <div id="selectPriceWarning" class="alert alert-danger collapse">Please enter price paid for animal in Euros</div>
+
         <div class="editor-label">
             @Html.LabelFor(model => model.Notes)
         </div>
@@ -89,4 +107,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/Mine/AddPurchase.js")
+    @Scripts.Render("~/Scripts/bootstrap-datepicker.js")
+
 }

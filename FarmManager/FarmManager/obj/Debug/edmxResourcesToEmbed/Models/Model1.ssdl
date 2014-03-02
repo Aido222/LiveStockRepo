@@ -49,7 +49,7 @@
     <Property Name="TagNo" Type="nvarchar" MaxLength="50" />
     <Property Name="Species" Type="int" />
     <Property Name="Sex" Type="bit" />
-    <Property Name="Breed" Type="int" />
+    <Property Name="AnimalBreed" Type="int" />
     <Property Name="DOB" Type="date" />
     <Property Name="OwnershipStatus" Type="int" />
     <Property Name="DateAdded" Type="date" />

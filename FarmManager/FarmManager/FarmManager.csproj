@@ -239,6 +239,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\CowBirthVM.cs" />
+    <Compile Include="ViewModels\CowIndexVM.cs" />
     <Compile Include="ViewModels\CowPurchVM.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -307,12 +308,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Images\SiteImages\BackR.gif" />
+    <Content Include="Images\SiteImages\Logo.jpg" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Images\SiteImages\BackR.gif" />
-    <Content Include="Images\SiteImages\Logo.jpg" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -344,6 +345,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
+    <Content Include="Scripts\Mine\AddPurchase.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\Mine\ConceptionType.js" />
     <Content Include="Web.config" />

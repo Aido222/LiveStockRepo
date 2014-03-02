@@ -30,12 +30,30 @@ namespace FarmManager.Controllers
         {
 
 
-            List<Animal> Animal1 = (from animals in db.Animals
+            /*List<Animal> Animal1 = (from animals in db.Animals
                                         where animals.Species == 2 & animals.OwnershipStatus == 1
                                         & animals.UserId == WebSecurity.CurrentUserId
-                                        select animals).ToList();
+                                        select animals).ToList();*/
 
-            return View(Animal1);
+            List <CowIndexVM> myCowIndexVM = (from animals in db.Animals
+                                    join aBreed in db.Breeds on animals.AnimalBreed equals aBreed.id
+                                    where animals.Species == 2 && animals.OwnershipStatus == 1
+                                    & animals.UserId == WebSecurity.CurrentUserId
+                                    orderby animals.DateAdded descending
+                                    select new CowIndexVM
+                                    {
+                                        TagNo = animals.TagNo,
+                                        AnimalBreed = aBreed.Breed1,
+                                        DateAdded = animals.DateAdded
+                                    }).ToList();
+                                    
+                                    
+                                   // animals).ToList();
+
+
+
+
+            return View("Index", myCowIndexVM);
         }
 
         //
@@ -169,19 +187,12 @@ namespace FarmManager.Controllers
         {
 
             CowPurchVM cowPurch = new CowPurchVM();
-            /*var breeds = (from t in db.Breeds
-                          select new SelectListItem()
-                          {
-                              Text = t.Breed1,
-                              Value = t.Breed1
-                          }).ToList<SelectListItem>();
-
-            ViewData["breeds"] = breeds;*/
+          
 
 
 
             List<SelectListItem> BreedList = new List<SelectListItem>();
-            BreedList.Add(new SelectListItem { Text = "-Please select-", Value = "Selects items" });
+            BreedList.Add(new SelectListItem { Text = "Please select", Value = "Please select" });
             var breedsList = (from b in db.Breeds where b.SpeciesID == 2 select b).ToArray();
             for (int i = 0; i < breedsList.Length; i++)
             {
@@ -189,11 +200,10 @@ namespace FarmManager.Controllers
                 {
                     Text = breedsList[i].Breed1,
                     Value = breedsList[i].id.ToString(),
-                    Selected = (breedsList[i].id == 1)
                 });
             }
 
-            cowPurch.BreedsList = BreedList;
+            cowPurch.BreedList = BreedList;
 
 
             return View(cowPurch);
@@ -209,32 +219,19 @@ namespace FarmManager.Controllers
             
 
         
-           /* List<SelectListItem> BreedList = new List<SelectListItem>();
-            BreedList.Add(new SelectListItem { Text = "-Please select-", Value = "Selects items" });
-            var breedsList = (from b in db.Breeds where b.SpeciesID == 2 select b).ToArray();
-            for (int i = 0; i < breedsList.Length; i++)
-            {
-                BreedList.Add(new SelectListItem
-                {
-                    Text = breedsList[i].Breed1,
-                    Value = breedsList[i].id.ToString(),
-                    Selected = (breedsList[i].id == 1)
-                });
-            }
-
-            ViewData["Breeds"] = BreedList;*/
+           
 
 
 
 
 
 
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+           // {
                 Animal animal = new Animal();
 
                 animal.TagNo = cowPurc.TagNo;
-                animal.Breed = Convert.ToInt32(cowPurc.Breed);
+                animal.AnimalBreed = Convert.ToInt32(cowPurc.Breed);
 
                 if (Convert.ToInt32(cowPurc.Sex) == 0)
                 {
@@ -254,10 +251,11 @@ namespace FarmManager.Controllers
                 animal.BornOnFarm = false;
 
                 //set animals dob
-                int age = Convert.ToInt32(cowPurc.Age);
-                var todaysDate = DateTime.Now;
-                var birthDate = todaysDate.AddYears(-age);
-                animal.DOB = birthDate;
+                //int age = Convert.ToInt32(cowPurc.Age);
+                //var todaysDate = DateTime.Now;
+                //var birthDate = todaysDate.AddYears(-age);
+                //animal.DOB = birthDate;
+                animal.DOB = cowPurc.BirthDate;
 
                 db.Animals.Add(animal);
                 db.SaveChanges();
@@ -278,9 +276,9 @@ namespace FarmManager.Controllers
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
-            }
+            //}
 
-            return View(cowPurc);
+            //return View(cowPurc);
         }
 
         
@@ -444,7 +442,7 @@ namespace FarmManager.Controllers
             animal.UserId = (int)WebSecurity.CurrentUserId;
             animal.TagNo = cowBith.TagNo;
             animal.Species = 2;
-            animal.DOB = cowBith.BirthDate;
+            animal.DOB = Convert.ToDateTime(cowBith.BirthDate);
 
             if (Convert.ToInt32(cowBith.Sex) == 0)
             {
@@ -458,7 +456,7 @@ namespace FarmManager.Controllers
             animal.OwnershipStatus = 1;
             animal.DateAdded = DateTime.Now;
             animal.BornOnFarm = true;
-            animal.Breed = Convert.ToInt32(cowBith.Breed);
+            animal.AnimalBreed = Convert.ToInt32(cowBith.Breed);
 
 
 

@@ -59,14 +59,164 @@ namespace FarmManager.Controllers
         //
         // GET: /Cows/Details/5
         [Authorize]
-        public ActionResult Details(int id = 0)
+        public ActionResult Details(string id)
         {
-            Animal animal = db.Animals.Find(id);
+
+
+            var isBorn = (from c in db.Animals
+                          where c.TagNo == id && c.UserId == (int)WebSecurity.CurrentUserId
+                          select c).FirstOrDefault();
+
+
+            
+              //  string isBornOnFarm = Convert.ToString(isBorn.BornOnFarm);
+            
+
+
+            
+           /* if (isBornOnFarm == "true")
+            {
+
+                CowDetailVM animal = (from animals in db.Animals
+                                      join breed in db.Breeds on animals.AnimalBreed equals breed.id
+                                      join birth in db.Births on animals.TagNo equals birth.TagNo
+                                      where animals.TagNo == id && animals.UserId == WebSecurity.CurrentUserId
+                                      orderby animals.DateAdded descending
+
+                                      select new CowDetailVM
+                                      {
+                                          TagNo = animals.TagNo,
+                                          Sex = animals.Sex,
+                                          AnimalBreed = breed.Breed1,
+                                          DOB = animals.DOB,
+                                          OwnershipStatus = animals.OwnershipStatus,
+                                          BornOnFarm = animals.BornOnFarm,
+
+
+                                          MotherTagNo = birth.MotherTagNo,
+                                          SireTagNo = birth.SireTagNo,
+                                          Difficult = birth.Difficult
+
+                                      }).FirstOrDefault();
+
+                if (animal == null)
+                {
+                    return HttpNotFound();
+                }
+                return View("Details", animal);
+
+
+            }
+            else
+            {
+
+                CowDetailVM animal = (from animals in db.Animals
+                                      join breed in db.Breeds on animals.AnimalBreed equals breed.id
+                                      join purchase in db.Purchases on animals.TagNo equals purchase.TagNo
+                                      where animals.TagNo == id && animals.UserId == WebSecurity.CurrentUserId
+                                      orderby animals.DateAdded descending
+
+                                      select new CowDetailVM
+                                      {
+                                          TagNo = animals.TagNo,
+                                          Sex = animals.Sex,
+                                          AnimalBreed = breed.Breed1,
+                                          DOB = animals.DOB,
+                                          OwnershipStatus = animals.OwnershipStatus,
+                                          BornOnFarm = animals.BornOnFarm,
+
+
+                                          DateBought = purchase.DateBought,
+                                          BoughtFrom = purchase.BoughtFrom,
+                                          Price = purchase.Price,
+                                          Location = purchase.Location,
+
+                                      }).FirstOrDefault();
+
+                if (animal == null)
+                {
+                    return HttpNotFound();
+                }
+                return View("Details", animal);
+            }*/
+
+
+
+            CowDetailVM animal = (from animals in db.Animals
+                                  join breed in db.Breeds on animals.AnimalBreed equals breed.id
+                                  join birth in db.Births on animals.TagNo equals birth.TagNo into j0
+                                  from birth in j0.DefaultIfEmpty()
+                                  join purchase in db.Purchases on animals.TagNo equals purchase.TagNo into j1
+                                  from purchase in j1.DefaultIfEmpty()
+                                  where animals.TagNo == id && animals.UserId == WebSecurity.CurrentUserId
+                                  orderby animals.DateAdded descending
+
+                                  select new CowDetailVM
+                                  {
+                                      TagNo = animals.TagNo,
+                                      Sex = animals.Sex,
+                                      AnimalBreed = breed.Breed1,
+                                      DOB = animals.DOB,
+                                      OwnershipStatus = animals.OwnershipStatus,
+                                      BornOnFarm = animals.BornOnFarm,
+
+                                      DateBought = purchase.DateBought,
+                                      BoughtFrom = purchase.BoughtFrom,
+                                      Price = purchase.Price,
+                                      Location = purchase.Location,
+
+                                      MotherTagNo = birth.MotherTagNo,
+                                      SireTagNo = birth.SireTagNo,
+                                      Difficult = birth.Difficult
+
+                                  }).FirstOrDefault();
+
+
+
+
+            List<SelectListItem> cowCalves = new List<SelectListItem>();
+            var calfList = (from b in db.Births
+                            where b.MotherTagNo == id && b.UserId == WebSecurity.CurrentUserId 
+                            select b).ToArray();
+            for (int i = 0; i < calfList.Length; i++)
+            {
+                cowCalves.Add(new SelectListItem
+                {
+                    Text = calfList[i].TagNo,
+                    Value = calfList[i].TagNo,
+                });
+            }
+
+         
+
+            animal.calvesList = cowCalves;
+
+
+            List<SelectListItem> Notes = new List<SelectListItem>();
+            var noteList = (from b in db.AnimalNotes
+                            where b.TagNo == id
+                            select b).ToArray();
+            for (int i = 0; i < noteList.Length; i++)
+            {
+                Notes.Add(new SelectListItem
+                {
+                    Text = noteList[i].Description,
+                    Value = Convert.ToString(noteList[i].NoteId)
+                });
+            }
+
+            animal.notesList = Notes;
+
+            
+
             if (animal == null)
             {
                 return HttpNotFound();
             }
-            return View(animal);
+            return View("Details", animal);
+          
+
+
         }
 
         //
@@ -490,7 +640,7 @@ namespace FarmManager.Controllers
         public ActionResult CowDeath(string id)
         {
             List<SelectListItem> DeathList = new List<SelectListItem>();
-            DeathList.Add(new SelectListItem { Text = "-Please select-", Value = "Selects items" });
+            DeathList.Add(new SelectListItem { Text = "Please select", Value = "Please select" });
             var deathList = (from b in db.DeathCauses select b).ToArray();
             for (int i = 0; i < deathList.Length; i++)
             {
@@ -547,6 +697,32 @@ namespace FarmManager.Controllers
 
             return RedirectToAction("Index");
         }
+
+
+
+
+        public ActionResult AddCowNote(string id)
+        {
+            AnimalNote newNote =  new AnimalNote();
+
+            newNote.TagNo = id;
+
+            return View(newNote);
+        }
+
+
+        [HttpPost]
+        public ActionResult AddCowNote(AnimalNote animalNote)
+        {
+
+            animalNote.Date = DateTime.Now;
+            db.AnimalNotes.Add(animalNote);
+            db.SaveChanges();
+
+
+            return RedirectToAction("Index");
+        }
+
 
 
 

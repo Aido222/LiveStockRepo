@@ -6,14 +6,95 @@
 
 /*! normalize.css v2.1.3 | MIT License | git.io/normalize */
 
+.clear
+{
+    clear: both;
+}
+
+#sideLinks
+{
+    float: left;
+    width: 15%;
+}
+
+#animalTable
+{
+    float: left;
+    width: 80%;
+}
+.contentArea
+{
+    padding: 10px;
+  background-color: #eeeeee;
+  width: 300px;
+
+ -moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+border-radius: 5px; /* future proofing */
+-khtml-border-radius: 5px; /* for old Konqueror browsers */
+
+}
+
+#cowDetails
+{
+    width: 200px;
+    float: left;
 
 
+    padding: 5px;
+
+ -moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+border-radius: 5px; /* future proofing */
+-khtml-border-radius: 5px; /* for old Konqueror browsers */
+
+}
+
+#childDetails
+{
+    width: 200px;
+    float: left;
+
+
+        padding: 5px;
+
+     -moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+border-radius: 5px; /* future proofing */
+-khtml-border-radius: 5px; /* for old Konqueror browsers */
+
+margin-left: 20px;
+
+}
+
+#notesContainer
+{
+    float: left;
+    width: 200px;
+    padding: 5px;
+
+    
+
+}
+
+
+.tagHighLight
+{
+    color: #1481c1;
+}
 
 
 /*My changes!!!!******************************************************/
 .hTop
 {
     color: #009933;
+}
+
+.detailsHead
+{
+        color: white;
+        margin-top: -1px;
+
 }
 
 .spanTag
@@ -43,6 +124,59 @@
 
 
 
+
+#iconSlide div {
+	margin-left:20px;
+	margin-bottom:20px;
+	height: auto;
+	float:left;
+	width:100%;
+	height:100px;
+	border:1px solid #999;
+	position:relative;
+	overflow:hidden;
+}
+
+
+
+#iconSlide  img {
+	position:absolute;
+}
+
+.detailsBanner
+{
+    height: 35px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+
+    padding: 5px;
+
+    background: #178a0e; /* Old browsers */
+background: -moz-linear-gradient(top,  #178a0e 0%, #10ab1b 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#178a0e), color-stop(100%,#10ab1b)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #178a0e 0%,#10ab1b 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #178a0e 0%,#10ab1b 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #178a0e 0%,#10ab1b 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #178a0e 0%,#10ab1b 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#178a0e', endColorstr='#10ab1b',GradientType=0 ); /* IE6-9 */
+
+}
+
+.detailsBottom
+{
+        padding: 5px;
+
+        -moz-border-radius-bottomleft: 5px;
+    -moz-border-radius-bottompright: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+
+border:1px solid #a1a1a1;
+background-color: #EFEFEF;
+
+}
 
 
 
@@ -1932,6 +2066,7 @@ label {
   display: inline-block;
   margin-bottom: 5px;
   font-weight: bold;
+  color: #1481c1;
 }
 
 input[type="search"] {

@@ -42,6 +42,7 @@
           </Key>
           <Property Name="NoteId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TagNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Note" Type="nvarchar(max)" />
           <Property Name="Date" Type="date" />
         </EntityType>
@@ -253,6 +254,7 @@
           </Key>
           <Property Name="NoteId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="TagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Note" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Date" Type="DateTime" Precision="0" />
         </EntityType>
@@ -446,6 +448,7 @@
               <MappingFragment StoreEntitySet="AnimalNotes">
                 <ScalarProperty Name="NoteId" ColumnName="NoteId" />
                 <ScalarProperty Name="TagNo" ColumnName="TagNo" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
               </MappingFragment>

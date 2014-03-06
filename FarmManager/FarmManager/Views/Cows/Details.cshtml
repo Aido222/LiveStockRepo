@@ -1,71 +1,183 @@
-﻿@model FarmManager.Models.Animal
+﻿@model  FarmManager.ViewModels.CowDetailVM
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2 class="hTop">Details</h2>
 
-<fieldset>
-    <legend>Animal</legend>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.UserId)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.UserId)
+<h2 class="hTop">Cow <span class="tagHighLight">@Html.DisplayFor(model => model.TagNo)</span></h2>
+
+
+<div id="cowDetails">
+    <div class="detailsBanner">
+        <h3 class="detailsHead">Details</h3>
     </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.TagNo)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.TagNo)
-    </div>
+    <div class="detailsBottom">
+    @if (Model.BornOnFarm == true)
+    {
+        <div class="display-label">
+            <label>Origin of Cow</label>
+        </div>
+            
+        <div class="display-field">
+            <p>Born on farm</p>
+        </div>
+            
+        <div class="display-label">
+            <label>Born on</label>
+        </div>
+            
+        <div class="display-field">
+            <p>@Html.DisplayFor(model => model.DOB)</p>
+        </div>
+            
+        <div class="display-label">
+            <label>Sex</label>
+        </div>
+            
+        <div class="display-field">
+            @if (Model.Sex == true)
+            {
+                <p>Male</p>
+            }
+            else
+            {
+                <p>Female</p>
+            }
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Species)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Species)
-    </div>
+        </div>
+            
+        <div class="display-label">
+            <label>Breed</label>
+        </div>
+            
+        <div class="display-field">
+            <p>@Html.DisplayFor(model => model.AnimalBreed)</p>
+        </div>
+    }
+    else
+    {
+            
+        <div class="display-label">
+            <label>Origin of Cow</label>
+        </div>
+            
+        <div class="display-field">
+            <p>Bought into farm</p>
+        </div>
+            
+        <div class="display-label">
+            <label>Owned Since</label>
+        </div>
+            
+        <div class="display-field">
+            <p>@Html.DisplayFor(model => model.DateBought)</p>
+        </div>
+            
+        <div class="display-label">
+            <label>Sex</label>
+        </div>
+            
+        <div class="display-field">
+            @if (Model.Sex == true)
+            {
+                <p>Male</p>
+            }
+            else
+            {
+                <p>Female</p>
+            }
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Breed)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Breed)
-    </div>
+        </div>
+            
+        <div class="display-label">
+            <label>Breed</label>
+        </div>
+            
+        <div class="display-field">
+            <p>@Html.DisplayFor(model => model.AnimalBreed)</p>
+        </div>
+            
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Age)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Age)
-    </div>
+    }
+        </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.DOB)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.DOB)
-    </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.OwnershipStatus)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.OwnershipStatus)
-    </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.DateAdded)
+</div>
+
+<div id="childDetails">
+    <div class="detailsBanner">
+        <h3 class="detailsHead">Offspring</h3>
     </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.DateAdded)
+        <div class="detailsBottom">
+
+    @if (@Model.calvesList.Count() == 1)
+    {
+        <label>1 Calf</label>
+    }
+    else if (@Model.calvesList.Count() > 1)
+    {
+        <label>@Model.calvesList.Count() Calves</label>
+    }
+    else
+    {
+        <label>No Calves</label>         
+                                             
+    }
+
+
+    <br />
+
+    @foreach (var item in Model.calvesList)
+    {
+        @Html.ActionLink(item.Text, "Details", new { id = item.Text })<br />
+
+    }
+            </div>
+</div>
+
+<div id="notesContainer">
+    <div class="detailsBanner">
+        <h3 class="detailsHead">Notes</h3>
     </div>
-</fieldset>
+        <div class="detailsBottom">
+
+
+    @if (@Model.notesList.Count() == 1)
+    {
+        <label>1 Note</label>
+    }
+    else if (@Model.notesList.Count() > 1)
+    {
+        <label>@Model.notesList.Count() Notes</label>
+    }
+    else
+    {
+        <label>No Notes</label>            
+    }
+    
+            | @Html.ActionLink("New Note", "AddCowNote", new { id = Model.TagNo })<br />
+
+
+    
+    @foreach (var item in Model.notesList)
+    {
+        @Html.ActionLink(item.Text, "Index", new { id = item.Value })<br />
+
+    }
+            </div>
+</div>
+
+
+
+<br style="clear: both;" />
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.AnimalId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index") |
+    @Html.ActionLink("Record Death", "CowDeath", new { id = Model.TagNo })
+
 </p>
+
+</>

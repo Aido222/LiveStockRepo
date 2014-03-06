@@ -16,6 +16,7 @@ namespace FarmManager.Models
     {
         public int NoteId { get; set; }
         public string TagNo { get; set; }
+        public string Description { get; set; }
         public string Note { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
     }

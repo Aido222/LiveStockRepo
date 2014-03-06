@@ -19,6 +19,7 @@
         <MappingFragment StoreEntitySet="AnimalNotes">
           <ScalarProperty Name="NoteId" ColumnName="NoteId" />
           <ScalarProperty Name="TagNo" ColumnName="TagNo" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Note" ColumnName="Note" />
           <ScalarProperty Name="Date" ColumnName="Date" />
         </MappingFragment>

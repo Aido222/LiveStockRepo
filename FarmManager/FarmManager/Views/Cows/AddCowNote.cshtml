@@ -1,0 +1,54 @@
+﻿@model FarmManager.Models.AnimalNote
+
+@{
+    ViewBag.Title = "AddCowNote";
+}
+
+<h2 class="hTop">New Note for <span class="tagHighLight">@Html.DisplayFor(model => model.TagNo)</span></h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div id="formMyStyle">
+
+
+        @Html.TextBoxFor(model => model.TagNo, new { @class = "hidden" })
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Description)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Description, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Note)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Note, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Note)
+        </div>
+
+        <br />
+        <p>
+            <input type="submit" class="btn btn-info" value="Create" />
+            @Html.ActionLink("Cancel", "Details", new { id = Model.TagNo }, new { @class = "btn btn-default" })
+
+        </p>
+
+    </div>
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/jquery.validate.min.js")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
+
+}

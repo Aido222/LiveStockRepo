@@ -1,6 +1,8 @@
 ﻿
 @model IEnumerable<FarmManager.ViewModels.CowIndexVM>
 
+
+
 @{
     ViewBag.Title = "Index";
 }
@@ -11,6 +13,7 @@
     @Html.ActionLink("Create Purchase", "CreatePurchase",null, new { @class = "btn btn-success" })
     @Html.ActionLink("Create Birth", "CreateCowBirth",null, new { @class = "btn btn-success" })
 </p>
+<div >
 <table class="table table-striped">
     <tr>
         <th>
@@ -29,7 +32,7 @@
 {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.TagNo)
+            @Html.ActionLink(item.TagNo, "Details", new { id=item.TagNo })
         </td>
 
         <td>
@@ -48,3 +51,6 @@
 }
 
 </table>
+</div>
+
+<p class="clear"></p>

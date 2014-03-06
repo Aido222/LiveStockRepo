@@ -24,7 +24,5 @@ namespace FarmManager.Models
         public Nullable<int> OwnershipStatus { get; set; }
         public Nullable<System.DateTime> DateAdded { get; set; }
         public Nullable<bool> BornOnFarm { get; set; }
-
-        public virtual Breed Breed { get; set; }
     }
 }

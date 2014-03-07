@@ -1,19 +1,24 @@
 ﻿@model FarmManager.Models.AnimalNote
 
 @{
-    ViewBag.Title = "AddCowNote";
+    ViewBag.Title = "EditNote";
 }
 
 <h2 class="hTop">New Note for <span class="tagHighLight">@Html.DisplayFor(model => model.TagNo)</span></h2>
 
-@using (Html.BeginForm())
-{
+@using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
 
-    <div id="formMyStyle">
+
+        <div id="formMyStyle">
+
+        
+            @Html.TextBoxFor(model => model.NoteId, new { @class = "hidden" })
+            @Html.TextBoxFor(model => model.TagNo, new { @class = "hidden" })
+            @Html.TextBoxFor(model => model.UserID, new { @class = "hidden" })
+            @Html.TextBoxFor(model => model.Date, new { @class = "hidden" })
 
 
-        @Html.TextBoxFor(model => model.TagNo, new { @class = "hidden" })
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Description)
@@ -35,20 +40,16 @@
         <div id="RequiredWarningNote" class="alert alert-danger collapse">Please enter note</div>
 
 
-        <br />
+
+            <br />
         <p>
-            <input type="submit" class="btn btn-success" value="Create" />
+            <input class="btn btn-success" type="submit" value="Save" />
             @Html.ActionLink("Cancel", "Details", new { id = Model.TagNo }, new { @class = "btn btn-default" })
-
         </p>
-
-    </div>
-
+            </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

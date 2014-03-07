@@ -11,13 +11,16 @@ namespace FarmManager.Models
 {
     using System;
     using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
     
     public partial class AnimalNote
     {
         public int NoteId { get; set; }
         public string TagNo { get; set; }
+        public Nullable<int> UserID { get; set; }
         public string Description { get; set; }
         public string Note { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public Nullable<System.DateTime> Date { get; set; }
     }
 }

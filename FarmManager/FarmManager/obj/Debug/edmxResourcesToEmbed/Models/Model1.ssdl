@@ -37,6 +37,7 @@
     </Key>
     <Property Name="NoteId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="TagNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserID" Type="int" />
     <Property Name="Description" Type="nvarchar(max)" />
     <Property Name="Note" Type="nvarchar(max)" />
     <Property Name="Date" Type="date" />

@@ -37,6 +37,7 @@
     </Key>
     <Property Name="NoteId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
     <Property Name="TagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="UserID" Type="Int32" />
     <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="Note" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="Date" Type="DateTime" Precision="0" />

@@ -63,7 +63,7 @@ border-radius: 5px; /* future proofing */
 border-radius: 5px; /* future proofing */
 -khtml-border-radius: 5px; /* for old Konqueror browsers */
 
-margin-left: 20px;
+margin-left: 15px;
 
 }
 
@@ -72,6 +72,7 @@ margin-left: 20px;
     float: left;
     width: 200px;
     padding: 5px;
+    margin-left: 15px;
 
     
 
@@ -87,12 +88,19 @@ margin-left: 20px;
 /*My changes!!!!******************************************************/
 .hTop
 {
-    color: #009933;
+    color: black;
 }
 
 .detailsHead
 {
         color: white;
+        margin-top: -1px;
+
+}
+
+#modalHead
+{
+        color: #178B0E;
         margin-top: -1px;
 
 }
@@ -178,6 +186,27 @@ background-color: #EFEFEF;
 
 }
 
+
+
+
+
+
+
+#overlay_form{
+position: absolute;
+border: 1px solid green;
+padding: 10px;
+background: white;
+width: 370px;
+height: auto;
+}
+
+
+
+.listItems
+{
+    color: green;
+}
 
 
 

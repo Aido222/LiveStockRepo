@@ -347,8 +347,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
+    <Content Include="Scripts\Mine\AddNote.js" />
     <Content Include="Scripts\Mine\AddPurchase.js" />
     <Content Include="Scripts\Mine\CowDeath.js" />
+    <Content Include="Scripts\Mine\CowDetails.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\Mine\ConceptionType.js" />
     <Content Include="Web.config" />
@@ -399,6 +401,8 @@
     <Content Include="Views\Cows\CreateCowBirth.cshtml" />
     <Content Include="Views\Cows\CowDeath.cshtml" />
     <Content Include="Views\Cows\AddCowNote.cshtml" />
+    <Content Include="Views\Cows\DeleteNote.cshtml" />
+    <Content Include="Views\Cows\EditNote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

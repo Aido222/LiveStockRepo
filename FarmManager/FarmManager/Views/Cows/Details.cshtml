@@ -15,94 +15,94 @@
     </div>
 
     <div class="detailsBottom">
-    @if (Model.BornOnFarm == true)
-    {
-        <div class="display-label">
-            <label>Origin of Cow</label>
-        </div>
+        @if (Model.BornOnFarm == true)
+        {
+            <div class="display-label">
+                <label>Origin of Cow</label>
+            </div>
             
-        <div class="display-field">
-            <p>Born on farm</p>
-        </div>
+            <div class="display-field">
+                <p>Born on farm</p>
+            </div>
             
-        <div class="display-label">
-            <label>Born on</label>
-        </div>
+            <div class="display-label">
+                <label>Born on</label>
+            </div>
             
-        <div class="display-field">
-            <p>@Html.DisplayFor(model => model.DOB)</p>
-        </div>
+            <div class="display-field">
+                <p>@Html.DisplayFor(model => model.DOB)</p>
+            </div>
             
-        <div class="display-label">
-            <label>Sex</label>
-        </div>
+            <div class="display-label">
+                <label>Sex</label>
+            </div>
             
-        <div class="display-field">
-            @if (Model.Sex == true)
-            {
-                <p>Male</p>
-            }
-            else
-            {
-                <p>Female</p>
-            }
+            <div class="display-field">
+                @if (Model.Sex == true)
+                {
+                    <p>Male</p>
+                }
+                else
+                {
+                    <p>Female</p>
+                }
 
-        </div>
+            </div>
             
-        <div class="display-label">
-            <label>Breed</label>
-        </div>
+            <div class="display-label">
+                <label>Breed</label>
+            </div>
             
-        <div class="display-field">
-            <p>@Html.DisplayFor(model => model.AnimalBreed)</p>
-        </div>
-    }
-    else
-    {
+            <div class="display-field">
+                <p>@Html.DisplayFor(model => model.AnimalBreed)</p>
+            </div>
+        }
+        else
+        {
             
-        <div class="display-label">
-            <label>Origin of Cow</label>
-        </div>
+            <div class="display-label">
+                <label>Origin of Cow</label>
+            </div>
             
-        <div class="display-field">
-            <p>Bought into farm</p>
-        </div>
+            <div class="display-field">
+                <p>Bought into farm</p>
+            </div>
             
-        <div class="display-label">
-            <label>Owned Since</label>
-        </div>
+            <div class="display-label">
+                <label>Owned Since</label>
+            </div>
             
-        <div class="display-field">
-            <p>@Html.DisplayFor(model => model.DateBought)</p>
-        </div>
+            <div class="display-field">
+                <p>@Html.DisplayFor(model => model.DateBought)</p>
+            </div>
             
-        <div class="display-label">
-            <label>Sex</label>
-        </div>
+            <div class="display-label">
+                <label>Sex</label>
+            </div>
             
-        <div class="display-field">
-            @if (Model.Sex == true)
-            {
-                <p>Male</p>
-            }
-            else
-            {
-                <p>Female</p>
-            }
+            <div class="display-field">
+                @if (Model.Sex == true)
+                {
+                    <p>Male</p>
+                }
+                else
+                {
+                    <p>Female</p>
+                }
 
-        </div>
+            </div>
             
-        <div class="display-label">
-            <label>Breed</label>
-        </div>
+            <div class="display-label">
+                <label>Breed</label>
+            </div>
             
-        <div class="display-field">
-            <p>@Html.DisplayFor(model => model.AnimalBreed)</p>
-        </div>
+            <div class="display-field">
+                <p>@Html.DisplayFor(model => model.AnimalBreed)</p>
+            </div>
             
 
-    }
-        </div>
+        }
+    </div>
 
 
 
@@ -112,72 +112,112 @@
     <div class="detailsBanner">
         <h3 class="detailsHead">Offspring</h3>
     </div>
-        <div class="detailsBottom">
-
-    @if (@Model.calvesList.Count() == 1)
-    {
-        <label>1 Calf</label>
-    }
-    else if (@Model.calvesList.Count() > 1)
-    {
-        <label>@Model.calvesList.Count() Calves</label>
-    }
-    else
-    {
-        <label>No Calves</label>         
+    <div class="detailsBottom">
+        @if (@Model.Sex == false)
+        {
+            if (@Model.calvesList.Count() == 1)
+            {
+            <label>1 Calf</label>
+            }
+            else if (@Model.calvesList.Count() > 1)
+            {
+            <label>@Model.calvesList.Count() Calves</label>
+            }
+            else
+            {
+             <label>No Calves</label>         
                                              
-    }
+            }
+        }
+        else
+        {
+            if (@Model.bullCalveList.Count() == 1)
+            {
+                <label>1 Calf</label>
+            }
+            else if (@Model.bullCalveList.Count() > 1)
+            {
+                <label>@Model.bullCalveList.Count() Calves</label>
+            }
+            else
+            {
+                <label>No Calves</label>         
+                                             
+            }   
+        }
 
 
-    <br />
+        <br />
 
-    @foreach (var item in Model.calvesList)
-    {
-        @Html.ActionLink(item.Text, "Details", new { id = item.Text })<br />
+        @foreach (var item in Model.bullCalveList)
+        {
+            @Html.ActionLink(item.Text, "Details", new { id = item.Text }, new { @class = "listItems" })<br />
 
-    }
-            </div>
+        }
+    </div>
 </div>
 
 <div id="notesContainer">
     <div class="detailsBanner">
         <h3 class="detailsHead">Notes</h3>
     </div>
-        <div class="detailsBottom">
+    <div class="detailsBottom">
 
 
-    @if (@Model.notesList.Count() == 1)
-    {
-        <label>1 Note</label>
-    }
-    else if (@Model.notesList.Count() > 1)
-    {
-        <label>@Model.notesList.Count() Notes</label>
-    }
-    else
-    {
-        <label>No Notes</label>            
-    }
-    
-            | @Html.ActionLink("New Note", "AddCowNote", new { id = Model.TagNo })<br />
+        @if (@Model.notesList.Count() == 1)
+        {
+            <label>1 Note</label>
+        }
+        else if (@Model.notesList.Count() > 1)
+        {
+            <label>@Model.notesList.Count() Notes</label>
+        }
+        else
+        {
+            <label>No Notes</label>            
+        }
+
+        | @Html.ActionLink("New Note", "AddCowNote", new { id = Model.TagNo })<br />
 
 
-    
-    @foreach (var item in Model.notesList)
-    {
-        @Html.ActionLink(item.Text, "Index", new { id = item.Value })<br />
 
-    }
-            </div>
+        @foreach (var item in Model.notesList)
+        {
+            <a  id="@item.Value" class="noteLinks listItems" href="#">@item.Text</a><br />
+        }
+    </div>
 </div>
 
 
 
+
+
 <br style="clear: both;" />
+
+<br />
+
+<form id="overlay_form" style="display: none">
+    <h3 id="modalHead"></h3>
+    <label id="noteDate">1 Note</label>
+    <p id="noteBody"></p>
+
+    <a href="#" id="close" class="btn btn-default">Close</a>
+    <a href="#" class="btn btn-primary" id="btnEditNote">Edit</a>
+    <a href="#" class="btn btn-danger" id="btnDeleteNote">Delete</a>
+
+</form>
 <p>
     @Html.ActionLink("Back to List", "Index") |
     @Html.ActionLink("Record Death", "CowDeath", new { id = Model.TagNo })
 
 </p>
 
-</>
+@section Scripts {
+    @Scripts.Render("~/Scripts/Mine/CowDetails.js")
+    @Scripts.Render("~/Scripts/jquery.validate.min.js")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/jquery.validate.min.js")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
+}

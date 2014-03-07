@@ -194,7 +194,7 @@ namespace FarmManager.Controllers
 
             List<SelectListItem> Notes = new List<SelectListItem>();
             var noteList = (from b in db.AnimalNotes
-                            where b.TagNo == id
+                            where b.TagNo == id && b.UserID == (int)WebSecurity.CurrentUserId
                             select b).ToArray();
             for (int i = 0; i < noteList.Length; i++)
             {
@@ -206,6 +206,24 @@ namespace FarmManager.Controllers
             }
 
             animal.notesList = Notes;
+
+
+
+
+            List<SelectListItem> BullCalveList = new List<SelectListItem>();
+            var bullcalveList = (from b in db.Births
+                            where b.SireTagNo == id && b.UserId == (int)WebSecurity.CurrentUserId
+                            select b).ToArray();
+            for (int i = 0; i < bullcalveList.Length; i++)
+            {
+                BullCalveList.Add(new SelectListItem
+                {
+                    Text = bullcalveList[i].TagNo,
+                    Value = Convert.ToString(bullcalveList[i].TagNo)
+                });
+            }
+
+            animal.bullCalveList = BullCalveList;
 
             
 
@@ -716,14 +734,111 @@ namespace FarmManager.Controllers
         {
 
             animalNote.Date = DateTime.Now;
+            animalNote.UserID = (int)WebSecurity.CurrentUserId;
             db.AnimalNotes.Add(animalNote);
             db.SaveChanges();
 
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Details/" + animalNote.TagNo);
         }
 
 
+
+        public JsonResult RetrieveNote(FormCollection form)
+        {
+            int id = Convert.ToInt32((form["NoteID"]).ToUpper());
+
+
+            var noteText = (from c in db.AnimalNotes
+                          where c.NoteId == id && c.UserID == (int)WebSecurity.CurrentUserId
+                          select c).FirstOrDefault();
+
+            /*
+            if (dbCows != 0)
+            {
+                return Json(true);
+            }
+            else
+            {
+                return Json(false);
+            }
+           * */
+
+            DateTime? myDate = noteText.Date;
+
+            //myDate.Value.ToString("dd-MMM-yyyy"); 
+
+            
+
+            string[] myArray = new string[] { noteText.Note, noteText.Description, Convert.ToString(myDate), noteText.NoteId.ToString()};
+                
+
+            return Json(myArray);
+        }
+
+
+
+        [Authorize]
+        public ActionResult DeleteNote(int id = 0)
+        {
+            AnimalNote note = db.AnimalNotes.Find(id);
+            db.AnimalNotes.Remove(note);
+            db.SaveChanges();
+            
+
+            
+
+            return RedirectToAction("Details/" + note.TagNo);
+        }
+
+
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult EditNote(int id = 0)
+        {
+            AnimalNote note = db.AnimalNotes.Find(id);
+            if (note == null)
+            {
+                return HttpNotFound();
+            }
+            return View(note);
+        }
+
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult EditNote(AnimalNote editnote)
+        {
+
+            var query =
+            from note in db.AnimalNotes
+            where note.NoteId == editnote.NoteId
+            select note;
+
+            foreach (AnimalNote note in query)
+            {
+                note.Note = editnote.Note;
+                note.Description = editnote.Description;
+                // Insert any additional changes to column values.
+            }
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch 
+            {
+                return HttpNotFound();
+
+            }
+
+
+
+            return RedirectToAction("Details/" + editnote.TagNo);
+
+
+        }
 
 
 

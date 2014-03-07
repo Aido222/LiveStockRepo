@@ -33,6 +33,8 @@ namespace FarmManager.ViewModels
 
         public IEnumerable<SelectListItem> notesList { get; set; }
 
+        public IEnumerable<SelectListItem> bullCalveList { get; set; }
+
 
 
     }

@@ -1,0 +1,146 @@
+﻿@model FarmManager.ViewModels.TreatmentDetailsVM
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<h2 class="hTop">Treatment for <span class="tagHighLight">@Model.TagNo</span> on <span class="tagHighLight">@Html.DisplayFor(model => model.TreatmentDate)</span></h2>
+
+<div id="withdrawalWarn" class="alert alert-warning collapse">This cow is currently in a withdrawal period from the treatment</div>
+
+<div id="treatDetails">
+<div class="detailsBanner">
+    <h3 class="detailsHead">Details</h3>
+</div>
+
+<div class="detailsBottom">
+    <div class="inlineData">
+        <div class="display-label">
+            <label>Treated With</label>
+        </div>
+        <div class="display-field">
+            <p>@Html.DisplayFor(model => model.MedicineName)</p>
+        </div>
+    </div>
+
+    <div class="inlineData">
+
+        <div class="display-label">
+            <label>Dosage Amount</label>
+        </div>
+        <div class="display-field">
+            <p>@Html.DisplayFor(model => model.DosageAmount)</p>
+        </div>
+    </div>
+
+    <div class="inlineData">
+        <div class="display-label">
+            <label>Prescribing Vet</label>
+        </div>
+        <div class="display-field">
+            <p>@Html.DisplayFor(model => model.PrescribingVet)</p>
+        </div>
+    </div>
+
+    <div class="inlineData">
+        <div class="display-label">
+            <label>Administrator</label>
+        </div>
+        <div class="display-field">
+            <p>@Html.DisplayFor(model => model.Administrator)</p>
+        </div>
+    </div>
+
+    <div class="inlineData">
+        <div class="display-label">
+            <label>Withdrawal End Date</label>
+        </div>
+        <div class="display-field">
+            <p id="withDrawalEnd">@Html.DisplayFor(model => model.WithdrawalEnd)</p>
+        </div>
+    </div>
+
+    <div class="inlineData">
+        <div class="display-label">
+            <label>@Html.DisplayNameFor(model => model.Notes)</label>
+        </div>
+        <div class="display-field">
+            <p>@Html.DisplayFor(model => model.Notes)</p>
+        </div>
+    </div>
+
+
+
+   
+
+   
+
+    <br style="clear: both;" />
+    </div>
+
+</div>
+
+ <div id="userMedDetails">
+    <div class="detailsBanner">
+        <h3 class="detailsHead">This Medicine</h3>
+      </div>
+    <div class="detailsBottom">
+       <label>Batch Number</label>
+        <p>@Html.DisplayFor(model => Model.BatchNo)</p>
+
+        <label>Opened On</label>
+        <p>@Html.DisplayFor(model => Model.OpenDate)</p>
+
+        <label>Bottle Size(ml)</label>
+        <p>@Html.DisplayFor(model => Model.BottleSize)</p>
+
+        <label>Supplied By</label>
+        <p>@Html.DisplayFor(model => Model.SuppliedBy)</p>
+
+        <label>Date of Purchase</label>
+        <p>@Html.DisplayFor(model => Model.DateOfPurchase)</p>
+
+        <label>Notes</label>
+        <p>@Html.DisplayFor(model => Model.Notes)</p>
+
+    </div>
+</div>
+
+
+<div id="defMedDetails">
+    <div class="detailsBanner">
+        <h3 class="detailsHead">@Model.MedicineName</h3>
+      </div>
+    <div class="detailsBottom">
+       <label>Name</label>
+        <p>@Html.DisplayFor(model => Model.MedicineName)</p>
+
+        <label>Brand</label>
+        <p>@Html.DisplayFor(model => Model.MedicineBrand)</p>
+
+        <label>Withdrawal Period(Days)</label>
+        <p>@Html.DisplayFor(model => Model.WithdrawalPeriod)</p>
+
+        <label>Breach Period(Weeks)</label>
+        <p>@Html.DisplayFor(model => Model.BreachPeriod)</p>
+
+        <label>Target Species</label>
+        <p>@Html.DisplayFor(model => Model.Species)</p>
+
+        <label>Notes</label>
+        <p>@Html.DisplayFor(model => Model.DefaultNotes)</p>
+
+    </div>
+</div>
+<br style="clear: both;" />
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TreatmentId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+@section Scripts {
+        @Scripts.Render("~/Scripts/Mine/TreatmentDetails.js")
+
+}

@@ -11,7 +11,6 @@ namespace FarmManager.Models
 {
     using System;
     using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
     
     public partial class AnimalNote
     {
@@ -20,7 +19,6 @@ using System.ComponentModel.DataAnnotations;
         public Nullable<int> UserID { get; set; }
         public string Description { get; set; }
         public string Note { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public Nullable<System.DateTime> Date { get; set; }
     }
 }

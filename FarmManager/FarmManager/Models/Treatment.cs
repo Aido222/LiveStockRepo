@@ -17,6 +17,7 @@ namespace FarmManager.Models
         public int TreatmentId { get; set; }
         public Nullable<int> UserMedicineID { get; set; }
         public string TagNo { get; set; }
+        public Nullable<int> UserID { get; set; }
         public Nullable<System.DateTime> TreatmentDate { get; set; }
         public string Notes { get; set; }
         public Nullable<decimal> DosageAmount { get; set; }

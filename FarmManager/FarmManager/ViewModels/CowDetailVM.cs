@@ -17,6 +17,7 @@ namespace FarmManager.ViewModels
         public Nullable<bool> BornOnFarm { get; set; }
 
         //Purchase related data
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public Nullable<System.DateTime> DateBought { get; set; }
         public string BoughtFrom { get; set; }
         public Nullable<decimal> Price { get; set; }
@@ -34,6 +35,8 @@ namespace FarmManager.ViewModels
         public IEnumerable<SelectListItem> notesList { get; set; }
 
         public IEnumerable<SelectListItem> bullCalveList { get; set; }
+
+        public IEnumerable<SelectListItem> treatmentList { get; set; }
 
 
 

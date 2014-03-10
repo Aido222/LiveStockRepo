@@ -148,7 +148,7 @@
       <PropertyRef Name="SaleID" />
     </Key>
     <Property Name="SaleID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-    <Property Name="UserId" Type="Int32" />
+    <Property Name="UserId" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="TagNo" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
     <Property Name="LocationSold" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="DateSold" Type="DateTime" Precision="0" />

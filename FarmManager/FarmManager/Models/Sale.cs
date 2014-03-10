@@ -15,7 +15,7 @@ namespace FarmManager.Models
     public partial class Sale
     {
         public int SaleID { get; set; }
-        public string UserId { get; set; }
+        public Nullable<int> UserId { get; set; }
         public string TagNo { get; set; }
         public string LocationSold { get; set; }
         public Nullable<System.DateTime> DateSold { get; set; }

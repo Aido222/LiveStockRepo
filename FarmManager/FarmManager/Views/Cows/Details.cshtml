@@ -8,6 +8,9 @@
 
 <h2 class="hTop">Cow <span class="tagHighLight">@Html.DisplayFor(model => model.TagNo)</span></h2>
 
+    @Html.ActionLink("Sell Animal", "Sale", new { id = Model.TagNo }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Record Death", "CowDeath", new { id = Model.TagNo }, new { @class = "btn btn-primary" })
+
 
 <div id="cowDetails">
     <div class="detailsBanner">
@@ -17,6 +20,7 @@
     <div class="detailsBottom">
         @if (Model.BornOnFarm == true)
         {
+            <div class="inlineData">
             <div class="display-label">
                 <label>Origin of Cow</label>
             </div>
@@ -24,7 +28,9 @@
             <div class="display-field">
                 <p>Born on farm</p>
             </div>
+            </div>
             
+            <div class="inlineData">
             <div class="display-label">
                 <label>Born on</label>
             </div>
@@ -32,7 +38,9 @@
             <div class="display-field">
                 <p>@Html.DisplayFor(model => model.DOB)</p>
             </div>
+            </div>
             
+            <div class="inlineData">
             <div class="display-label">
                 <label>Sex</label>
             </div>
@@ -48,7 +56,9 @@
                 }
 
             </div>
+            </div>
             
+            <div class="inlineData">
             <div class="display-label">
                 <label>Breed</label>
             </div>
@@ -56,10 +66,11 @@
             <div class="display-field">
                 <p>@Html.DisplayFor(model => model.AnimalBreed)</p>
             </div>
+            </div>
         }
         else
         {
-            
+            <div class="inlineData">
             <div class="display-label">
                 <label>Origin of Cow</label>
             </div>
@@ -67,7 +78,9 @@
             <div class="display-field">
                 <p>Bought into farm</p>
             </div>
+            </div>
             
+            <div class="inlineData">
             <div class="display-label">
                 <label>Owned Since</label>
             </div>
@@ -75,7 +88,9 @@
             <div class="display-field">
                 <p>@Html.DisplayFor(model => model.DateBought)</p>
             </div>
+            </div>
             
+            <div class="inlineData">
             <div class="display-label">
                 <label>Sex</label>
             </div>
@@ -91,7 +106,9 @@
                 }
 
             </div>
+            </div>
             
+            <div class="inlineData">
             <div class="display-label">
                 <label>Breed</label>
             </div>
@@ -99,14 +116,18 @@
             <div class="display-field">
                 <p>@Html.DisplayFor(model => model.AnimalBreed)</p>
             </div>
-            
+            </div>
 
         }
+        <br style="clear: both;" />
+
     </div>
 
 
 
 </div>
+
+
 
 <div id="childDetails">
     <div class="detailsBanner">
@@ -128,6 +149,15 @@
              <label>No Calves</label>         
                                              
             }
+            
+            
+            <br />
+
+            foreach (var item in Model.calvesList)
+            {
+              @Html.ActionLink(item.Text, "Details", new { id = item.Text }, new { @class = "listItems" })<br />
+
+            }
         }
         else
         {
@@ -143,17 +173,19 @@
             {
                 <label>No Calves</label>         
                                              
+            }
+            
+            <br />
+
+            foreach (var item in Model.bullCalveList)
+            {
+              @Html.ActionLink(item.Text, "Details", new { id = item.Text }, new { @class = "listItems" })<br />
+
             }   
         }
 
 
-        <br />
-
-        @foreach (var item in Model.bullCalveList)
-        {
-            @Html.ActionLink(item.Text, "Details", new { id = item.Text }, new { @class = "listItems" })<br />
-
-        }
+        
     </div>
 </div>
 
@@ -184,6 +216,33 @@
         @foreach (var item in Model.notesList)
         {
             <a  id="@item.Value" class="noteLinks listItems" href="#">@item.Text</a><br />
+        }
+    </div>
+</div>
+
+<div id="treatmentDetails">
+    <div class="detailsBanner">
+        <h3 class="detailsHead">Treatments</h3>
+      </div>
+    <div class="detailsBottom">
+         @if (@Model.treatmentList.Count() == 1)
+        {
+            <label>1 Treatment</label>
+        }
+        else if (@Model.treatmentList.Count() > 1)
+        {
+            <label>@Model.treatmentList.Count() Treatments</label>
+        }
+        else
+        {
+            <label>No Treatments</label>            
+        }
+
+        | @Html.ActionLink("New Treatment", "NewTreatment", new { id = Model.TagNo })<br />
+
+        @foreach (var item in Model.treatmentList)
+        {
+            @Html.ActionLink(item.Text, "Details", new { controller = "Treatment",  id = item.Value }, new { @class="listItems"})
         }
     </div>
 </div>

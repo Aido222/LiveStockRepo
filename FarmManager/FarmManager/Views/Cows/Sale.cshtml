@@ -1,0 +1,76 @@
+﻿@model FarmManager.Models.Sale
+
+@{
+    ViewBag.Title = "Sale";
+}
+<link href="~/Content/datepicker.css" rel="stylesheet" />
+
+
+<h2 class="hTop">Sale of <span class="tagHighLight">@Html.DisplayFor(model => model.TagNo)</span></h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div id="formMyStyle">
+
+        @Html.HiddenFor(model => model.UserId)
+        @Html.HiddenFor(model => model.TagNo)
+
+
+        <div class="editor-label">
+            <label>Location Sold</label>
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.LocationSold, new { @class = "form-control" })
+        </div>
+        <div id="selectLocationWarning" class="alert alert-danger collapse">Please where the animal was sold</div>
+
+        <div class="editor-label">
+            <label>Sold to</label>
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.SoldTo, new { @class = "form-control" })
+        </div>
+        <div id="selectBuyerWarning" class="alert alert-danger collapse">Please who the animal was sold to</div>
+
+
+        <div class="editor-label">
+            <label>Date Sold</label>
+        </div>
+        <div class="editor-field">
+            <input name="DateSold" class="datepicker form-control" id="DateSold" size="16" type="text" value="Please select">
+        </div>
+        <div id="selectDateWarning" class="alert alert-danger collapse">Please select the date of sale</div>
+        <div id="greaterDateWarning" class="alert alert-danger collapse">The sale date cannot be after todays date</div>
+
+
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Notes)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Notes, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Notes)
+        </div>
+        <br />
+        <p>
+            <input type="submit" value="Create" class="btn btn-success" />
+            @Html.ActionLink("Cancel", "Details", new { controller = "Cows", id = Model.TagNo }, new { @class = "btn btn-default" })
+
+        </p>
+
+    </div>
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/Mine/CowSale.js")
+    @Scripts.Render("~/Scripts/bootstrap-datepicker.js")
+
+}

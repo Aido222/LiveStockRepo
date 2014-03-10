@@ -69,76 +69,7 @@ namespace FarmManager.Controllers
 
 
             
-              //  string isBornOnFarm = Convert.ToString(isBorn.BornOnFarm);
-            
-
-
-            
-           /* if (isBornOnFarm == "true")
-            {
-
-                CowDetailVM animal = (from animals in db.Animals
-                                      join breed in db.Breeds on animals.AnimalBreed equals breed.id
-                                      join birth in db.Births on animals.TagNo equals birth.TagNo
-                                      where animals.TagNo == id && animals.UserId == WebSecurity.CurrentUserId
-                                      orderby animals.DateAdded descending
-
-                                      select new CowDetailVM
-                                      {
-                                          TagNo = animals.TagNo,
-                                          Sex = animals.Sex,
-                                          AnimalBreed = breed.Breed1,
-                                          DOB = animals.DOB,
-                                          OwnershipStatus = animals.OwnershipStatus,
-                                          BornOnFarm = animals.BornOnFarm,
-
-
-                                          MotherTagNo = birth.MotherTagNo,
-                                          SireTagNo = birth.SireTagNo,
-                                          Difficult = birth.Difficult
-
-                                      }).FirstOrDefault();
-
-                if (animal == null)
-                {
-                    return HttpNotFound();
-                }
-                return View("Details", animal);
-
-
-            }
-            else
-            {
-
-                CowDetailVM animal = (from animals in db.Animals
-                                      join breed in db.Breeds on animals.AnimalBreed equals breed.id
-                                      join purchase in db.Purchases on animals.TagNo equals purchase.TagNo
-                                      where animals.TagNo == id && animals.UserId == WebSecurity.CurrentUserId
-                                      orderby animals.DateAdded descending
-
-                                      select new CowDetailVM
-                                      {
-                                          TagNo = animals.TagNo,
-                                          Sex = animals.Sex,
-                                          AnimalBreed = breed.Breed1,
-                                          DOB = animals.DOB,
-                                          OwnershipStatus = animals.OwnershipStatus,
-                                          BornOnFarm = animals.BornOnFarm,
-
-
-                                          DateBought = purchase.DateBought,
-                                          BoughtFrom = purchase.BoughtFrom,
-                                          Price = purchase.Price,
-                                          Location = purchase.Location,
-
-                                      }).FirstOrDefault();
-
-                if (animal == null)
-                {
-                    return HttpNotFound();
-                }
-                return View("Details", animal);
-            }*/
+           
 
 
 
@@ -225,6 +156,23 @@ namespace FarmManager.Controllers
 
             animal.bullCalveList = BullCalveList;
 
+            //                                  join birth in db.Births on animals.TagNo equals birth.TagNo into j0
+
+
+            List<SelectListItem> TreatList = new List<SelectListItem>();
+            var treatList = (from b in db.Treatments
+                                 where b.TagNo == id && b.UserID == (int)WebSecurity.CurrentUserId
+                                 select b).ToArray();
+            for (int i = 0; i < treatList.Length; i++)
+            {
+                TreatList.Add(new SelectListItem
+                {
+                    Text = treatList[i].TreatmentDate.ToString().Substring(0, 11),
+                    Value = Convert.ToString(treatList[i].TreatmentId)
+                });
+            }
+
+            animal.treatmentList = TreatList;
             
 
             if (animal == null)
@@ -838,6 +786,20 @@ namespace FarmManager.Controllers
             return RedirectToAction("Details/" + editnote.TagNo);
 
 
+        
+        
+        }
+
+
+        public ActionResult Sale(string id)
+        {
+
+            Sale sale = new Sale();
+
+            sale.TagNo = id;
+            sale.UserId = WebSecurity.CurrentUserId;
+
+            return View(sale);
         }
 
 

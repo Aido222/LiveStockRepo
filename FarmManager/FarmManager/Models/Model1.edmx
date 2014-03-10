@@ -153,7 +153,7 @@
             <PropertyRef Name="SaleID" />
           </Key>
           <Property Name="SaleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserId" Type="int" />
           <Property Name="TagNo" Type="nchar" MaxLength="10" />
           <Property Name="LocationSold" Type="nvarchar(max)" />
           <Property Name="DateSold" Type="date" />
@@ -193,6 +193,7 @@
           <Property Name="TreatmentId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="UserMedicineID" Type="int" />
           <Property Name="TagNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserID" Type="int" />
           <Property Name="TreatmentDate" Type="date" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="DosageAmount" Type="numeric" />
@@ -366,7 +367,7 @@
             <PropertyRef Name="SaleID" />
           </Key>
           <Property Name="SaleID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="UserId" Type="Int32" />
           <Property Name="TagNo" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
           <Property Name="LocationSold" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="DateSold" Type="DateTime" Precision="0" />
@@ -406,6 +407,7 @@
           <Property Name="TreatmentId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="UserMedicineID" Type="Int32" />
           <Property Name="TagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="UserID" Type="Int32" />
           <Property Name="TreatmentDate" Type="DateTime" Precision="0" />
           <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="DosageAmount" Type="Decimal" Precision="18" Scale="0" />
@@ -615,6 +617,7 @@
                 <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
                 <ScalarProperty Name="UserMedicineID" ColumnName="UserMedicineID" />
                 <ScalarProperty Name="TagNo" ColumnName="TagNo" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="TreatmentDate" ColumnName="TreatmentDate" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="DosageAmount" ColumnName="DosageAmount" />

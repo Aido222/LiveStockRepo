@@ -166,6 +166,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CowsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TreatmentController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -242,6 +243,7 @@
     <Compile Include="ViewModels\CowDetailVM.cs" />
     <Compile Include="ViewModels\CowIndexVM.cs" />
     <Compile Include="ViewModels\CowPurchVM.cs" />
+    <Compile Include="ViewModels\TreatmentDetailsVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -351,6 +353,8 @@
     <Content Include="Scripts\Mine\AddPurchase.js" />
     <Content Include="Scripts\Mine\CowDeath.js" />
     <Content Include="Scripts\Mine\CowDetails.js" />
+    <Content Include="Scripts\Mine\CowSale.js" />
+    <Content Include="Scripts\Mine\TreatmentDetails.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\Mine\ConceptionType.js" />
     <Content Include="Web.config" />
@@ -403,6 +407,8 @@
     <Content Include="Views\Cows\AddCowNote.cshtml" />
     <Content Include="Views\Cows\DeleteNote.cshtml" />
     <Content Include="Views\Cows\EditNote.cshtml" />
+    <Content Include="Views\Treatment\Details.cshtml" />
+    <Content Include="Views\Cows\Sale.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

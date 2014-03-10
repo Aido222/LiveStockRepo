@@ -148,7 +148,7 @@
       <PropertyRef Name="SaleID" />
     </Key>
     <Property Name="SaleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="UserId" Type="int" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="50" />
     <Property Name="TagNo" Type="nchar" MaxLength="10" />
     <Property Name="LocationSold" Type="nvarchar(max)" />
     <Property Name="DateSold" Type="date" />

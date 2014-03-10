@@ -6,12 +6,11 @@
 
 <link href="~/Content/datepicker.css" rel="stylesheet" />
 
-<h2 class="hTop">Record death for cow, Tag Number:<span class="spanTag"> @ViewData["TagNo"] </span></h2>
+<h2 class="hTop">Record death for <span class="spanTag"> @ViewData["TagNo"] </span></h2>
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <div id="formMyStyle">
-    <fieldset>
        <!-- <div class="editor-label">
          @*   @Html.LabelFor(model => model.TagNo) *@
         </div> -->
@@ -50,11 +49,10 @@
         </div>
         <br />
         <p>
-            <input type="submit" value="Create" class="btn btn-info"/>
+            <input type="submit" value="Create" class="btn btn-success"/>
             @Html.ActionLink("Cancel","Index","Cows",null, new { @class="btn btn-default"})
 
         </p>
-    </fieldset>
         </div>
 }
 

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1b4b6800479d4f249be4c4304531767d" Name="Diagram1">
+      <Diagram DiagramId="56ecfb6c09f4469d8c0032136c6b4b96" Name="Diagram1">
         <EntityTypeShape EntityType="FarmManagementDBModel.AI" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FarmManagementDBModel.AnimalNote" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FarmManagementDBModel.Animal" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />

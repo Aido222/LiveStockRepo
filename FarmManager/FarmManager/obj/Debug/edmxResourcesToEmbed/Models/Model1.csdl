@@ -27,8 +27,10 @@
     <Property Name="UserID" Type="Int32" />
     <Property Name="Date" Type="DateTime" Precision="0" />
     <Property Name="TagNo" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Breed" Type="Int32" />
     <Property Name="BullID" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
     <Property Name="AIOperator" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="ExpectedDueDate" Type="DateTime" Precision="0" />
     <Property Name="Born" Type="Boolean" />
   </EntityType>
   <EntityType Name="AnimalNote">
@@ -149,7 +151,7 @@
     </Key>
     <Property Name="SaleID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
     <Property Name="UserId" Type="Int32" />
-    <Property Name="TagNo" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+    <Property Name="TagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="LocationSold" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="DateSold" Type="DateTime" Precision="0" />
     <Property Name="SoldTo" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
@@ -201,6 +203,7 @@
     </Key>
     <Property Name="UserMedicineID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
     <Property Name="MedicineID" Type="Int32" />
+    <Property Name="UserID" Type="Int32" />
     <Property Name="BatchNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="ExpiryDate" Type="DateTime" Precision="0" />
     <Property Name="OpenDate" Type="DateTime" Precision="0" />

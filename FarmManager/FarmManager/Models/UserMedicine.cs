@@ -16,6 +16,7 @@ namespace FarmManager.Models
     {
         public int UserMedicineID { get; set; }
         public Nullable<int> MedicineID { get; set; }
+        public Nullable<int> UserID { get; set; }
         public string BatchNo { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
         public Nullable<System.DateTime> OpenDate { get; set; }

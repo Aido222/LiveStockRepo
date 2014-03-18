@@ -27,8 +27,10 @@
     <Property Name="UserID" Type="int" />
     <Property Name="Date" Type="date" />
     <Property Name="TagNo" Type="varchar" MaxLength="50" />
+    <Property Name="Breed" Type="int" />
     <Property Name="BullID" Type="varchar" MaxLength="50" />
     <Property Name="AIOperator" Type="varchar" MaxLength="50" />
+    <Property Name="ExpectedDueDate" Type="date" />
     <Property Name="Born" Type="bit" />
   </EntityType>
   <EntityType Name="AnimalNotes">
@@ -149,7 +151,7 @@
     </Key>
     <Property Name="SaleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="UserId" Type="int" />
-    <Property Name="TagNo" Type="nchar" MaxLength="10" />
+    <Property Name="TagNo" Type="nvarchar" MaxLength="50" />
     <Property Name="LocationSold" Type="nvarchar(max)" />
     <Property Name="DateSold" Type="date" />
     <Property Name="SoldTo" Type="nvarchar(max)" />
@@ -201,6 +203,7 @@
     </Key>
     <Property Name="UserMedicineID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="MedicineID" Type="int" />
+    <Property Name="UserID" Type="int" />
     <Property Name="BatchNo" Type="nvarchar" MaxLength="50" />
     <Property Name="ExpiryDate" Type="date" />
     <Property Name="OpenDate" Type="date" />

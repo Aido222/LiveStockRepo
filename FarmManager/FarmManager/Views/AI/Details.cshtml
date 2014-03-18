@@ -1,0 +1,57 @@
+﻿@model FarmManager.Models.AI
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>AI</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UserID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Date)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Date)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TagNo)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TagNo)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.BullID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BullID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.AIOperator)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AIOperator)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Born)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Born)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.AIID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

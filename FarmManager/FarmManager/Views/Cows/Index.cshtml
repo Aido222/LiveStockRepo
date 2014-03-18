@@ -1,11 +1,15 @@
 ﻿
 @model IEnumerable<FarmManager.ViewModels.CowIndexVM>
 
-
+@ViewBag.MyList
 
 @{
     ViewBag.Title = "Index";
 }
+
+<link href="~/Content/tabStyles.css" rel="stylesheet" />
+
+
 
 <h2 class="hTop">Cows</h2>
 
@@ -13,33 +17,47 @@
     @Html.ActionLink("Create Purchase", "CreatePurchase",null, new { @class = "btn btn-primary" })
     @Html.ActionLink("Create Birth", "CreateCowBirth",null, new { @class = "btn btn-primary" })
 </p>
-<div >
-<table class="table table-striped">
+
+
+
+
+
+<br style="clear: both;" />
+    
+
+<div id="tabs">
+   <ul>
+     <li><a href="#tab-1">Owned Cows</a></li>
+     <li><a href="#tab-2">Sold Cows</a></li>
+     <li><a href="#tab-3">Deceased Cows</a></li>
+     <li><a href="#tab-4">Purchased</a></li>
+     <li><a href="#tab-5">Born on Farm</a></li>
+   </ul>
+   <div id="tab-1">
+     <h3>Owned Cows</h3>
+     
+           <table class="table table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.TagNo)
+            <label>Tag Number</label>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AnimalBreed)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateAdded)
+            <label>Breed</label>
         </th>
         <!--<th></th>-->
     </tr>
 
 @foreach (var item in Model)
 {
+    if(item.OwnershipStatus == 1)
+    {
     <tr>
         <td>
-            @Html.ActionLink(item.TagNo, "Details", new { id=item.TagNo })
+            @Html.ActionLink(item.TagNo, "Details", new { id=item.TagNo })        
         </td>
 
         <td>
-            @Html.DisplayFor(modelItem => item.AnimalBreed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateAdded)
+            @item.AnimalBreed
         </td>
         <!--<td>
            @* @Html.ActionLink("Edit", "Edit", new { id=item.AnimalId }) |
@@ -48,9 +66,186 @@
             @Html.ActionLink("Record Death", "CowDeath", new { id=item.TagNo }) *@
         </td>-->
     </tr>
+    }
 }
 
 </table>
-</div>
+
+   </div>
+   <div id="tab-2">
+     <h3>Sold Cows</h3>
+     <table class="table table-striped">
+    <tr>
+        <th>
+            <label>Tag Number</label>
+        </th>
+        <th>
+            <label>Breed</label>
+        </th>
+        <th>
+            <label>Date Sold</label>
+        </th>
+        <!--<th></th>-->
+    </tr>
+
+@foreach (var item in Model)
+{
+    if(item.OwnershipStatus == 2)
+    {
+    <tr>
+        <td>
+            @Html.ActionLink(item.TagNo, "Details", new { id=item.TagNo })        
+        </td>
+
+        <td>
+            @item.AnimalBreed
+        </td>
+        <td>
+            @item.DateSold
+        </td>
+        <!--<td>
+           @* @Html.ActionLink("Edit", "Edit", new { id=item.AnimalId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AnimalId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AnimalId }) |
+            @Html.ActionLink("Record Death", "CowDeath", new { id=item.TagNo }) *@
+        </td>-->
+    </tr>
+    }
+}
+
+</table>
+   </div>
+   <div id="tab-3">
+     <h3>Deceased Cows</h3>
+     <table class="table table-striped">
+    <tr>
+        <th>
+            <label>Tag Number</label>
+        </th>
+        <th>
+            <label>Breed</label>
+        </th>
+        <th>
+            <label>Date of Death</label>
+        </th>
+        <!--<th></th>-->
+    </tr>
+
+@foreach (var item in Model)
+{
+    if(item.OwnershipStatus == 3)
+    {
+    <tr>
+        <td>
+            @Html.ActionLink(item.TagNo, "Details", new { id=item.TagNo })        
+        </td>
+
+        <td>
+            @item.AnimalBreed
+        </td>
+        <td>
+            @item.DOD
+        </td>
+        <!--<td>
+           @* @Html.ActionLink("Edit", "Edit", new { id=item.AnimalId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AnimalId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AnimalId }) |
+            @Html.ActionLink("Record Death", "CowDeath", new { id=item.TagNo }) *@
+        </td>-->
+    </tr>
+    }
+}
+
+</table>
+   </div>
+   <div id="tab-4">
+     <h3>Purchased</h3>
+               <table class="table table-striped">
+    <tr>
+        <th>
+            <label>Tag Number</label>
+        </th>
+        <th>
+            <label>Breed</label>
+        </th>
+                <th>
+            <label>Date of Purchase</label>
+        </th>
+        <!--<th></th>-->
+    </tr>
+
+@foreach (var item in Model)
+{
+    if(item.BornOnFarm == false)
+    {
+    <tr>
+        <td>
+            @Html.ActionLink(item.TagNo, "Details", new { id=item.TagNo })        
+        </td>
+
+        <td>
+            @item.AnimalBreed
+        </td>
+                <td>
+            @item.DateBought
+
+        </td>
+    </tr>
+    }
+}
+
+</table>
+   </div>
+
+
+
+    <div id="tab-5">
+     <h3>Born on Farm</h3>
+               <table class="table table-striped">
+    <tr>
+        <th>
+            <label>Tag Number</label>
+        </th>
+        <th>
+            <label>Breed</label>
+        </th>
+                <th>
+            <label>Birth Date</label>
+        </th>
+        <!--<th></th>-->
+    </tr>
+
+@foreach (var item in Model)
+{
+    if(item.BornOnFarm == true)
+    {
+    <tr>
+        <td>
+            @Html.ActionLink(item.TagNo, "Details", new { id=item.TagNo })        
+        </td>
+
+        <td>
+            @item.AnimalBreed
+        </td>
+        <td>
+            @item.DOB
+        </td>
+    </tr>
+    }
+}
+
+</table>
+   </div>
+ </div>
+
 
 <p class="clear"></p>
+
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery-1.9.1.min.js")
+    @Scripts.Render("~/Scripts/jquery-1.9.1.js")
+
+        @Scripts.Render("~/Scripts/Mine/Cowindex.js")
+
+}

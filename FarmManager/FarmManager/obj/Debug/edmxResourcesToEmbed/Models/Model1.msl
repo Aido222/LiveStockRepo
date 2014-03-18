@@ -8,8 +8,10 @@
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="TagNo" ColumnName="TagNo" />
+          <ScalarProperty Name="Breed" ColumnName="Breed" />
           <ScalarProperty Name="BullID" ColumnName="BullID" />
           <ScalarProperty Name="AIOperator" ColumnName="AIOperator" />
+          <ScalarProperty Name="ExpectedDueDate" ColumnName="ExpectedDueDate" />
           <ScalarProperty Name="Born" ColumnName="Born" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -198,6 +200,7 @@
         <MappingFragment StoreEntitySet="UserMedicine">
           <ScalarProperty Name="UserMedicineID" ColumnName="UserMedicineID" />
           <ScalarProperty Name="MedicineID" ColumnName="MedicineID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="BatchNo" ColumnName="BatchNo" />
           <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
           <ScalarProperty Name="OpenDate" ColumnName="OpenDate" />

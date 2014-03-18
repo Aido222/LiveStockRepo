@@ -1,0 +1,82 @@
+﻿@model FarmManager.ViewModels.AICreate
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<link href="~/Content/datepicker.css" rel="stylesheet" />
+
+<h2 class="hTop">New Artificial Insemination for <span class="tagHighLight">@Html.DisplayFor(model => model.TagNo)</span></h2>
+
+
+
+
+@using (Html.BeginForm()){
+        @Html.ValidationSummary(true)
+
+            <div id="formMyStyle">
+
+
+
+    @Html.HiddenFor(model => model.TagNo)
+
+        <div class="editor-label">
+            <label>Insemination Date</label>
+        </div>
+        <div class="editor-field">
+            <input name="Date" class="datepicker form-control" id="Date" size="16" type="text" value="Please select" readonly="true">
+        </div>
+        <div id="enterDateWarning" class="alert alert-danger collapse">Please enter the AI date</div>
+
+
+        <div class="editor-label">
+            <label>Bull ID</label>
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.BullID, new { @class = "form-control" })
+        </div>
+        <div id="enterBullIDWarn" class="alert alert-danger collapse">Please enter the Bulls ID</div>
+
+    
+            <div class="editor-label">
+                <label>Bull Breed</label>
+        </div>
+        <div class="editor-field">
+           @Html.DropDownListFor(model => model.Breed, Model.BreedList, new { @class = "form-control" })
+        </div>
+                        <div id="selectBreedWarning" class="alert alert-danger collapse">Please enter the Bulls Breed</div>
+
+    
+
+        <div class="editor-label">
+            <label>AI Operator</label>
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.AIOperator, new { @class = "form-control" })
+        </div>
+        <div id="selectAIOperatorWarning" class="alert alert-danger collapse">Please enter the AI Operator</div>
+
+    <br />
+
+        <p>
+            <input id="btnSubmit" type="submit" value="Create" class="btn btn-success"/>
+            @Html.ActionLink("Cancel", "Details", "Cows", new { controller = "AI", id = Model.TagNo }, new { @class = "btn btn-default" })
+
+        </p>
+
+                            </div>
+
+}
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    @Scripts.Render("~/Scripts/Mine/AICreate.js")
+    @Scripts.Render("~/Scripts/bootstrap-datepicker.js")
+
+}

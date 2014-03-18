@@ -154,6 +154,91 @@ namespace FarmManager.Controllers
         }
 
 
-        
+        [HttpGet]
+        public ActionResult NewTreatment(string id)
+        {
+
+
+
+           
+            
+
+            NewTreatmentVM newTreatmment = new NewTreatmentVM();
+
+            newTreatmment.TagNo = id;
+            newTreatmment.UserID = WebSecurity.CurrentUserId;
+
+
+
+            List<SelectListItem> Medicines = new List<SelectListItem>();
+            var medicineList = (from userMed in db.UserMedicines
+                                join DefMed in db.DefaultMedicines on userMed.UserMedicineID equals DefMed.MedicineID
+                                where userMed.ExpiryDate > DateTime.Now && userMed.UserID == (int)WebSecurity.CurrentUserId
+                                select new { userMed, DefMed }).ToArray();
+            for (int i = 0; i < medicineList.Length; i++)
+            {
+                Medicines.Add(new SelectListItem
+                {
+                    Text = medicineList[i].DefMed.MedicineName + " (" + medicineList[i].userMed.BatchNo + ")",
+                    Value = medicineList[i].userMed.UserMedicineID.ToString()
+                });
+            }
+
+
+            newTreatmment.UserMedList = Medicines;
+
+            return View(newTreatmment);
+        }
+
+
+
+        [HttpPost]
+        public ActionResult NewTreatment(NewTreatmentVM newTreat)
+        {
+            Treatment treatment = new Treatment();
+
+            treatment.Administrator = newTreat.Administrator;
+            treatment.DosageAmount = newTreat.DosageAmount;
+            treatment.Notes = newTreat.Notes;
+            treatment.PrescribingVet = newTreat.PrescribingVet;
+            treatment.TagNo = newTreat.TagNo;
+            treatment.TreatmentDate = newTreat.TreatmentDate;
+            treatment.UserMedicineID = newTreat.UserMedicineID;
+            treatment.UserID = (int)WebSecurity.CurrentUserId;
+
+
+            db.Treatments.Add(treatment);
+            db.SaveChanges();
+
+            return RedirectToAction("Details/" + newTreat.TagNo, "Cows");
+
+        }
+    
+
+
+
+
+     public JsonResult RetrieveMedicine(FormCollection form)
+        {
+            int id = Convert.ToInt32((form["MedID"]).ToUpper());
+
+
+            var MedDetails = (from userMed in db.UserMedicines
+                              join defMed in db.DefaultMedicines on userMed.MedicineID equals defMed.MedicineID
+                              where userMed.UserMedicineID == id && userMed.UserID == (int)WebSecurity.CurrentUserId
+                              select new { userMed, defMed }).FirstOrDefault();
+
+
+            string mm = MedDetails.userMed.Notes;
+            
+
+            string[] myArray = new string[] { MedDetails.defMed.MedicineName, MedDetails.defMed.MainUse, MedDetails.defMed.WithdrawalPeriod.ToString(),
+                                              MedDetails.userMed.BatchNo, MedDetails.userMed.BottleSize.ToString(), MedDetails.userMed.DateOfPurchase.ToString(), MedDetails.userMed.SuppliedBy };
+                
+
+            return Json(myArray);
+        }
+
     }
+
 }

@@ -16,8 +16,11 @@
     var withDrawaldate = new Date(month + "-" + day + "-" + year);
     var todaysDate = new Date(fullYear);
 
+    //alert(withDrawaldate);
 
-    if (withDrawaldate > todaysDate) {
+    //alert(todaysDate);
+    
+    if (Date.parse(withDrawaldate) > Date.parse(todaysDate)) {
         $("#withdrawalWarn").slideDown("slow");
     }
     

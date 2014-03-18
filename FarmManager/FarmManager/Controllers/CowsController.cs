@@ -28,31 +28,96 @@ namespace FarmManager.Controllers
         [Authorize]
         public ActionResult Index()
         {
+            /*from animals in db.Animals
+                                  join breed in db.Breeds on animals.AnimalBreed equals breed.id
+                                  join birth in db.Births on animals.TagNo equals birth.TagNo into j0
+                                  from birth in j0.DefaultIfEmpty()
+                                  join purchase in db.Purchases on animals.TagNo equals purchase.TagNo into j1
+                                  from purchase in j1.DefaultIfEmpty()
+                                  where animals.TagNo == id && animals.UserId == WebSecurity.CurrentUserId*/
 
 
-            /*List<Animal> Animal1 = (from animals in db.Animals
-                                        where animals.Species == 2 & animals.OwnershipStatus == 1
-                                        & animals.UserId == WebSecurity.CurrentUserId
-                                        select animals).ToList();*/
 
-            List <CowIndexVM> myCowIndexVM = (from animals in db.Animals
+            /*            List <CowIndexVM> myCowIndexVM = (from animals in db.Animals
                                     join aBreed in db.Breeds on animals.AnimalBreed equals aBreed.id
-                                    where animals.Species == 2 && animals.OwnershipStatus == 1
+                                    where animals.Species == 2
                                     & animals.UserId == WebSecurity.CurrentUserId
-                                    orderby animals.DateAdded descending
+                                    select new CowIndexVM*/
+
+            List<CowIndexVM> myCowIndexVM = (from animals in db.Animals
+                                             join breed in db.Breeds on animals.AnimalBreed equals breed.id
+                                             join birth in db.Births on animals.TagNo equals birth.TagNo into j0
+                                             from birth in j0.DefaultIfEmpty()
+                                             join purchase in db.Purchases on animals.TagNo equals purchase.TagNo into j1
+                                             from purchase in j1.DefaultIfEmpty()
+                                             join sale in db.Sales on animals.TagNo equals sale.TagNo into j2
+                                             from sale in j2.DefaultIfEmpty()
+                                             join death in db.Deaths on animals.TagNo equals death.TagNo into j3
+                                             from death in j3.DefaultIfEmpty()
+                                             join purch in db.Purchases on animals.TagNo equals purch.TagNo into j4
+                                             from purch in j4.DefaultIfEmpty()
+                                    where animals.Species == 2
+                                    & animals.UserId == WebSecurity.CurrentUserId
                                     select new CowIndexVM
                                     {
                                         TagNo = animals.TagNo,
-                                        AnimalBreed = aBreed.Breed1,
-                                        DateAdded = animals.DateAdded
+                                        AnimalBreed = breed.Breed1,
+                                        DateAdded = animals.DateAdded,
+                                        OwnershipStatus = animals.OwnershipStatus,
+                                        DateSold = sale.DateSold,
+                                        LocationSold = sale.LocationSold,
+                                        BornOnFarm = animals.BornOnFarm,
+                                        DOD = death.DOD,
+                                        DOB= animals.DOB,
+                                        DateBought = purch.DateBought
+
+                                        
                                     }).ToList();
                                     
-                                    
-                                   // animals).ToList();
+                      
+
+
+            CowIndexVM cowIndex = new CowIndexVM();
+
+
+            /*List<SelectListItem> SoldList = new List<SelectListItem>();
+            var soldList = (from sold in db.Sales
+                            join animal in db.Animals on sold.TagNo equals animal.TagNo
+                            join breed in db.Breeds on animal.AnimalBreed equals breed.id
+                                where sold.UserId == (int)WebSecurity.CurrentUserId && animal.Species == 2
+                                select new { sold, breed }).ToArray();
+                        for (int i = 0; i < soldList.Length; i++)
+            {
+                SoldList.Add(new SelectListItem
+                {
+                    Text = soldList[i].breed.Breed1,
+                    Value = soldList[i].sold.TagNo
+                });
+            }
+
+                        //cowIndex.SoldCows = SoldList;
+                        cowIndex.SoldCows = SoldList;
 
 
 
+                        List<SelectListItem> OwnedList = new List<SelectListItem>();
+                        var ownedList = (from animal in db.Animals
+                                         join breed in db.Breeds on animal.AnimalBreed equals breed.id
+                                        where animal.UserId == (int)WebSecurity.CurrentUserId && animal.Species == 2 && animal.OwnershipStatus == 1
+                                        select new { animal, breed }).ToArray();
+                        for (int i = 0; i < ownedList.Length; i++)
+                        {
+                            OwnedList.Add(new SelectListItem
+                            {
+                                Text = ownedList[i].breed.Breed1,
+                                Value = ownedList[i].animal.TagNo
+                            });
+                        }
 
+                        cowIndex.OwnedCows = OwnedList;
+            */
+
+            
             return View("Index", myCowIndexVM);
         }
 
@@ -62,6 +127,8 @@ namespace FarmManager.Controllers
         public ActionResult Details(string id)
         {
 
+            //id = id.Trim();
+ 
 
             var isBorn = (from c in db.Animals
                           where c.TagNo == id && c.UserId == (int)WebSecurity.CurrentUserId
@@ -98,6 +165,7 @@ namespace FarmManager.Controllers
 
                                       MotherTagNo = birth.MotherTagNo,
                                       SireTagNo = birth.SireTagNo,
+                                      AIID = birth.AIID,
                                       Difficult = birth.Difficult
 
                                   }).FirstOrDefault();
@@ -160,20 +228,57 @@ namespace FarmManager.Controllers
 
 
             List<SelectListItem> TreatList = new List<SelectListItem>();
-            var treatList = (from b in db.Treatments
-                                 where b.TagNo == id && b.UserID == (int)WebSecurity.CurrentUserId
-                                 select b).ToArray();
+
+            var treatList = (from treat in db.Treatments
+                             join userMed in db.UserMedicines on treat.UserMedicineID equals userMed.UserMedicineID
+                             join defMed in db.DefaultMedicines on userMed.MedicineID equals defMed.MedicineID into j0
+                             from defMed in j0.DefaultIfEmpty()
+                             where treat.TagNo == id && treat.UserID == (int)WebSecurity.CurrentUserId
+                             select new { treat, userMed, defMed }).ToArray();
             for (int i = 0; i < treatList.Length; i++)
             {
                 TreatList.Add(new SelectListItem
                 {
-                    Text = treatList[i].TreatmentDate.ToString().Substring(0, 11),
-                    Value = Convert.ToString(treatList[i].TreatmentId)
+                    Text = treatList[i].defMed.MedicineName + " (" + treatList[i].treat.TreatmentDate.ToString().Substring(0, 11) + ")",
+                    Value = Convert.ToString(treatList[i].treat.TreatmentId)
                 });
             }
 
             animal.treatmentList = TreatList;
-            
+
+
+
+
+
+            List<SelectListItem> WithDrawalList = new List<SelectListItem>();
+
+            var withdrawlPeriod = (from animal2 in db.Animals
+                                   join treat in db.Treatments on animal2.TagNo equals treat.TagNo
+                                   join userMed in db.UserMedicines on treat.UserMedicineID equals userMed.UserMedicineID
+                                   join defMed in db.DefaultMedicines on userMed.MedicineID equals defMed.MedicineID
+                                   where animal2.TagNo == id && DateTime.Now < System.Data.Objects.EntityFunctions.AddDays(treat.TreatmentDate, defMed.WithdrawalPeriod)
+                                   select new { treat, defMed }).ToArray();
+
+            for (int i = 0; i < withdrawlPeriod.Length; i++)
+            {
+                WithDrawalList.Add(new SelectListItem
+                {
+                    Text = withdrawlPeriod[i].defMed.MedicineName + " (" + withdrawlPeriod[i].treat.TreatmentDate.ToString().Substring(0, 10) +")",
+                    Value = withdrawlPeriod[i].treat.TreatmentId.ToString()
+                });
+            }
+
+            //	string sub = input.Substring(0, 3);
+
+            animal.WithDrawalList = WithDrawalList;
+
+            /*var withDrawList = (from animal2 in db.Animals
+                                join treat in db.Treatments on animal2.TagNo equals treat.TagNo
+                                join userMed in db.UserMedicines on treat.UserMedicineID equals userMed.UserMedicineID
+                                join defMed in db.DefaultMedicines on userMed.MedicineID equals defMed.MedicineID
+                                where DateTime.Now < System.Data.Objects.EntityFunctions.AddDays(treat.))
+                                select treat).ToArray();
+            */
 
             if (animal == null)
             {
@@ -803,8 +908,89 @@ namespace FarmManager.Controllers
         }
 
 
+        [HttpPost]
+        public ActionResult Sale(Sale newSale)
+        {
+
+          
+
+            db.Sales.Add(newSale);
+            db.SaveChanges();
 
 
+
+            var animalStatus =
+            (from c in db.Animals
+             where c.TagNo == newSale.TagNo && c.UserId == (int)WebSecurity.CurrentUserId
+                select c).First();
+
+            animalStatus.OwnershipStatus = 2;
+            db.SaveChanges();
+
+
+            return RedirectToAction("Details/" + newSale.TagNo);
+        }
+
+
+
+
+        public JsonResult RetrieveSale(FormCollection form)
+        {
+            string id = Convert.ToString((form["TagNo"]).ToUpper());
+
+
+            var saleData = (from c in db.Sales
+                            where c.TagNo == id && c.UserId == (int)WebSecurity.CurrentUserId
+                            select c).FirstOrDefault();
+
+
+
+            string[] myArray = new string[] { saleData.TagNo, saleData.LocationSold, saleData.DateSold.ToString(), saleData.SoldTo, saleData.Notes };
+                        
+            
+            return Json(myArray);
+        }
+
+
+
+        public JsonResult RetrieveDeath(FormCollection form)
+        {
+            string id = Convert.ToString((form["TagNo"]).ToUpper());
+
+
+            var deathData = (from c in db.Deaths
+                             join death in db.DeathCauses on c.Cause equals death.Id
+                             where c.TagNo == id && c.UserId == (int)WebSecurity.CurrentUserId
+                             select new { c, death }).FirstOrDefault();
+
+
+
+            string[] myArray = new string[] { deathData.c.TagNo, deathData.c.DOD.ToString(), deathData.c.Notes, deathData.death.DeathCauses };
+                        
+            
+            return Json(myArray);
+        }
+
+
+
+
+        public JsonResult RetrieveCowPurch(FormCollection form)
+        {
+            string id = Convert.ToString((form["TagNo"]).ToUpper());
+
+
+            var purchData = (from p in db.Purchases
+                             
+                             where p.TagNo == id && p.UserId == (int)WebSecurity.CurrentUserId
+                             select p).FirstOrDefault();
+
+
+
+            string[] myArray = new string[] { purchData.TagNo, purchData.DateBought.ToString(), purchData.Notes, purchData.Location, purchData.Price.ToString(), purchData.BoughtFrom };
+
+
+            return Json(myArray);
+        }
        
 
     }

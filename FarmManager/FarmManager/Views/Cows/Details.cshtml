@@ -8,9 +8,23 @@
 
 <h2 class="hTop">Cow <span class="tagHighLight">@Html.DisplayFor(model => model.TagNo)</span></h2>
 
-    @Html.ActionLink("Sell Animal", "Sale", new { id = Model.TagNo }, new { @class = "btn btn-primary" })
+@if(Model.OwnershipStatus == 1)
+{
+    @Html.ActionLink("New Artificial Insemination", "Create", new { controller = "AI",  id = Model.TagNo }, new { @class = "btn btn-primary" }) <span>  </span>
+    @Html.ActionLink("Sell Animal", "Sale", new { id = Model.TagNo }, new { @class = "btn btn-primary" }) <span> </span>
     @Html.ActionLink("Record Death", "CowDeath", new { id = Model.TagNo }, new { @class = "btn btn-primary" })
 
+}
+
+<div id="statusWarn" class="alert alert-warning collapse">@Html.HiddenFor(model => model.OwnershipStatus) @Html.HiddenFor(model => model.TagNo)<p class="inline" id="statusMessage"> </p> <a id="statusLink" href="#" >hu</a></div>
+
+<div id="withDrawWarn" class="alert alert-warning collapse"> 
+    <p>The animal is currently in withdrawl from the following treatments:</p>
+    <p id="withDrawPara">@foreach (var item in Model.WithDrawalList)
+        {
+            @Html.ActionLink(item.Text, "Details", new { controller = "Treatment",  id = item.Value }, new { @class="listItems"})<br />
+        }</p>
+    </div>
 
 <div id="cowDetails">
     <div class="detailsBanner">
@@ -67,6 +81,44 @@
                 <p>@Html.DisplayFor(model => model.AnimalBreed)</p>
             </div>
             </div>
+            
+            
+            <div class="inlineData">
+            <div class="display-label">
+                <label>Mother</label>
+            </div>
+            
+            <div class="display-field">
+                @Html.ActionLink(Model.MotherTagNo, "Details", new { id = Model.MotherTagNo }, new { @class = "listItems" })<br />
+            </div>
+            </div>
+            
+            
+            if (Model.SireTagNo != "")
+            { <div class="inlineData">
+            <div class="display-label">
+                <label>Sire</label>
+            </div>
+            
+            <div class="display-field">
+                @Html.ActionLink(Model.SireTagNo, "Details", new { id = Model.SireTagNo }, new { @class = "listItems" })<br />
+
+            </div>
+            </div>
+            }
+            else
+            {
+              <div class="inlineData">
+            <div class="display-label">
+                <label>AI ID</label>
+            </div>
+            
+            <div class="display-field">
+                <p>@Html.DisplayFor(model => model.AIID)</p>
+
+            </div>
+            </div>  
+            }
         }
         else
         {
@@ -76,7 +128,7 @@
             </div>
             
             <div class="display-field">
-                <p>Bought into farm</p>
+               <a id="purchLink" href="#" >Purchased</a>
             </div>
             </div>
             
@@ -238,11 +290,11 @@
             <label>No Treatments</label>            
         }
 
-        | @Html.ActionLink("New Treatment", "NewTreatment", new { id = Model.TagNo })<br />
+        | @Html.ActionLink("New Treatment", "NewTreatment", new { controller = "Treatment",  id = Model.TagNo })<br />
 
         @foreach (var item in Model.treatmentList)
         {
-            @Html.ActionLink(item.Text, "Details", new { controller = "Treatment",  id = item.Value }, new { @class="listItems"})
+            @Html.ActionLink(item.Text, "Details", new { controller = "Treatment",  id = item.Value }, new { @class="listItems"})<br />
         }
     </div>
 </div>
@@ -255,7 +307,7 @@
 
 <br />
 
-<form id="overlay_form" style="display: none">
+<form id="overlay_form" class="overlay_form" style="display: none">
     <h3 id="modalHead"></h3>
     <label id="noteDate">1 Note</label>
     <p id="noteBody"></p>
@@ -265,6 +317,208 @@
     <a href="#" class="btn btn-danger" id="btnDeleteNote">Delete</a>
 
 </form>
+
+
+<form id="overlay_form_Sale" class="overlay_form" style="display: none">
+    <h3 id="modalHeadSale"></h3>
+     <h3 id="modalHead"></h3>
+
+    
+
+        <div class="inlineData">
+
+                <div class="display-label">
+                <label>Tag No</label>
+            </div>
+            
+            <div class="display-field">
+                <p id="modalTagNo"></p>
+            </div>
+            </div>
+
+        <div class="inlineData">
+
+             <div class="display-label">
+                <label>Location Sold</label>
+            </div>
+            
+            <div class="display-field">
+                <p id="modalLocationSold"></p>
+            </div>
+            </div>
+
+    <div class="inlineData">
+
+             <div class="display-label">
+                <label>Date Sold</label>
+            </div>
+            
+            <div class="display-field">
+                <p id="dateSold"></p>
+            </div>
+            </div>
+
+    <div class="inlineData">
+
+             <div class="display-label">
+                <label>Sold To</label>
+            </div>
+            
+            <div class="display-field">
+                <p id="soldTo"></p>
+            </div>
+            </div>
+
+    <div class="inlineData">
+
+             <div class="display-label">
+                <label>Notes</label>
+            </div>
+            
+            <div class="display-field">
+                <p id="saleNotes"></p>
+            </div>
+            </div>
+
+<br style="clear: both;" />
+
+    <a href="#" id="closeSale" class="btn btn-default">Close</a>
+</form>
+
+
+<form id="overlay_form_Death" class="overlay_form" style="display: none">
+    <h3 id="modalHeadDeath"></h3>
+    
+        <div class="inlineData">
+
+                <div class="display-label">
+                <label>Tag No</label>
+            </div>
+            
+            <div class="display-field">
+                <p id="modalTagNoDeath"></p>
+            </div>
+            </div>
+
+        <div class="inlineData">
+
+             <div class="display-label">
+                <label>Date of Death</label>
+            </div>
+            
+            <div class="display-field">
+                <p id="modalDOD"></p>
+            </div>
+            </div>
+
+    <div class="inlineData">
+
+             <div class="display-label">
+                <label>Cause</label>
+            </div>
+            
+            <div class="display-field">
+                <p id="deathCause"></p>
+            </div>
+            </div>
+
+    <div class="inlineData">
+
+             <div class="display-label">
+                <label>Notes</label>
+            </div>
+            
+            <div class="display-field">
+                <p id="deathNotes"></p>
+            </div>
+            </div>
+
+    
+
+<br style="clear: both;" />
+
+    <a href="#" id="closeDeath" class="btn btn-default">Close</a>
+</form>
+
+
+<form id="overlay_form_Purchase" class="overlay_form" style="display: none">
+    <h3 id="modalHeadPurchase"></h3>
+    
+        <div class="inlineData">
+
+                <div class="display-label">
+                <label>Tag No</label>
+            </div>
+            
+            <div class="display-field">
+                <p id="modalTagNoPurchase"></p>
+            </div>
+            </div>
+
+        <div class="inlineData">
+
+             <div class="display-label">
+                <label>Date of Purchase</label>
+            </div>
+            
+            <div class="display-field">
+                <p id="modalDOP"></p>
+            </div>
+            </div>
+
+    <div class="inlineData">
+
+             <div class="display-label">
+                <label>Purchased From</label>
+            </div>
+            
+            <div class="display-field">
+                <p id="purchasedFrom"></p>
+            </div>
+            </div>
+
+        <div class="inlineData">
+
+             <div class="display-label">
+                <label>Location</label>
+            </div>
+            
+            <div class="display-field">
+                <p id="purchasedLocation"></p>
+            </div>
+            </div>
+
+    <div class="inlineData">
+
+             <div class="display-label">
+                <label>Price Paid</label>
+            </div>
+            
+            <div class="display-field">
+                <p id="pricePaid"></p>
+            </div>
+            </div>
+
+
+     <div class="inlineData">
+
+             <div class="display-label">
+                <label>Notes</label>
+            </div>
+            
+            <div class="display-field">
+                <p id="purchNotes"></p>
+            </div>
+            </div>
+
+    
+
+<br style="clear: both;" />
+
+    <a href="#" id="closePurchase" class="btn btn-default">Close</a>
+</form>
+
+
 <p>
     @Html.ActionLink("Back to List", "Index") |
     @Html.ActionLink("Record Death", "CowDeath", new { id = Model.TagNo })

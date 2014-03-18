@@ -32,8 +32,10 @@
           <Property Name="UserID" Type="int" />
           <Property Name="Date" Type="date" />
           <Property Name="TagNo" Type="varchar" MaxLength="50" />
+          <Property Name="Breed" Type="int" />
           <Property Name="BullID" Type="varchar" MaxLength="50" />
           <Property Name="AIOperator" Type="varchar" MaxLength="50" />
+          <Property Name="ExpectedDueDate" Type="date" />
           <Property Name="Born" Type="bit" />
         </EntityType>
         <EntityType Name="AnimalNotes">
@@ -154,7 +156,7 @@
           </Key>
           <Property Name="SaleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="int" />
-          <Property Name="TagNo" Type="nchar" MaxLength="10" />
+          <Property Name="TagNo" Type="nvarchar" MaxLength="50" />
           <Property Name="LocationSold" Type="nvarchar(max)" />
           <Property Name="DateSold" Type="date" />
           <Property Name="SoldTo" Type="nvarchar(max)" />
@@ -206,6 +208,7 @@
           </Key>
           <Property Name="UserMedicineID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="MedicineID" Type="int" />
+          <Property Name="UserID" Type="int" />
           <Property Name="BatchNo" Type="nvarchar" MaxLength="50" />
           <Property Name="ExpiryDate" Type="date" />
           <Property Name="OpenDate" Type="date" />
@@ -246,8 +249,10 @@
           <Property Name="UserID" Type="Int32" />
           <Property Name="Date" Type="DateTime" Precision="0" />
           <Property Name="TagNo" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Breed" Type="Int32" />
           <Property Name="BullID" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="AIOperator" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="ExpectedDueDate" Type="DateTime" Precision="0" />
           <Property Name="Born" Type="Boolean" />
         </EntityType>
         <EntityType Name="AnimalNote">
@@ -368,7 +373,7 @@
           </Key>
           <Property Name="SaleID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Int32" />
-          <Property Name="TagNo" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="TagNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="LocationSold" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="DateSold" Type="DateTime" Precision="0" />
           <Property Name="SoldTo" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
@@ -420,6 +425,7 @@
           </Key>
           <Property Name="UserMedicineID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="MedicineID" Type="Int32" />
+          <Property Name="UserID" Type="Int32" />
           <Property Name="BatchNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="ExpiryDate" Type="DateTime" Precision="0" />
           <Property Name="OpenDate" Type="DateTime" Precision="0" />
@@ -441,8 +447,10 @@
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="TagNo" ColumnName="TagNo" />
+                <ScalarProperty Name="Breed" ColumnName="Breed" />
                 <ScalarProperty Name="BullID" ColumnName="BullID" />
                 <ScalarProperty Name="AIOperator" ColumnName="AIOperator" />
+                <ScalarProperty Name="ExpectedDueDate" ColumnName="ExpectedDueDate" />
                 <ScalarProperty Name="Born" ColumnName="Born" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -631,6 +639,7 @@
               <MappingFragment StoreEntitySet="UserMedicine">
                 <ScalarProperty Name="UserMedicineID" ColumnName="UserMedicineID" />
                 <ScalarProperty Name="MedicineID" ColumnName="MedicineID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="BatchNo" ColumnName="BatchNo" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
                 <ScalarProperty Name="OpenDate" ColumnName="OpenDate" />

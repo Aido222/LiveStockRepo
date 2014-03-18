@@ -12,6 +12,7 @@ namespace FarmManager.ViewModels
         public string TagNo { get; set; }
         public Nullable<bool> Sex { get; set; }
         public string AnimalBreed { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public Nullable<System.DateTime> DOB { get; set; }
         public Nullable<int> OwnershipStatus { get; set; }
         public Nullable<bool> BornOnFarm { get; set; }
@@ -27,6 +28,7 @@ namespace FarmManager.ViewModels
         public string MotherTagNo { get; set; }
         public string SireTagNo { get; set; }
         public Nullable<bool> Difficult { get; set; }
+        public Nullable<int> AIID { get; set; }
 
 
 
@@ -37,6 +39,8 @@ namespace FarmManager.ViewModels
         public IEnumerable<SelectListItem> bullCalveList { get; set; }
 
         public IEnumerable<SelectListItem> treatmentList { get; set; }
+
+        public IEnumerable<SelectListItem> WithDrawalList { get; set; }
 
 
 

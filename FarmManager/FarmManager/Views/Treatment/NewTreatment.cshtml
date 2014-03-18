@@ -1,0 +1,209 @@
+﻿@model FarmManager.ViewModels.NewTreatmentVM
+
+@{
+    ViewBag.Title = "NewTreatment";
+}
+
+<link href="~/Content/datepicker.css" rel="stylesheet" />
+
+
+
+
+<h2 class="hTop">New Treatment for <span class="tagHighLight">@Html.DisplayFor(model => model.TagNo)</span></h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div id="formNewTreatment">
+
+        @Html.HiddenFor(model => model.TagNo)
+        @Html.HiddenFor(model => model.UserMedicineID)
+
+        <div class="editor-label">
+            <label>Treatment Date</label>
+        </div>
+        <div class="editor-field">
+            <input name="TreatmentDate" class="datepicker form-control" id="TreatmentDate" size="16" type="text" value="Please select">
+        </div>
+        <div id="greaterDateWarn" class="alert alert-danger collapse">Treatment date cannot be after todays date</div>
+        <div id="enterDateWarn" class="alert alert-danger collapse">Please enter treatment date</div>
+
+        
+
+        <div class="editor-label">
+            <label>Notes</label>
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Notes, new { @class = "form-control" })
+        </div>
+
+         <div class="editor-label">
+            <label>Medicine Used</label>
+        </div>
+        <div class="editor-field">
+            <input id="medicineUsedText" type="text" readonly="true" class="form-control"/>
+        </div>
+        <div id="enterMedicineWarn" class="alert alert-danger collapse">Please select medicine used on the right</div>
+
+
+        <div class="editor-label">
+            <label>Dosage Amount(ml)</label>
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.DosageAmount, new { @class = "form-control"})
+        </div>
+        <div id="enterDosageWarn" class="alert alert-danger collapse">Dosage is required and must be numbers only</div>
+
+
+        <div class="editor-label">
+            <label>Prescribing Vet</label>
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.PrescribingVet, new { @class = "form-control" })
+        </div>
+
+        <div class="editor-label">
+            <label>Administrator</label>
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Administrator, new { @class = "form-control" })
+        </div>
+
+        <p>
+            <input id="submitBtn" type="submit" class="btn btn-success" value="Create" />
+            @Html.ActionLink("Cancel","Details","Cows", new { id = Model.TagNo }, new { @class="btn btn-default"})
+
+        </p>
+    </div>
+    
+    
+}
+
+
+<div id="selectMedicineTable">
+        <div class="detailsBanner">
+            <h3 class="detailsHead">Select Medicine Used</h3>
+        </div>
+
+        <div class="detailsBottom">
+
+            <table class="table table-striped">
+                <tr>
+                    <th>Name & Batch No
+                    </th>
+                    <th>Action
+                    </th>
+                </tr>
+                @foreach (var item in Model.UserMedList)
+                {
+             
+                    <tr>
+                        <td>
+                            <a  id="@item.Value" class="noteLinks listItems Select" href="#">@item.Text</a>
+                        </td>
+                        <td>
+                            <a  id="@item.Value" data-id="@item.Value" class="noteLinks listItems ViewMed" href="#">View Medicine</a><br />
+                        </td>
+                    </tr>
+                }
+            </table>
+
+        </div>
+    </div>
+
+<br style="clear: both;" />
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<form id="overlay_form" style="display: none">
+    <h3 id="modalHead"></h3>
+
+    
+
+        <div class="inlineData">
+
+                <div class="display-label">
+                <label>Withdrawal Period</label>
+            </div>
+            
+            <div class="display-field">
+                <p id="withPeriod"></p>
+            </div>
+            </div>
+
+        <div class="inlineData">
+
+             <div class="display-label">
+                <label>Batch No</label>
+            </div>
+            
+            <div class="display-field">
+                <p id="batchNo"></p>
+            </div>
+            </div>
+
+    <div class="inlineData">
+
+             <div class="display-label">
+                <label>Bottle Size(ml)</label>
+            </div>
+            
+            <div class="display-field">
+                <p id="bottleSize"></p>
+            </div>
+            </div>
+
+    <div class="inlineData">
+
+             <div class="display-label">
+                <label>Date Of Purchase</label>
+            </div>
+            
+            <div class="display-field">
+                <p id="DOP"></p>
+            </div>
+            </div>
+
+    <div class="inlineData">
+
+             <div class="display-label">
+                <label>Supplied By</label>
+            </div>
+            
+            <div class="display-field">
+                <p id="suppliedBy"></p>
+            </div>
+            </div>
+
+    <div class="inlineData">
+            <div class="display-label">
+                <label>Main Use</label>
+            </div>
+            
+            <div class="display-field">
+                <p id="mainUse"></p>
+            </div>
+            </div>
+            
+
+<br style="clear: both;" />
+
+    <a href="#" id="close" class="btn btn-default">Close</a>
+
+</form>
+
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/bootstrap-datepicker.js")
+    @Scripts.Render("~/Scripts/Mine/NewCowTreatment.js")
+
+}

@@ -1,0 +1,77 @@
+﻿@model FarmManager.Models.AI
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>AI</legend>
+
+        @Html.HiddenFor(model => model.AIID)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UserID)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UserID)
+            @Html.ValidationMessageFor(model => model.UserID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Date)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Date)
+            @Html.ValidationMessageFor(model => model.Date)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TagNo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TagNo)
+            @Html.ValidationMessageFor(model => model.TagNo)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BullID)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.BullID)
+            @Html.ValidationMessageFor(model => model.BullID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AIOperator)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AIOperator)
+            @Html.ValidationMessageFor(model => model.AIOperator)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Born)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Born)
+            @Html.ValidationMessageFor(model => model.Born)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -13,6 +13,11 @@
 
 }
 
+.iconMargin
+{
+}
+
+
 .detailsBottomIndex
 {
     padding: 5px;
@@ -93,6 +98,29 @@ overflow-x:auto;
     width: 49%;
     float: left;
     padding-top: 5px;
+    margin-left: 18px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; /* future proofing */
+    -khtml-border-radius: 5px; /* for old Konqueror browsers */
+}
+
+#defaultMedDetails
+{
+        width: 49%;
+    float: left;
+    padding-top: 10px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+    -khtml-border-radius: 5px; 
+}
+
+#relatedTreatments
+{
+    width: 49%;
+    float: left;
+    padding-top: 10px;
     margin-left: 18px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -5405,6 +5433,7 @@ textarea.input-group-sm > .input-group-btn > .btn
     padding-left: 0;
     margin-bottom: 0;
     list-style: none;
+    font-size: 16px;
 }
 
     .nav:before,

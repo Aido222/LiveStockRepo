@@ -117,6 +117,7 @@
     <Property Name="BreachPeriod" Type="Int32" />
     <Property Name="TargetSpecies" Type="Int32" />
     <Property Name="MainUse" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="AvgDosage" Type="Int32" />
     <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
   </EntityType>
   <EntityType Name="Medicine">

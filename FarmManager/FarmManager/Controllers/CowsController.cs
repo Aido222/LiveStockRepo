@@ -56,28 +56,48 @@ namespace FarmManager.Controllers
                                              from death in j3.DefaultIfEmpty()
                                              join purch in db.Purchases on animals.TagNo equals purch.TagNo into j4
                                              from purch in j4.DefaultIfEmpty()
-                                    where animals.Species == 2
-                                    & animals.UserId == WebSecurity.CurrentUserId
-                                    select new CowIndexVM
-                                    {
-                                        TagNo = animals.TagNo,
-                                        AnimalBreed = breed.Breed1,
-                                        DateAdded = animals.DateAdded,
-                                        OwnershipStatus = animals.OwnershipStatus,
-                                        DateSold = sale.DateSold,
-                                        LocationSold = sale.LocationSold,
-                                        BornOnFarm = animals.BornOnFarm,
-                                        DOD = death.DOD,
-                                        DOB= animals.DOB,
-                                        DateBought = purch.DateBought
-
-                                        
-                                    }).ToList();
-                                    
+                                             where animals.UserId == WebSecurity.CurrentUserId && animals.Species == 2
                       
+                                             select new CowIndexVM
+                                             {
+                                                 TagNo = animals.TagNo,
+                                                 AnimalBreed = breed.Breed1,
+                                                 DateAdded = animals.DateAdded,
+                                                 OwnershipStatus = animals.OwnershipStatus,
+                                                 DateSold = sale.DateSold,
+                                                 LocationSold = sale.LocationSold,
+                                                 BornOnFarm = animals.BornOnFarm,
+                                                 DOD = death.DOD,
+                                                 DOB = animals.DOB,
+                                                 DateBought = purch.DateBought,
 
 
-            CowIndexVM cowIndex = new CowIndexVM();
+
+                                             }).ToList();
+
+
+
+
+            List<SelectListItem> WithDrawalList = new List<SelectListItem>();
+
+            var withdrawlPeriod = (from animal2 in db.Animals
+                                   join treat in db.Treatments on animal2.TagNo equals treat.TagNo
+                                   join userMed in db.UserMedicines on treat.UserMedicineID equals userMed.UserMedicineID
+                                   join defMed in db.DefaultMedicines on userMed.MedicineID equals defMed.MedicineID
+                                   where DateTime.Now < System.Data.Objects.EntityFunctions.AddDays(treat.TreatmentDate, defMed.WithdrawalPeriod)
+                                   select new { treat, defMed }).ToArray();
+
+            for (int i = 0; i < withdrawlPeriod.Length; i++)
+            {
+                WithDrawalList.Add(new SelectListItem
+                {
+                    Text = withdrawlPeriod[i].treat.TagNo,
+                    Value = withdrawlPeriod[i].treat.TreatmentId.ToString()
+                });
+            }
+
+
+            ViewBag.WithList = WithDrawalList;
 
 
             /*List<SelectListItem> SoldList = new List<SelectListItem>();
@@ -134,151 +154,160 @@ namespace FarmManager.Controllers
                           where c.TagNo == id && c.UserId == (int)WebSecurity.CurrentUserId
                           select c).FirstOrDefault();
 
+            /* join treat in db.Treatments on animal2.TagNo equals treat.TagNo
+                                   join userMed in db.UserMedicines on treat.UserMedicineID equals userMed.UserMedicineID
+                                   join defMed in db.DefaultMedicines on userMed.MedicineID equals defMed.MedicineID*/
 
-            
-           
-
-
-
-            CowDetailVM animal = (from animals in db.Animals
-                                  join breed in db.Breeds on animals.AnimalBreed equals breed.id
-                                  join birth in db.Births on animals.TagNo equals birth.TagNo into j0
-                                  from birth in j0.DefaultIfEmpty()
-                                  join purchase in db.Purchases on animals.TagNo equals purchase.TagNo into j1
-                                  from purchase in j1.DefaultIfEmpty()
-                                  where animals.TagNo == id && animals.UserId == WebSecurity.CurrentUserId
-                                  orderby animals.DateAdded descending
-
-                                  select new CowDetailVM
-                                  {
-                                      TagNo = animals.TagNo,
-                                      Sex = animals.Sex,
-                                      AnimalBreed = breed.Breed1,
-                                      DOB = animals.DOB,
-                                      OwnershipStatus = animals.OwnershipStatus,
-                                      BornOnFarm = animals.BornOnFarm,
-
-                                      DateBought = purchase.DateBought,
-                                      BoughtFrom = purchase.BoughtFrom,
-                                      Price = purchase.Price,
-                                      Location = purchase.Location,
-
-                                      MotherTagNo = birth.MotherTagNo,
-                                      SireTagNo = birth.SireTagNo,
-                                      AIID = birth.AIID,
-                                      Difficult = birth.Difficult
-
-                                  }).FirstOrDefault();
+            /*from animals in db.Animals
+                                   join breed in db.Breeds on animals.AnimalBreed equals breed.id
+                                   join birth in db.Births on animals.TagNo equals birth.TagNo into j0
+                                   from birth in j0.DefaultIfEmpty()
+                                   join purchase in db.Purchases on animals.TagNo equals purchase.TagNo into j1
+                                   from purchase in j1.DefaultIfEmpty()
+                                   where animals.TagNo == id && animals.UserId == WebSecurity.CurrentUserId
+                                   orderby animals.DateAdded descending*/
 
 
 
+             CowDetailVM animal = (from animals in db.Animals
+                                   join breed in db.Breeds on animals.AnimalBreed equals breed.id
+                                   join birth in db.Births on animals.TagNo equals birth.TagNo into j0
+                                   from birth in j0.DefaultIfEmpty()
+                                   join purchase in db.Purchases on animals.TagNo equals purchase.TagNo into j1
+                                   from purchase in j1.DefaultIfEmpty()
+                                   where animals.TagNo == id
+                                   orderby animals.DateAdded descending
 
-            List<SelectListItem> cowCalves = new List<SelectListItem>();
-            var calfList = (from b in db.Births
-                            where b.MotherTagNo == id && b.UserId == WebSecurity.CurrentUserId 
-                            select b).ToArray();
-            for (int i = 0; i < calfList.Length; i++)
-            {
-                cowCalves.Add(new SelectListItem
-                {
-                    Text = calfList[i].TagNo,
-                    Value = calfList[i].TagNo,
-                });
-            }
+                                   select new CowDetailVM
+                                   {
+                                       TagNo = animals.TagNo,
+                                       Sex = animals.Sex,
+                                       AnimalBreed = breed.Breed1,
+                                       DOB = animals.DOB,
+                                       OwnershipStatus = animals.OwnershipStatus,
+                                       BornOnFarm = animals.BornOnFarm,
+
+                                       DateBought = purchase.DateBought,
+                                       BoughtFrom = purchase.BoughtFrom,
+                                       Price = purchase.Price,
+                                       Location = purchase.Location,
+
+                                       MotherTagNo = birth.MotherTagNo,
+                                       SireTagNo = birth.SireTagNo,
+                                       AIID = birth.AIID,
+                                       Difficult = birth.Difficult
+
+                                   }).FirstOrDefault();
+
+
+
+
+             List<SelectListItem> cowCalves = new List<SelectListItem>();
+             var calfList = (from b in db.Births
+                             where b.MotherTagNo == id && b.UserId == WebSecurity.CurrentUserId 
+                             select b).ToArray();
+             for (int i = 0; i < calfList.Length; i++)
+             {
+                 cowCalves.Add(new SelectListItem
+                 {
+                     Text = calfList[i].TagNo,
+                     Value = calfList[i].TagNo,
+                 });
+             }
 
          
 
-            animal.calvesList = cowCalves;
+             animal.calvesList = cowCalves;
 
 
-            List<SelectListItem> Notes = new List<SelectListItem>();
-            var noteList = (from b in db.AnimalNotes
-                            where b.TagNo == id && b.UserID == (int)WebSecurity.CurrentUserId
-                            select b).ToArray();
-            for (int i = 0; i < noteList.Length; i++)
-            {
-                Notes.Add(new SelectListItem
-                {
-                    Text = noteList[i].Description,
-                    Value = Convert.ToString(noteList[i].NoteId)
-                });
-            }
+             List<SelectListItem> Notes = new List<SelectListItem>();
+             var noteList = (from b in db.AnimalNotes
+                             where b.TagNo == id && b.UserID == (int)WebSecurity.CurrentUserId
+                             select b).ToArray();
+             for (int i = 0; i < noteList.Length; i++)
+             {
+                 Notes.Add(new SelectListItem
+                 {
+                     Text = noteList[i].Description,
+                     Value = Convert.ToString(noteList[i].NoteId)
+                 });
+             }
 
-            animal.notesList = Notes;
-
-
-
-
-            List<SelectListItem> BullCalveList = new List<SelectListItem>();
-            var bullcalveList = (from b in db.Births
-                            where b.SireTagNo == id && b.UserId == (int)WebSecurity.CurrentUserId
-                            select b).ToArray();
-            for (int i = 0; i < bullcalveList.Length; i++)
-            {
-                BullCalveList.Add(new SelectListItem
-                {
-                    Text = bullcalveList[i].TagNo,
-                    Value = Convert.ToString(bullcalveList[i].TagNo)
-                });
-            }
-
-            animal.bullCalveList = BullCalveList;
-
-            //                                  join birth in db.Births on animals.TagNo equals birth.TagNo into j0
-
-
-            List<SelectListItem> TreatList = new List<SelectListItem>();
-
-            var treatList = (from treat in db.Treatments
-                             join userMed in db.UserMedicines on treat.UserMedicineID equals userMed.UserMedicineID
-                             join defMed in db.DefaultMedicines on userMed.MedicineID equals defMed.MedicineID into j0
-                             from defMed in j0.DefaultIfEmpty()
-                             where treat.TagNo == id && treat.UserID == (int)WebSecurity.CurrentUserId
-                             select new { treat, userMed, defMed }).ToArray();
-            for (int i = 0; i < treatList.Length; i++)
-            {
-                TreatList.Add(new SelectListItem
-                {
-                    Text = treatList[i].defMed.MedicineName + " (" + treatList[i].treat.TreatmentDate.ToString().Substring(0, 11) + ")",
-                    Value = Convert.ToString(treatList[i].treat.TreatmentId)
-                });
-            }
-
-            animal.treatmentList = TreatList;
+             animal.notesList = Notes;
 
 
 
 
+             List<SelectListItem> BullCalveList = new List<SelectListItem>();
+             var bullcalveList = (from b in db.Births
+                             where b.SireTagNo == id && b.UserId == (int)WebSecurity.CurrentUserId
+                             select b).ToArray();
+             for (int i = 0; i < bullcalveList.Length; i++)
+             {
+                 BullCalveList.Add(new SelectListItem
+                 {
+                     Text = bullcalveList[i].TagNo,
+                     Value = Convert.ToString(bullcalveList[i].TagNo)
+                 });
+             }
 
-            List<SelectListItem> WithDrawalList = new List<SelectListItem>();
+             animal.bullCalveList = BullCalveList;
 
-            var withdrawlPeriod = (from animal2 in db.Animals
-                                   join treat in db.Treatments on animal2.TagNo equals treat.TagNo
-                                   join userMed in db.UserMedicines on treat.UserMedicineID equals userMed.UserMedicineID
-                                   join defMed in db.DefaultMedicines on userMed.MedicineID equals defMed.MedicineID
-                                   where animal2.TagNo == id && DateTime.Now < System.Data.Objects.EntityFunctions.AddDays(treat.TreatmentDate, defMed.WithdrawalPeriod)
-                                   select new { treat, defMed }).ToArray();
+             //                                  join birth in db.Births on animals.TagNo equals birth.TagNo into j0
 
-            for (int i = 0; i < withdrawlPeriod.Length; i++)
-            {
-                WithDrawalList.Add(new SelectListItem
-                {
-                    Text = withdrawlPeriod[i].defMed.MedicineName + " (" + withdrawlPeriod[i].treat.TreatmentDate.ToString().Substring(0, 10) +")",
-                    Value = withdrawlPeriod[i].treat.TreatmentId.ToString()
-                });
-            }
 
-            //	string sub = input.Substring(0, 3);
+             List<SelectListItem> TreatList = new List<SelectListItem>();
 
-            animal.WithDrawalList = WithDrawalList;
+             var treatList = (from treat in db.Treatments
+                              join userMed in db.UserMedicines on treat.UserMedicineID equals userMed.UserMedicineID
+                              join defMed in db.DefaultMedicines on userMed.MedicineID equals defMed.MedicineID into j0
+                              from defMed in j0.DefaultIfEmpty()
+                              where treat.TagNo == id && treat.UserID == (int)WebSecurity.CurrentUserId
+                              select new { treat, userMed, defMed }).ToArray();
+             for (int i = 0; i < treatList.Length; i++)
+             {
+                 TreatList.Add(new SelectListItem
+                 {
+                     Text = treatList[i].defMed.MedicineName + " (" + treatList[i].treat.TreatmentDate.ToString().Substring(0, 11) + ")",
+                     Value = Convert.ToString(treatList[i].treat.TreatmentId)
+                 });
+             }
 
-            /*var withDrawList = (from animal2 in db.Animals
-                                join treat in db.Treatments on animal2.TagNo equals treat.TagNo
-                                join userMed in db.UserMedicines on treat.UserMedicineID equals userMed.UserMedicineID
-                                join defMed in db.DefaultMedicines on userMed.MedicineID equals defMed.MedicineID
-                                where DateTime.Now < System.Data.Objects.EntityFunctions.AddDays(treat.))
-                                select treat).ToArray();
-            */
+             animal.treatmentList = TreatList;
+
+
+
+
+
+             List<SelectListItem> WithDrawalList = new List<SelectListItem>();
+
+             var withdrawlPeriod = (from animal2 in db.Animals
+                                    join treat in db.Treatments on animal2.TagNo equals treat.TagNo
+                                    join userMed in db.UserMedicines on treat.UserMedicineID equals userMed.UserMedicineID
+                                    join defMed in db.DefaultMedicines on userMed.MedicineID equals defMed.MedicineID
+                                    where animal2.TagNo == id && DateTime.Now < System.Data.Objects.EntityFunctions.AddDays(treat.TreatmentDate, defMed.WithdrawalPeriod)
+                                    select new { treat, defMed }).ToArray();
+
+             for (int i = 0; i < withdrawlPeriod.Length; i++)
+             {
+                 WithDrawalList.Add(new SelectListItem
+                 {
+                     Text = withdrawlPeriod[i].defMed.MedicineName + " (" + withdrawlPeriod[i].treat.TreatmentDate.ToString().Substring(0, 10) +")",
+                     Value = withdrawlPeriod[i].treat.TreatmentId.ToString()
+                 });
+             }
+
+             //	string sub = input.Substring(0, 3);
+
+             animal.WithDrawalList = WithDrawalList;
+
+             /*var withDrawList = (from animal2 in db.Animals
+                                 join treat in db.Treatments on animal2.TagNo equals treat.TagNo
+                                 join userMed in db.UserMedicines on treat.UserMedicineID equals userMed.UserMedicineID
+                                 join defMed in db.DefaultMedicines on userMed.MedicineID equals defMed.MedicineID
+                                 where DateTime.Now < System.Data.Objects.EntityFunctions.AddDays(treat.))
+                                 select treat).ToArray();
+             */
 
             if (animal == null)
             {
@@ -991,7 +1020,27 @@ namespace FarmManager.Controllers
 
             return Json(myArray);
         }
-       
 
+
+
+        public JsonResult RetrieveTreatments(FormCollection form)
+        {
+           // int id = Convert.ToString((form["ID"]).ToUpper());
+            int id = Convert.ToInt32(form["ID"]);
+
+            var treatments = (from t in db.Treatments
+                              join um in db.UserMedicines on t.UserMedicineID equals um.UserMedicineID
+                              join dm in db.DefaultMedicines on um.UserMedicineID equals dm.MedicineID
+                              where t.TreatmentId == id && t.UserID == (int)WebSecurity.CurrentUserId
+                              select new { t, dm, um }).FirstOrDefault();
+           
+
+
+            string[] myArray = new string[] { treatments.t.DosageAmount.ToString(), treatments.t.TreatmentDate.ToString().Substring(0,10), treatments.dm.MedicineName, treatments.um.BatchNo };
+
+            return Json(myArray);
+        }
+       
+        
     }
 }

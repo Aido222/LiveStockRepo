@@ -167,6 +167,7 @@
     <Compile Include="Controllers\AIController.cs" />
     <Compile Include="Controllers\CowsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MedicinesController.cs" />
     <Compile Include="Controllers\TreatmentController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -245,6 +246,8 @@
     <Compile Include="ViewModels\CowDetailVM.cs" />
     <Compile Include="ViewModels\CowIndexVM.cs" />
     <Compile Include="ViewModels\CowPurchVM.cs" />
+    <Compile Include="ViewModels\MedicineDetailVM.cs" />
+    <Compile Include="ViewModels\MedicineIndexVM.cs" />
     <Compile Include="ViewModels\NewTreatmentVM.cs" />
     <Compile Include="ViewModels\TreatmentDetailsVM.cs" />
   </ItemGroup>
@@ -318,6 +321,8 @@
     <Content Include="Images\bulb_Icon.jpg" />
     <Content Include="Images\SiteImages\BackR.gif" />
     <Content Include="Images\SiteImages\Logo.jpg" />
+    <Content Include="Images\SiteImages\treated.png" />
+    <Content Include="Images\SiteImages\treated2.png" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -422,6 +427,11 @@
     <Content Include="Views\AI\Create.cshtml" />
     <Content Include="Views\AI\Edit.cshtml" />
     <Content Include="Views\AI\Delete.cshtml" />
+    <Content Include="Views\Medicines\Index.cshtml" />
+    <Content Include="Views\Medicines\Details.cshtml" />
+    <Content Include="Views\Medicines\Create.cshtml" />
+    <Content Include="Views\Medicines\Edit.cshtml" />
+    <Content Include="Views\Medicines\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

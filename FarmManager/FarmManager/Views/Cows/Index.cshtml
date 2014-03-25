@@ -25,17 +25,20 @@
 <br style="clear: both;" />
     
 
+    <div class="detailsBanner">
+        <h3 id="cowStatusHead" class="detailsHead">Owned</h3>
+    </div>
+
+    <div class="detailsBottom">
 <div id="tabs">
    <ul>
-     <li><a href="#tab-1">Owned Cows</a></li>
-     <li><a href="#tab-2">Sold Cows</a></li>
-     <li><a href="#tab-3">Deceased Cows</a></li>
-     <li><a href="#tab-4">Purchased</a></li>
-     <li><a href="#tab-5">Born on Farm</a></li>
+     <li><a class="tabLinks" href="#tab-1">Owned</a></li>
+     <li><a class="tabLinks" href="#tab-2">Sold</a></li>
+     <li><a class="tabLinks" href="#tab-3">Deceased</a></li>
+     <li><a class="tabLinks" href="#tab-4">Purchased</a></li>
+     <li><a class="tabLinks" href="#tab-5">Born on Farm</a></li>
    </ul>
    <div id="tab-1">
-     <h3>Owned Cows</h3>
-     
            <table class="table table-striped">
     <tr>
         <th>
@@ -44,7 +47,9 @@
         <th>
             <label>Breed</label>
         </th>
-        <!--<th></th>-->
+        <th>
+            <label>Treatment Status</label>
+        </th>
     </tr>
 
 @foreach (var item in Model)
@@ -59,12 +64,16 @@
         <td>
             @item.AnimalBreed
         </td>
-        <!--<td>
-           @* @Html.ActionLink("Edit", "Edit", new { id=item.AnimalId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.AnimalId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AnimalId }) |
-            @Html.ActionLink("Record Death", "CowDeath", new { id=item.TagNo }) *@
-        </td>-->
+        <th>
+            @foreach(var withItem in ViewBag.WithList)
+            {
+                if(withItem.Text == item.TagNo)
+                {
+               <a class="treatLink" data-tag="@withItem.Value" href="#"><img class="iconMargin" src="~/Images/SiteImages/treated2.png" width="20px" height="20px"/></a>
+                }
+            }        </th>
+  
+
     </tr>
     }
 }
@@ -73,7 +82,6 @@
 
    </div>
    <div id="tab-2">
-     <h3>Sold Cows</h3>
      <table class="table table-striped">
     <tr>
         <th>
@@ -116,7 +124,6 @@
 </table>
    </div>
    <div id="tab-3">
-     <h3>Deceased Cows</h3>
      <table class="table table-striped">
     <tr>
         <th>
@@ -159,7 +166,6 @@
 </table>
    </div>
    <div id="tab-4">
-     <h3>Purchased</h3>
                <table class="table table-striped">
     <tr>
         <th>
@@ -200,7 +206,6 @@
 
 
     <div id="tab-5">
-     <h3>Born on Farm</h3>
                <table class="table table-striped">
     <tr>
         <th>
@@ -237,7 +242,30 @@
 </table>
    </div>
  </div>
+        </div>
 
+
+<form id="overlay_form" class="overlay_form" style="display: none">
+    <h3 id="modalHead"></h3>
+
+    <div class="inlineData">
+    <label>Medicine Batch No</label>
+    <p id="batch"></p>
+        </div>
+
+    <div class="inlineData">
+    <label>Dosage Amount(ml)</label>
+    <p id="dosage"></p>
+        </div>
+
+
+        <br style="clear: both;" />
+
+    <a href="#" id="close" class="btn btn-default">Close</a>
+    <a href="#" class="btn btn-primary" id="btnView">View</a>
+
+
+</form>
 
 <p class="clear"></p>
 

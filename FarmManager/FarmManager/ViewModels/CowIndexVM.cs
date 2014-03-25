@@ -37,12 +37,15 @@ namespace FarmManager.ViewModels
         public Nullable<System.DateTime> DateBought { get; set; }
 
 
+        public Nullable<System.DateTime> TreatmentDate { get; set; }
 
-        //public Nullable<System.DateTime> DateSold { get; set; }
+        public Nullable<int> WithdrawalPeriod { get; set; }
 
-       /// public IEnumerable<SelectListItem> OwnedCows { get; set; }
+        public int? TreatmentId { get; set; }
 
-       // public IEnumerable<SelectListItem> SoldCows { get; set; }
+
+        public IEnumerable<SelectListItem> WithDrawalList { get; set; }
+
 
 
 

@@ -7,18 +7,16 @@
 }
 #tabs {
 	font-size: 90%;
-	margin: 20px 0;
 }
 #tabs ul {
 	float: left;
-	background: #fff;
 	width: 600px;
 	padding-top: 4px;
         color: #1481c1;
 
 }
 #tabs li {
-	margin-left: 8px;
+	margin-right: 8px;
 	list-style: none;
 }
 * html #tabs li {
@@ -30,6 +28,8 @@
 }
 #tabs ul li.active {
 	background: #1481c1;
+            border-radius: 10px;
+
 }
 #tabs ul li.active a {
 	color: #333333;
@@ -37,7 +37,6 @@
 
 }
 #tabs div {
-	background: white;
 	clear: both;
 	padding: 15px;
 	min-height: 200px;

@@ -1,0 +1,184 @@
+﻿@model FarmManager.ViewModels.MedicineDetailVM
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2 class="hTop">Details for <span class="tagHighLight">@Html.DisplayFor(model => model.MedicineName) (@Html.DisplayFor(model => model.BatchNo))</span></h2>
+
+<div id="divmedDetails">
+    <div class="detailsBanner">
+        <h3 class="detailsHead">Details</h3>
+    </div>
+    </div>
+    <div class="detailsBottom">
+        
+    <div class="inlineData">
+    
+    <label>
+        Batch No
+    </label>
+        <p>@Html.DisplayFor(model => model.BatchNo)</p>
+    </div>
+
+            <div class="inlineData">
+    
+    <label>
+        Expiry Date
+    </label>
+        <p>@Html.DisplayFor(model => model.ExpiryDate)</p>
+    </div>
+
+                    <div class="inlineData">
+    
+    <label>
+        Open Date
+    </label>
+        <p>@Html.DisplayFor(model => model.OpenDate)</p>
+    </div>
+
+
+                    <div class="inlineData">
+    
+    <label>
+        Supplied By
+    </label>
+        <p>@Html.DisplayFor(model => model.SuppliedBy)</p>
+    </div>
+
+                    <div class="inlineData">
+    
+    <label>
+        Purchase Date
+    </label>
+        <p>@Html.DisplayFor(model => model.DateOfPurchase)</p>
+    </div>
+
+                    <div class="inlineData">
+    
+    <label>
+        Bottle Size
+    </label>
+        <p>@Html.DisplayFor(model => model.BottleSize) ml</p>
+    </div>
+
+                <div class="inlineData">
+    
+    <label>
+        Remaining in Bottle
+    </label>
+        <p>@Html.DisplayFor(model => model.RemainingML) ml</p>
+    </div>
+
+
+                    <div class="inlineData">
+    
+    <label>
+        Treatments left (avg)
+    </label>
+        <p>@Html.DisplayFor(model => model.NumberOfUsesLeft)</p>
+    </div>
+
+                    <div class="inlineData">
+    
+    <label>
+        Notes
+    </label>
+        <p>@Html.DisplayFor(model => model.Notes)</p>
+    </div>
+
+
+
+<br style="clear: both;" />
+
+    </div>
+
+
+<div id="defaultMedDetails">
+
+    <div class="detailsBanner">
+        <h3 class="detailsHead">@Model.MedicineName</h3>
+    </div>
+    <div class="detailsBottom">
+        
+                    <div class="inlineData">
+    
+    <label>Name</label>
+        <p>@Html.DisplayFor(model => Model.MedicineName)</p>
+
+        <label>Brand</label>
+        <p>@Html.DisplayFor(model => Model.MedicineBrand)</p>
+
+        <label>Withdrawal Period(Days)</label>
+        <p>@Html.DisplayFor(model => Model.WithdrawalPeriod)</p>
+
+        <label>Breach Period(Weeks)</label>
+        <p>@Html.DisplayFor(model => Model.BreachPeriod)</p>
+
+        <label>Target Species</label>
+        <p>@Html.DisplayFor(model => Model.Species1)</p>
+
+        <label>Main use</label>
+        <p>@Html.DisplayFor(model => Model.MainUse)</p>
+
+        </div>
+
+        <label>Notes</label>
+        <p>@Html.DisplayFor(model => Model.DefNotes)</p>
+
+        </div>
+
+
+    <br style="clear: both;" />
+
+    </div>
+
+<div id="relatedTreatments">
+    <div class="detailsBanner">
+        <h3 class="detailsHead">Treatments with this medicine</h3>
+      </div>
+    <div class="detailsBottom">
+         <table class="table table-striped">
+        <tr>
+        <th>
+
+        </th>
+        <th>
+                        <label>Tag No</label>
+
+        </th>
+        <th>
+            <label>Dosage</label>
+        </th>
+    </tr>
+
+  @foreach (var animal in ViewBag.data)
+        {
+    <tr>
+        <td>
+                @Html.ActionLink("View", "Details", new { controller = "Treatment", id=animal.TreatmentId })
+
+
+        </td>
+        <td>
+            @animal.TagNo
+
+        </td>
+        <td>
+@animal.DosageAmount
+
+        </td>
+        
+    </tr>
+}
+
+</table>
+        </div>
+    </div>
+
+    <br style="clear: both;" />
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.UserMedicineID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

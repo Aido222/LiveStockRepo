@@ -21,6 +21,7 @@ namespace FarmManager.Models
         public Nullable<int> BreachPeriod { get; set; }
         public Nullable<int> TargetSpecies { get; set; }
         public string MainUse { get; set; }
+        public Nullable<int> AvgDosage { get; set; }
         public string Notes { get; set; }
     }
 }

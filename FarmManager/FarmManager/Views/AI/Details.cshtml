@@ -4,54 +4,52 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2 class="hTop">AI <span class="tagHighLight">@Html.DisplayFor(model => model.TagNo) (@Html.DisplayFor(model => model.Date))</span></h2>
 
-<fieldset>
-    <legend>AI</legend>
+    <p>
+                    @Html.ActionLink("Back", "Index",null, new { @class = "btn btn-primary" })
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.UserID)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.UserID)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Date)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Date)
+    </p>
+<div id="cowDetails">
+    <div class="detailsBanner">
+        <h3 class="detailsHead">Details</h3>
     </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.TagNo)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.TagNo)
-    </div>
+    <div class="detailsBottom">
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.BullID)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.BullID)
-    </div>
+        <div class="inlineData">
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.AIOperator)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.AIOperator)
-    </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Born)
+            <label>Tag No</label>
+            <p>@Html.DisplayFor(model => model.TagNo)</p>
+        </div>
+
+        <div class="inlineData">
+            <label>Date</label>
+            <p>@Html.DisplayFor(model => model.Date)</p>
+        </div>
+
+        <div class="inlineData">
+            <label>AI Operator</label>
+            <p>@Html.DisplayFor(model => model.AIOperator)</p>
+        </div>
+
+        <div class="inlineData">
+            <label>Expected Due Date</label>
+            <p>@Html.DisplayFor(model => model.ExpectedDueDate)</p>
+        </div>
+
+        <div class="inlineData">
+            <label>Is Born</label>
+            <p>@Model.Born</p>
+        </div>
+
+
+
+        <br style="clear: both;" />
+
     </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Born)
-    </div>
-</fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.AIID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+            </div>
+
+
+

@@ -1,0 +1,166 @@
+﻿@model IEnumerable<FarmManager.ViewModels.MedicineIndexVM>
+
+@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/tabStyles.css" rel="stylesheet" />
+
+
+<h2>Medicines</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+    <div class="detailsBanner">
+        <h3 id="cowStatusHead" class="detailsHead">All Medicines</h3>
+    </div>
+
+    <div class="detailsBottom">
+<div id="tabs">
+       <ul>
+     <li><a class="tabLinks" href="#tab-1">All Medicines</a></li>
+     <li><a class="tabLinks" href="#tab-2">Expired</a></li>
+     <li><a class="tabLinks" href="#tab-3">Carry a Withdrawal</a></li>
+   </ul>
+       <div id="tab-1">
+
+<table class="table table-striped">
+        <tr>
+        <th>
+            <label>Medicine Name</label>
+        </th>
+        <th>
+            <label>Batch No</label>
+        </th>
+        <th>
+            <label>Expiry Date</label>
+        </th>
+        <th>
+            <label>Bottle Size(ml)</label>
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(@item.MedicineName, "Details", new { id=item.UserMedicineID })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BatchNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExpiryDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BottleSize)
+        </td>
+    </tr>
+}
+
+</table>
+
+           </div>
+
+     <div id="tab-2">
+         <table class="table table-striped">
+        <tr>
+        <th>
+            <label>Medicine Name</label>
+        </th>
+        <th>
+            <label>Batch No</label>
+        </th>
+        <th>
+            <label>Expiry Date</label>
+        </th>
+        <th>
+            <label>Bottle Size(ml)</label>
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        @if(item.ExpiryDate < DateTime.Now)
+        {
+        <td>
+            @Html.ActionLink(@item.MedicineName, "Details", new { id=item.UserMedicineID })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BatchNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExpiryDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BottleSize)
+        </td>
+        }
+    </tr>
+}
+
+</table>
+         </div>
+
+
+
+
+
+     <div id="tab-3">
+         <table class="table table-striped">
+        <tr>
+        <th>
+            <label>Medicine Name</label>
+        </th>
+        <th>
+            <label>Batch No</label>
+        </th>
+        <th>
+            <label>Withdrawal Period(Days)</label>
+        </th>
+        <th>
+            <label>Bottle Size(ml)</label>
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        @if(item.WithdrawalPeriod != 0)
+        {
+        <td>
+            @Html.ActionLink(@item.MedicineName, "Details", new { id=item.UserMedicineID })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BatchNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WithdrawalPeriod)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BottleSize)
+        </td>
+        }
+    </tr>
+}
+
+</table>
+         </div>
+
+    </div>
+
+
+
+
+
+
+        
+
+
+
+        </div>
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery-1.9.1.min.js")
+    @Scripts.Render("~/Scripts/jquery-1.9.1.js")
+
+        @Scripts.Render("~/Scripts/Mine/Cowindex.js")
+
+}

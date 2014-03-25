@@ -106,6 +106,7 @@
           <ScalarProperty Name="BreachPeriod" ColumnName="BreachPeriod" />
           <ScalarProperty Name="TargetSpecies" ColumnName="TargetSpecies" />
           <ScalarProperty Name="MainUse" ColumnName="MainUse" />
+          <ScalarProperty Name="AvgDosage" ColumnName="AvgDosage" />
           <ScalarProperty Name="Notes" ColumnName="Notes" />
         </MappingFragment>
       </EntityTypeMapping>

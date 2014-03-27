@@ -12,8 +12,14 @@
 {
     @Html.ActionLink("New Artificial Insemination", "Create", new { controller = "AI",  id = Model.TagNo }, new { @class = "btn btn-primary" }) <span>  </span>
     @Html.ActionLink("Sell Animal", "Sale", new { id = Model.TagNo }, new { @class = "btn btn-primary" }) <span> </span>
-    @Html.ActionLink("Record Death", "CowDeath", new { id = Model.TagNo }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Record Death", "CowDeath", new { id = Model.TagNo }, new { @class = "btn btn-primary" })<span></span>
+    if(Model.BornOnFarm == false)
+    { @Html.ActionLink("Edit Details", "Edit", new { id = Model.TagNo }, new { @class = "btn btn-primary" })
+}
 
+    if(Model.BornOnFarm == true)
+    { @Html.ActionLink("Edit Details", "EditBirth", new { id = Model.TagNo }, new { @class = "btn btn-primary" })
+}
 }
 
 <div id="statusWarn" class="alert alert-warning collapse">@Html.HiddenFor(model => model.OwnershipStatus) @Html.HiddenFor(model => model.TagNo)<p class="inline" id="statusMessage"> </p> <a id="statusLink" href="#" >hu</a></div>
@@ -40,7 +46,7 @@
             </div>
             
             <div class="display-field">
-                <p>Born on farm</p>
+               <a id="bornLink" href="#" >Born on Farm</a>
             </div>
             </div>
             
@@ -517,6 +523,10 @@
 
     <a href="#" id="closePurchase" class="btn btn-default">Close</a>
 </form>
+
+
+
+
 
 
 <p>

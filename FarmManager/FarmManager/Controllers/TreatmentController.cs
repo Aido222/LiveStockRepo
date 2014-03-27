@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using FarmManager.Models;
 using FarmManager.ViewModels;
 using WebMatrix.WebData;
+using FarmManager.Filters;
 
 namespace FarmManager.Controllers
 {
@@ -106,25 +107,94 @@ namespace FarmManager.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View();
+            var treatDetails = (from treat in db.Treatments
+                                where treat.TreatmentId == id && treat.UserID == WebSecurity.CurrentUserId
+                                select treat).FirstOrDefault();
+
+
+            NewTreatmentVM editTreat = new NewTreatmentVM();
+
+            editTreat.Administrator = treatDetails.Administrator;
+            editTreat.DosageAmount = treatDetails.DosageAmount;
+            editTreat.Notes = treatDetails.Notes;
+            editTreat.PrescribingVet = treatDetails.PrescribingVet;
+            editTreat.TreatmentDate = treatDetails.TreatmentDate;
+            editTreat.UserMedicineID = treatDetails.UserMedicineID;
+            editTreat.TagNo = treatDetails.TagNo;
+            editTreat.TreatmentId = treatDetails.TreatmentId;
+
+
+
+            List<SelectListItem> Medicines = new List<SelectListItem>();
+            var medicineList = (from userMed in db.UserMedicines
+                                join DefMed in db.DefaultMedicines on userMed.MedicineID equals DefMed.MedicineID
+                                where userMed.ExpiryDate > DateTime.Now && userMed.UserID == (int)WebSecurity.CurrentUserId
+                                select new { userMed, DefMed }).ToArray();
+            for (int i = 0; i < medicineList.Length; i++)
+            {
+                Medicines.Add(new SelectListItem
+                {
+                    Text = medicineList[i].DefMed.MedicineName + " (" + medicineList[i].userMed.BatchNo + ")",
+                    Value = medicineList[i].userMed.UserMedicineID.ToString()
+                });
+            }
+
+
+            
+            editTreat.UserMedList = Medicines;
+
+
+
+
+
+            var medName = (from treat in db.Treatments
+                           join umed in db.UserMedicines on treat.UserMedicineID equals umed.UserMedicineID
+                           join dmed in db.DefaultMedicines on umed.MedicineID equals dmed.MedicineID
+                                where treat.TreatmentId == id && treat.UserID == WebSecurity.CurrentUserId
+                                select dmed).FirstOrDefault();
+
+            ViewBag.MedName = medName.MedicineName;
+
+            return View(editTreat);
         }
 
         //
         // POST: /Treatment/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(NewTreatmentVM editTreat)
         {
+
+
+            var query =
+            from treat in db.Treatments
+            where treat.TreatmentId == editTreat.TreatmentId
+            select treat;
+
+            foreach (Treatment treat in query)
+            {  // TODO: Add update logic here
+
+                treat.Administrator = editTreat.Administrator;
+                treat.DosageAmount = editTreat.DosageAmount;
+                treat.Notes = editTreat.Notes;
+                treat.PrescribingVet = editTreat.PrescribingVet;
+                treat.TreatmentDate = editTreat.TreatmentDate;
+                treat.UserMedicineID = editTreat.UserMedicineID;
+
+            }
+
             try
             {
-                // TODO: Add update logic here
+                db.SaveChanges();
 
-                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return HttpNotFound();
+
             }
+
+            return RedirectToAction("Details/" + editTreat.TreatmentId);
         }
 
         //
@@ -172,7 +242,7 @@ namespace FarmManager.Controllers
 
             List<SelectListItem> Medicines = new List<SelectListItem>();
             var medicineList = (from userMed in db.UserMedicines
-                                join DefMed in db.DefaultMedicines on userMed.UserMedicineID equals DefMed.MedicineID
+                                join DefMed in db.DefaultMedicines on userMed.MedicineID equals DefMed.MedicineID
                                 where userMed.ExpiryDate > DateTime.Now && userMed.UserID == (int)WebSecurity.CurrentUserId
                                 select new { userMed, DefMed }).ToArray();
             for (int i = 0; i < medicineList.Length; i++)

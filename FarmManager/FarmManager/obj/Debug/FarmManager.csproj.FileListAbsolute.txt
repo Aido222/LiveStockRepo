@@ -338,6 +338,6 @@ C:\Users\Adrian\Documents\GitHub\LiveStockRepo\FarmManager\FarmManager\bin\DotNe
 C:\Users\Adrian\Documents\GitHub\LiveStockRepo\FarmManager\FarmManager\bin\DotNetOpenAuth.OAuth.xml
 C:\Users\Adrian\Documents\GitHub\LiveStockRepo\FarmManager\FarmManager\bin\DotNetOpenAuth.OpenId.xml
 C:\Users\Adrian\Documents\GitHub\LiveStockRepo\FarmManager\FarmManager\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
-C:\Users\Adrian\Documents\GitHub\LiveStockRepo\FarmManager\FarmManager\obj\Debug\FarmManager.csprojResolveAssemblyReference.cache
 C:\Users\Adrian\Documents\GitHub\LiveStockRepo\FarmManager\FarmManager\obj\Debug\FarmManager.dll
 C:\Users\Adrian\Documents\GitHub\LiveStockRepo\FarmManager\FarmManager\obj\Debug\FarmManager.pdb
+C:\Users\Adrian\Documents\GitHub\LiveStockRepo\FarmManager\FarmManager\obj\Debug\FarmManager.csprojResolveAssemblyReference.cache

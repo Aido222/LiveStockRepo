@@ -8,6 +8,9 @@ namespace FarmManager.ViewModels
 {
     public class NewTreatmentVM
     {
+
+        public int TreatmentId { get; set; }
+
         public Nullable<int> UserMedicineID { get; set; }
         public string TagNo { get; set; }
         public Nullable<int> UserID { get; set; }

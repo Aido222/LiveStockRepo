@@ -374,30 +374,386 @@ namespace FarmManager.Controllers
         //
         // GET: /Cows/Edit/5
         [Authorize]
-        public ActionResult Edit(int id = 0)
+        public ActionResult Edit(string id)
         {
-            Animal animal = db.Animals.Find(id);
-            if (animal == null)
+            //Animal animal = db.Animals.Find(id);
+            //if (animal == null)
+            //{
+            //    return HttpNotFound();
+            //}
+
+            Animal myanimal = (from animals in db.Animals
+                               where animals.TagNo == id && animals.UserId == WebSecurity.CurrentUserId
+                               select animals).FirstOrDefault();
+
+            Purchase myPurch = (from purch in db.Purchases
+                                where purch.TagNo == id && purch.UserId == WebSecurity.CurrentUserId
+                                select purch).FirstOrDefault();
+
+            CowPurchVM editCow = new CowPurchVM();
+
+            editCow.TagNo = myanimal.TagNo;
+            editCow.BirthDate = myanimal.DOB;
+            editCow.Breed = Convert.ToString(myanimal.AnimalBreed);
+
+            if (myanimal.Sex == false)
             {
-                return HttpNotFound();
+                editCow.Sex = "0";
             }
-            return View(animal);
+            else
+            {
+                editCow.Sex = "1";
+            }
+
+            editCow.BoughtFrom = myPurch.BoughtFrom;
+            editCow.Location = myPurch.Location;
+            editCow.Price = myPurch.Price;
+            editCow.Notes = myPurch.Notes;
+            
+
+
+
+            List<SelectListItem> BreedList = new List<SelectListItem>();
+            BreedList.Add(new SelectListItem { Text = "Please select", Value = "Please select" });
+            var breedsList = (from b in db.Breeds where b.SpeciesID == 2 select b).ToArray();
+            for (int i = 0; i < breedsList.Length; i++)
+            {
+                BreedList.Add(new SelectListItem
+                {
+                    Text = breedsList[i].Breed1,
+                    Value = breedsList[i].id.ToString(),
+                });
+            }
+
+            editCow.BreedList = BreedList;
+ 
+
+            return View(editCow);
         }
 
         //
         // POST: /Cows/Edit/5
         [Authorize]
         [HttpPost]
-        public ActionResult Edit(Animal animal)
+        public ActionResult Edit(CowPurchVM animal)
         {
-            if (ModelState.IsValid)
+            var queryDetails = from a in db.Animals
+                               where a.TagNo == animal.TagNo
+                               select a;
+
+
+            foreach (Animal a in queryDetails)
             {
-                db.Entry(animal).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                a.AnimalBreed = Convert.ToInt32(animal.Breed);
+                a.DOB = animal.BirthDate;
+                a.BornOnFarm = false;
+
+                if (Convert.ToInt32(animal.Sex) == 0)
+                {
+                    a.Sex = false;
+                }
+                else
+                {
+                    a.Sex = true;
+                }
+
+                a.DOB = animal.BirthDate;
             }
-            return View(animal);
+
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                return HttpNotFound();
+
+            
+            
+            }
+
+
+
+
+
+
+            var queryPurch = from p in db.Purchases
+                               where p.TagNo == animal.TagNo
+                               select p;
+
+
+
+            foreach (Purchase p in queryPurch)
+            {
+                p.BoughtFrom = animal.BoughtFrom;
+                p.Location = animal.Location;
+                p.Notes = animal.Notes;
+                p.Price = animal.Price;
+            }
+
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                return HttpNotFound();
+
+
+
+            }
+
+
+
+            return RedirectToAction("Index");
         }
+
+
+
+
+
+        [HttpGet]
+        public ActionResult EditBirth(string id)
+        {
+            //Animal animal = db.Animals.Find(id);
+            //if (animal == null)
+            //{
+            //    return HttpNotFound();
+            //}
+
+            Animal myanimal = (from animals in db.Animals
+                               where animals.TagNo == id && animals.UserId == WebSecurity.CurrentUserId
+                               select animals).FirstOrDefault();
+
+            Birth myBirth = (from birth in db.Births
+                                where birth.TagNo == id && birth.UserId == WebSecurity.CurrentUserId
+                                select birth).FirstOrDefault();
+
+            CowBirthVM editCow = new CowBirthVM();
+
+            editCow.TagNo = myanimal.TagNo;
+            editCow.BirthDate = myanimal.DOB;
+            editCow.Breed = myanimal.AnimalBreed.ToString();
+            editCow.MotherTagNo = myBirth.MotherTagNo;
+            editCow.SireTagNo = myBirth.SireTagNo;
+
+
+            if (myanimal.Sex == false)
+            {
+                editCow.Sex = "0";
+            }
+            else
+            {
+                editCow.Sex = "1";
+            }
+
+
+
+
+            List<SelectListItem> BreedList = new List<SelectListItem>();
+            BreedList.Add(new SelectListItem { Text = "Please select", Value = "Please Select" });
+            var breedsList = (from b in db.Breeds where b.SpeciesID == 2 select b).ToArray();
+            for (int i = 0; i < breedsList.Length; i++)
+            {
+                BreedList.Add(new SelectListItem
+                {
+                    Text = breedsList[i].Breed1,
+                    Value = breedsList[i].id.ToString(),
+                });
+            }
+
+            editCow.BreedList = BreedList;
+
+
+            //Cow List
+            List<SelectListItem> MotherList = new List<SelectListItem>();
+            MotherList.Add(new SelectListItem { Text = "Please select", Value = "Please Select" });
+            var motherList = (from b in db.Animals
+                              where b.Sex == false && b.UserId == (int)WebSecurity.CurrentUserId
+                              select b).ToArray();
+            //foreach (var item in motherList)
+            //{
+            //  MotherList.Add(new SelectListItem { Text = item.TagNo.ToString(), Value = item.TagNo.ToString() });
+            //}
+            for (int j = 0; j < motherList.Length; j++)
+            {
+                MotherList.Add(new SelectListItem
+                {
+                    //Assign Values to text
+                    Text = motherList[j].TagNo,
+                    Value = motherList[j].TagNo.ToString(),
+                    // Selected = (motherList[i].AnimalId == 1)
+                });
+            }
+
+
+            editCow.MotherTagList = MotherList;
+
+
+
+
+
+            //Bull List
+            List<SelectListItem> BullList = new List<SelectListItem>();
+            BullList.Add(new SelectListItem { Text = "Please select", Value = "Please Select" });
+            var bullList = (from b in db.Animals
+                            where b.Sex == true && b.UserId == (int)WebSecurity.CurrentUserId
+                            select b).ToArray();
+            for (int i = 0; i < bullList.Length; i++)
+            {
+                BullList.Add(new SelectListItem
+                {
+                    Text = bullList[i].TagNo,
+                    Value = bullList[i].TagNo.ToString(),
+                    //Selected = (bullList[i].AnimalId == 1)
+                });
+            }
+
+            editCow.SireTagList = BullList;
+
+
+            //Sneds ai list to view
+            DateTime upperDate = DateTime.Now.AddMonths(-10);
+            DateTime lowerDate = DateTime.Now.AddMonths(-4);
+
+            List<SelectListItem> AIList = new List<SelectListItem>();
+            AIList.Add(new SelectListItem { Text = "Please select", Value = "Please Select" });
+            var aiList = (from b in db.AIs
+                          where b.UserID == (int)WebSecurity.CurrentUserId && b.Date > upperDate && b.Date < lowerDate where b.Born == false
+                          select b).ToArray();
+            for (int i = 0; i < aiList.Length; i++)
+            {
+                AIList.Add(new SelectListItem
+                {
+                    Text = aiList[i].TagNo + " (" + aiList[i].Date + ")",
+                    Value = aiList[i].AIID.ToString(),
+                    //Selected = (aiList[i].TagNo.ToString == 1)
+
+
+                });
+            }
+
+            editCow.AIList = AIList;
+
+
+            return View(editCow);
+        }
+
+
+
+        [HttpPost]
+        public ActionResult EditBirth(CowBirthVM editCow, FormCollection fCollection)
+        {
+
+            var queryDetails = from a in db.Animals
+                               where a.TagNo == editCow.TagNo
+                               select a;
+
+
+            foreach (Animal a in queryDetails)
+            {
+                a.AnimalBreed = Convert.ToInt32(editCow.Breed);
+                a.DOB = editCow.BirthDate;
+                a.BornOnFarm = true;
+
+                if (Convert.ToInt32(editCow.Sex) == 0)
+                {
+                    a.Sex = false;
+                }
+                else
+                {
+                    a.Sex = true;
+                }
+
+                a.DOB = editCow.BirthDate;
+            }
+
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                return HttpNotFound();
+
+
+            }
+
+
+
+
+            var queryBirth= from b in db.Births
+                               where b.TagNo == editCow.TagNo
+                               select b;
+
+            int selectedInseminationType = Convert.ToInt32(fCollection["InseminationType"]);
+
+
+            foreach (Birth b in queryBirth)
+            {
+
+                if (selectedInseminationType == 0)
+                {
+                    b.MotherTagNo = editCow.MotherTagNo;
+                    b.SireTagNo = editCow.SireTagNo;
+                }
+                else
+                {
+                    b.AIID = Convert.ToInt32(editCow.AICow);
+
+                    //works
+                    var aiRecord = from bAI in db.AIs
+                                   where bAI.AIID == b.AIID
+                                   select bAI;
+
+               foreach (AI ai in aiRecord)
+                {
+                    ai.Born = true;
+
+                }
+
+                }
+
+                if (Convert.ToInt32(editCow.Difficult) == 1)
+                {
+                    b.Difficult = true;
+                }
+                else
+                {
+                    b.Difficult = false;
+                }
+
+
+
+
+            }
+
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                return HttpNotFound();
+
+
+            }
+
+            return RedirectToAction("Index");
+
+        }
+
+                    
+
+            
+            
+
+
+
 
         //
         // GET: /Cows/Delete/5
@@ -607,7 +963,7 @@ namespace FarmManager.Controllers
             List<SelectListItem> AIList = new List<SelectListItem>();
             AIList.Add(new SelectListItem { Text = "Please select", Value = "Please Select" });
             var aiList = (from b in db.AIs
-                          where b.UserID == (int)WebSecurity.CurrentUserId && b.Date > upperDate && b.Date < lowerDate
+                          where b.UserID == (int)WebSecurity.CurrentUserId && b.Date > upperDate && b.Date < lowerDate where b.Born == false
                             select b).ToArray();
             for (int i = 0; i < aiList.Length; i++)
             {
@@ -979,6 +1335,10 @@ namespace FarmManager.Controllers
             
             return Json(myArray);
         }
+
+
+
+     
 
 
 

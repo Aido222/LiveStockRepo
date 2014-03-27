@@ -21,6 +21,15 @@
         <div id="SameTagWarning" class="alert alert-danger collapse">You already own an animal with this Tag Number</div>
         <div id="EnterTagWarning" class="alert alert-danger collapse">Please enter the calf tag number</div>
 
+                <div class="editor-label">
+            <label>Re enter Tag No</label>
+        </div>
+        <div class="editor-field">
+            <input  id="confirmTag" type="text" class="form-control" />
+        </div>
+        <div id="ReEnterTagWarning" class="alert alert-danger collapse">The Tag numbers do not match</div>
+
+
         <div class="editor-label">
             @Html.LabelFor(model => model.Breed)
         </div>

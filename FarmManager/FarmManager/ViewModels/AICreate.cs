@@ -8,6 +8,8 @@ namespace FarmManager.ViewModels
 {
     public class AICreate
     {
+        public int AIID { get; set; }
+
         public Nullable<int> UserID { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public string TagNo { get; set; }

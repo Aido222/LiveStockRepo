@@ -1,72 +1,75 @@
-﻿@model FarmManager.Models.AI
+﻿@model FarmManager.ViewModels.AICreate
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit AI";
 }
 
-<h2>Edit</h2>
+<link href="~/Content/datepicker.css" rel="stylesheet" />
 
-@using (Html.BeginForm()) {
-    @Html.ValidationSummary(true)
+<h2 class="hTop">Edit AI for <span class="tagHighLight">@Html.DisplayFor(model => model.TagNo)</span></h2>
 
-    <fieldset>
-        <legend>AI</legend>
 
-        @Html.HiddenFor(model => model.AIID)
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.UserID)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.UserID)
-            @Html.ValidationMessageFor(model => model.UserID)
-        </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Date)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Date)
-            @Html.ValidationMessageFor(model => model.Date)
-        </div>
+@using (Html.BeginForm()){
+        @Html.ValidationSummary(true)
+
+            <div id="formMyStyle">
+
+
+
+    @Html.HiddenFor(model => model.TagNo)
+
+    @Html.HiddenFor(model => model.AIID)
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.TagNo)
+            <label>Insemination Date</label>
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.TagNo)
-            @Html.ValidationMessageFor(model => model.TagNo)
+            <input name="Date" class="datepicker form-control" id="Date" size="16" type="text" value="Please select" readonly="true">
         </div>
+        <div id="enterDateWarning" class="alert alert-danger collapse">Please enter the AI date</div>
+
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.BullID)
+            <label>Bull ID</label>
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.BullID)
-            @Html.ValidationMessageFor(model => model.BullID)
+            @Html.TextBoxFor(model => model.BullID, new { @class = "form-control" })
         </div>
+        <div id="enterBullIDWarn" class="alert alert-danger collapse">Please enter the Bulls ID</div>
+
+    
+            <div class="editor-label">
+                <label>Bull Breed</label>
+        </div>
+        <div class="editor-field">
+           @Html.DropDownListFor(model => model.Breed, Model.BreedList, new { @class = "form-control" })
+        </div>
+                        <div id="selectBreedWarning" class="alert alert-danger collapse">Please enter the Bulls Breed</div>
+
+    
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.AIOperator)
+            <label>AI Operator</label>
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.AIOperator)
-            @Html.ValidationMessageFor(model => model.AIOperator)
+            @Html.TextBoxFor(model => model.AIOperator, new { @class = "form-control" })
         </div>
+        <div id="selectAIOperatorWarning" class="alert alert-danger collapse">Please enter the AI Operator</div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Born)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Born)
-            @Html.ValidationMessageFor(model => model.Born)
-        </div>
+    <br />
 
         <p>
-            <input type="submit" value="Save" />
+            <input id="btnSubmit" type="submit" value="Create" class="btn btn-success"/>
+            @Html.ActionLink("Cancel", "Details", "Cows", new { controller = "AI", id = Model.TagNo }, new { @class = "btn btn-default" })
+
         </p>
-    </fieldset>
+
+                            </div>
+
 }
+
 
 <div>
     @Html.ActionLink("Back to List", "Index")
@@ -74,4 +77,8 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    @Scripts.Render("~/Scripts/Mine/AICreate.js")
+    @Scripts.Render("~/Scripts/bootstrap-datepicker.js")
+
 }

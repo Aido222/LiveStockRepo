@@ -42,6 +42,20 @@
         }
      
 
+        
+
+
+        if ($("#confirmTag").val() != $("#TagNo").val()) {
+            $("#ReEnterTagWarning").slideDown("slow");
+
+            event.preventDefault();
+
+        }
+        else {
+            $("#ReEnterTagWarning").slideUp("slow");
+
+        }
+
 
         if ($("#TagNo").val() == "") {
             $("#EnterTagWarning").slideDown("slow");

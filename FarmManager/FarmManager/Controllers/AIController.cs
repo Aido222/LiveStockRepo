@@ -95,11 +95,39 @@ namespace FarmManager.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            AI ai = db.AIs.Find(id);
-            if (ai == null)
+            var aiQuery = (from a in db.AIs
+                               where a.AIID == id && a.UserID == WebSecurity.CurrentUserId
+                               select a).FirstOrDefault();
+
+            AICreate ai = new AICreate();
+
+            ai.AIOperator = aiQuery.AIOperator;
+            ai.Breed = aiQuery.Breed;
+            ai.BullID = aiQuery.BullID;
+            ai.Date = aiQuery.Date;
+            ai.TagNo = aiQuery.TagNo;
+            ai.AIID = id;
+
+            //AI ai = db.AIs.Find(id);
+            //if (ai == null)
+            //{
+            //    return HttpNotFound();
+            //}
+
+            List<SelectListItem> BreedList = new List<SelectListItem>();
+            BreedList.Add(new SelectListItem { Text = "Please select", Value = "Please Select" });
+            var breedsList = (from b in db.Breeds where b.SpeciesID == 2 select b).ToArray();
+            for (int i = 0; i < breedsList.Length; i++)
             {
-                return HttpNotFound();
+                BreedList.Add(new SelectListItem
+                {
+                    Text = breedsList[i].Breed1,
+                    Value = breedsList[i].id.ToString(),
+                });
             }
+
+            ai.BreedList = BreedList;
+
             return View(ai);
         }
 
@@ -107,15 +135,45 @@ namespace FarmManager.Controllers
         // POST: /AI/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(AI ai)
+        public ActionResult Edit(AICreate ai)
         {
-            if (ModelState.IsValid)
+
+
+            var queryAI = from a in db.AIs
+                               where a.AIID == ai.AIID
+                               select a;
+
+
+            foreach (AI a in queryAI)
             {
-                db.Entry(ai).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                a.AIOperator = ai.AIOperator;
+                a.Breed = ai.Breed;
+                a.BullID = ai.BullID;
+                a.Date = ai.Date;
+                a.ExpectedDueDate = ai.Date.Value.AddDays(273);
             }
-            return View(ai);
+
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                return HttpNotFound();
+
+
+
+            }
+
+
+            //if (ModelState.IsValid)
+            //{
+            //    db.Entry(ai).State = EntityState.Modified;
+            //    db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
+            return RedirectToAction("Index");
         }
 
         //

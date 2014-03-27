@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using FarmManager.Filters;
 using FarmManager.Models;
 using FarmManager.ViewModels;
+using FarmManager.ViewModels.NewFolder1;
 using WebMatrix.WebData;
 
 namespace FarmManager.Controllers
@@ -40,6 +41,7 @@ namespace FarmManager.Controllers
 
 
 
+            
 
             return View(medList);
         }
@@ -131,23 +133,61 @@ namespace FarmManager.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            CreateMedicineVM createMed = new CreateMedicineVM();
+
+
+            List<SelectListItem> DefMedList = new List<SelectListItem>();
+            var defmedList = (from dmed in db.DefaultMedicines
+                              select dmed).ToArray();
+            for (int i = 0; i < defmedList.Length; i++)
+            {
+                DefMedList.Add(new SelectListItem
+                {
+                    Text = defmedList[i].MedicineBrand + ", " + defmedList[i].MedicineName,
+                    Value = Convert.ToString(defmedList[i].MedicineID),
+                });
+            }
+
+            createMed.MedList = DefMedList;
+
+
+            return View(createMed);
         }
 
         //
         // POST: /Medicines/Create
 
         [HttpPost]
-        public ActionResult Create(UserMedicine usermedicine)
+        public ActionResult Create(CreateMedicineVM usermedicineVM)
         {
-            if (ModelState.IsValid)
-            {
-                db.UserMedicines.Add(usermedicine);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
 
-            return View(usermedicine);
+            UserMedicine userMedicine = new UserMedicine();
+
+            userMedicine.MedicineID = usermedicineVM.MedicineID;
+            userMedicine.UserID = WebSecurity.CurrentUserId;
+            userMedicine.BatchNo = usermedicineVM.BatchNo;
+            userMedicine.ExpiryDate = usermedicineVM.ExpiryDate;
+            userMedicine.OpenDate = usermedicineVM.OpenDate;
+            userMedicine.BottleSize = usermedicineVM.BottleSize;
+            userMedicine.SuppliedBy = usermedicineVM.SuppliedBy;
+            userMedicine.DateOfPurchase = usermedicineVM.DateOfPurchase;
+            userMedicine.Notes = usermedicineVM.Notes;
+
+            db.UserMedicines.Add(userMedicine);
+            db.SaveChanges();
+
+
+            //if (ModelState.IsValid)
+            //{
+            //    db.UserMedicines.Add(usermedicine);
+            //    db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
+
+
+
+
+            return RedirectToAction("Index");
         }
 
         //
@@ -155,11 +195,43 @@ namespace FarmManager.Controllers
 
         public ActionResult Edit(int id = 0)
         {
+            List<SelectListItem> DefMedList = new List<SelectListItem>();
+            var defmedList = (from dmed in db.DefaultMedicines
+                              select dmed).ToArray();
+            for (int i = 0; i < defmedList.Length; i++)
+            {
+                DefMedList.Add(new SelectListItem
+                {
+                    Text = defmedList[i].MedicineBrand + ", " + defmedList[i].MedicineName,
+                    Value = Convert.ToString(defmedList[i].MedicineID),
+                });
+            }
+
+            
+            ViewBag.MedList = DefMedList;
+
+
+
+
+
+
             UserMedicine usermedicine = db.UserMedicines.Find(id);
             if (usermedicine == null)
             {
                 return HttpNotFound();
             }
+
+
+
+
+            var nameMed = (from umed in db.UserMedicines
+                           join defmed in db.DefaultMedicines on umed.MedicineID equals defmed.MedicineID
+                           where umed.UserMedicineID == id
+                           select defmed).FirstOrDefault();
+
+            ViewBag.MedName = nameMed.MedicineName;
+
+
             return View(usermedicine);
         }
 
@@ -169,13 +241,42 @@ namespace FarmManager.Controllers
         [HttpPost]
         public ActionResult Edit(UserMedicine usermedicine)
         {
-            if (ModelState.IsValid)
+
+            var query =
+            from umed in db.UserMedicines
+            where umed.UserMedicineID == usermedicine.UserMedicineID
+            select umed;
+
+
+            foreach (UserMedicine umed in query)
             {
-                db.Entry(usermedicine).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                umed.BatchNo = usermedicine.BatchNo;
+                umed.ExpiryDate = usermedicine.ExpiryDate;
+                umed.BottleSize = usermedicine.BottleSize;
+                umed.SuppliedBy = usermedicine.SuppliedBy;
+                umed.DateOfPurchase = usermedicine.DateOfPurchase;
+                umed.Notes = usermedicine.Notes;
+                // Insert any additional changes to column values.
             }
-            return View(usermedicine);
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                return HttpNotFound();
+
+            }
+
+            
+            //if (ModelState.IsValid)
+            //{
+            //    db.Entry(usermedicine).State = EntityState.Modified;
+            //    db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
+            return RedirectToAction("Details/" + usermedicine.UserMedicineID);
         }
 
         //

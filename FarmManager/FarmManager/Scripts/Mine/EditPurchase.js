@@ -9,21 +9,21 @@
     });
 
 
-   /* $('.datepicker').datepicker();
-
-    $('#DOB').datepicker()
-  .on('changeDate', function (ev) {
-      if (ev.date.valueOf() > new Date()) {
-          $("#greaterDateWarning").slideDown("slow");
-
-          DateOkCheck = false;
-      }
-      else {
-          $("#greaterDateWarning").slideUp("slow");
-
-          DateOkCheck = true;
-      }
-  });*/
+    /* $('.datepicker').datepicker();
+ 
+     $('#DOB').datepicker()
+   .on('changeDate', function (ev) {
+       if (ev.date.valueOf() > new Date()) {
+           $("#greaterDateWarning").slideDown("slow");
+ 
+           DateOkCheck = false;
+       }
+       else {
+           $("#greaterDateWarning").slideUp("slow");
+ 
+           DateOkCheck = true;
+       }
+   });*/
 
 
 
@@ -56,7 +56,8 @@
 
 
 
-    $("form").on('submit', function (e) {
+    $("#btnSubmit").click(function () {
+
         $("#Sex option:selected").text();
 
 
@@ -65,19 +66,10 @@
             event.preventDefault();
         }
 
+
+
+
         
-
-
-        if ($("#confirmTag").val() != $("#TagNo").val()) {
-            $("#ReEnterTagWarning").slideDown("slow");
-
-            event.preventDefault();
-
-        }
-        else {
-            $("#ReEnterTagWarning").slideUp("slow");
-
-        }
 
 
         if ($("#TagNo").val() == "") {
@@ -132,7 +124,7 @@
 
 
 
-      
+
 
 
 
@@ -172,7 +164,7 @@
             event.preventDefault();
         }
 
-        
+
     });
 
 });

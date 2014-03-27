@@ -6,6 +6,9 @@
 
 <h2 class="hTop">Details for <span class="tagHighLight">@Html.DisplayFor(model => model.MedicineName) (@Html.DisplayFor(model => model.BatchNo))</span></h2>
 
+    @Html.ActionLink("Edit Medicine", "Edit", new { id = Model.UserMedicineID }, new { @class = "btn btn-primary" })
+<br />
+<br />
 <div id="divmedDetails">
     <div class="detailsBanner">
         <h3 class="detailsHead">Details</h3>

@@ -248,6 +248,7 @@
     <Compile Include="ViewModels\CowPurchVM.cs" />
     <Compile Include="ViewModels\MedicineDetailVM.cs" />
     <Compile Include="ViewModels\MedicineIndexVM.cs" />
+    <Compile Include="ViewModels\CreateMedicineVM.cs" />
     <Compile Include="ViewModels\NewTreatmentVM.cs" />
     <Compile Include="ViewModels\TreatmentDetailsVM.cs" />
   </ItemGroup>
@@ -358,6 +359,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
+    <Content Include="Scripts\Mine\AddMedicine.js" />
     <Content Include="Scripts\Mine\AddNote.js" />
     <Content Include="Scripts\Mine\AddPurchase.js" />
     <Content Include="Scripts\Mine\AICreate.js" />
@@ -365,6 +367,8 @@
     <Content Include="Scripts\Mine\CowDetails.js" />
     <Content Include="Scripts\Mine\CowIndex.js" />
     <Content Include="Scripts\Mine\CowSale.js" />
+    <Content Include="Scripts\Mine\EditBirth.js" />
+    <Content Include="Scripts\Mine\EditPurchase.js" />
     <Content Include="Scripts\Mine\NewCowTreatment.js" />
     <Content Include="Scripts\Mine\TreatmentDetails.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
@@ -432,10 +436,11 @@
     <Content Include="Views\Medicines\Create.cshtml" />
     <Content Include="Views\Medicines\Edit.cshtml" />
     <Content Include="Views\Medicines\Delete.cshtml" />
+    <Content Include="Views\Cows\EditBirth.cshtml" />
+    <Content Include="Views\Treatment\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ViewModels\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

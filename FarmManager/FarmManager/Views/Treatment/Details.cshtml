@@ -9,6 +9,10 @@
 
 <div id="withdrawalWarn" class="alert alert-warning collapse">This cow is currently in a withdrawal period from the treatment</div>
 
+    @Html.ActionLink("Edit Treatment", "Edit", new { id = Model.TreatmentId }, new { @class = "btn btn-primary" })
+<br />
+<br />
+
 <div id="treatDetails">
 <div class="detailsBanner">
     <h3 class="detailsHead">Details</h3>

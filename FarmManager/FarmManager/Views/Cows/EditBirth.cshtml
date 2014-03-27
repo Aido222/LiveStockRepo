@@ -1,11 +1,11 @@
 ﻿@model FarmManager.ViewModels.CowBirthVM
 
 @{
-    ViewBag.Title = "Add Cow Birth";
+    ViewBag.Title = "Edit Cow";
 }
 <link href="~/Content/datepicker.css" rel="stylesheet" />
 
-<h2>New Cow Birth</h2>
+<h2>Edit Details for <span class="tagHighLight">@Html.DisplayFor(model => model.TagNo)</span></h2>
     <div class="detailsBanner">
         <h3 class="detailsHead">Calf Details</h3>
     </div>
@@ -28,24 +28,6 @@
 
         <div class="expandingForm collapse">
 
-        <div class="editor-label">
-            <label>Tag No</label>
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.TagNo, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.TagNo)
-        </div>
-        <div id="SameTagWarning" class="alert alert-danger collapse">You already own an animal with this Tag Number</div>
-        <div id="EnterTagWarning" class="alert alert-danger collapse">Please enter the calf tag number</div>
-
-
-        <div class="editor-label">
-            <label>Re enter Tag No</label>
-        </div>
-        <div class="editor-field">
-            <input  id="confirmTag" type="text" class="form-control" />
-        </div>
-        <div id="ReEnterTagWarning" class="alert alert-danger collapse">The Tag numbers do not match</div>
 
 
         <div class="editor-label">
@@ -158,7 +140,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/Scripts/Mine/ConceptionType.js")
+    @Scripts.Render("~/Scripts/Mine/EditBirth.js")
     @Scripts.Render("~/Scripts/jquery.validate.min.js")
     @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
     @Scripts.Render("~/Scripts/bootstrap-datepicker.js")

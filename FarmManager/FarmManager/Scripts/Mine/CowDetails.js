@@ -87,6 +87,19 @@
     });
 
 
+    $("#closeBirth").click(function () {
+        $("#overlay_form_Birth").fadeOut(500);
+    });
+
+    $("#pop").click(function () {
+        $("#overlay_form_Birth").fadeIn(1000);
+        positionPopup();
+    });
+    $("#closeBirth").click(function () {
+        $("#overlay_form_Birth").fadeOut(500);
+    });
+
+
 
 
     function positionPopup() {
@@ -267,4 +280,50 @@
             });
 
     });
+
+
+
+
+
+    //$("#bornLink").click(function () {
+
+    //    var tagNo = $('#TagNo').val();
+
+    //    //$.post("/Cows/RetrieveCowBirth", { TagNo: tagNo },
+    //    //   function (data) {
+
+  
+
+    //           $("#overlay_form_Birth").fadeIn(1000);
+    //           positionPopup();
+
+    //           //$('#modalHeadPurchase').text("Purchase details for " + data[0]);
+    //           //$('#modalTagNoPurchase').text(data[0]);
+    //           //$('#modalDOP').text(data[1].substring(0, 10));
+    //           //$('#purchasedFrom').text(data[5]);
+    //           //$('#pricePaid').text(data[4]);
+
+
+    //           //$('#purchNotes').text(data[2]);
+    //           //$('#purchasedLocation').text(data[3]);
+
+
+
+    //           // $('#noteBody').text(data[0]);
+
+
+    //           // var date = data[2];
+
+
+    //           // var sub = date.substring(0, 10);
+
+
+
+
+
+
+    //       //});
+
+    //});
+
 });

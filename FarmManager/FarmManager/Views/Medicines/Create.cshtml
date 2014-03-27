@@ -1,94 +1,123 @@
-﻿@model FarmManager.Models.UserMedicine
+﻿@model FarmManager.ViewModels.NewFolder1.CreateMedicineVM
 
 @{
     ViewBag.Title = "Create";
 }
+<link href="~/Content/datepicker.css" rel="stylesheet" />
 
-<h2>Create</h2>
+
+<h2>Add Medicine</h2>
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend>UserMedicine</legend>
+            @Html.HiddenFor(model => model.MedicineID)
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.MedicineID)
+    
+        <div id="formMyStyle" class="floatLeft">
+
+<div class="editor-label">
+            <label>Medicine Name</label>
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.MedicineID)
-            @Html.ValidationMessageFor(model => model.MedicineID)
+@*           @Html.DropDownListFor(model => model.MedicineID, Model.MedList,  new { @class = "form-control" } )*@
+            <input id="medicineName" type="text" readonly="true" class="form-control"/>
         </div>
+         <div id="enterMedWarn" class="alert alert-danger collapse">Please select medicine name on the right</div>
+
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.UserID)
+            <label>Batch No</label>
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.UserID)
-            @Html.ValidationMessageFor(model => model.UserID)
+            @Html.TextBoxFor(model => model.BatchNo, new { @class = "form-control" })
         </div>
+        <div id="enterBatchWarn" class="alert alert-danger collapse">Please enter the medicine batch number</div>
+
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.BatchNo)
+            <label>Expiry Date</label>
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.BatchNo)
-            @Html.ValidationMessageFor(model => model.BatchNo)
+        <input name="ExpiryDate" class="datepicker form-control" id="ExpiryDate" size="16" type="text" readonly="true" value="Please select">
         </div>
+        <div id="greaterDateWarning" class="alert alert-danger collapse">Expiry date must be past todays date</div>
+        <div id="enterDateWarning" class="alert alert-danger collapse">Please enter expiry date</div>
+
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.ExpiryDate)
+            <label>Bottle Size (ml)</label>
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.ExpiryDate)
-            @Html.ValidationMessageFor(model => model.ExpiryDate)
+            @Html.TextBoxFor(model => model.BottleSize, new { @class = "form-control" })
         </div>
+                    <div id="enterBottleWarn" class="alert alert-danger collapse">Please enter size of medicine sample in ml</div>
+                    <div id="mlOnlyWarn" class="alert alert-danger collapse">Size of medicine must be entered in numbers only</div>
+
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.OpenDate)
+            <label>Supplied By</label>
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.OpenDate)
-            @Html.ValidationMessageFor(model => model.OpenDate)
+            @Html.TextBoxFor(model => model.SuppliedBy, new { @class = "form-control" })
         </div>
+                    <div id="suppliedByWarn" class="alert alert-danger collapse">Please enter from where the medicine was supplied</div>
+
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.BottleSize)
+            <label>Date of Purchase</label>
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.BottleSize)
-            @Html.ValidationMessageFor(model => model.BottleSize)
+        <input name="DateOfPurchase" class="datepicker form-control" id="DateOfPurchase" size="16" readonly="true" type="text" value="Please select">
         </div>
+        <div id="purchgreaterDateWarning" class="alert alert-danger collapse">Date of purchase cannot be after todays date</div>
+        <div id="purchenterDateWarning" class="alert alert-danger collapse">Please enter date of purchase</div>
+
+
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.SuppliedBy)
+            <label>Notes</label>
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.SuppliedBy)
-            @Html.ValidationMessageFor(model => model.SuppliedBy)
+            @Html.TextAreaFor(model => model.Notes, new { @class = "form-control" })
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.DateOfPurchase)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.DateOfPurchase)
-            @Html.ValidationMessageFor(model => model.DateOfPurchase)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Notes)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Notes)
-            @Html.ValidationMessageFor(model => model.Notes)
-        </div>
-
+            <br />
         <p>
-            <input type="submit" value="Create" />
+            <input id="btnSubmit" type="submit" value="Create" class="btn btn-success"/>
+            @Html.ActionLink("Cancel","Index",null, new { @class="btn btn-default"})
+
         </p>
-    </fieldset>
+
+            </div>
+    
+    
+    <div id="selectMedicineTable">
+        <div class="detailsBanner">
+            <h3 class="detailsHead">Select Medicine Name</h3>
+        </div>
+
+        <div class="detailsBottom">
+
+            <table class="table table-striped">
+
+                @foreach (var item in Model.MedList)
+                {
+             
+                    <tr>
+                        <td>
+                            <a  id="@item.Value" class="noteLinks listItems Select" href="#">@item.Text</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+
+        </div>
+    </div>
+    
 }
+
+
+<br style="clear: both;" />
 
 <div>
     @Html.ActionLink("Back to List", "Index")
@@ -96,4 +125,8 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/Mine/AddMedicine.js")
+    @Scripts.Render("~/Scripts/jquery.validate.min.js")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
+    @Scripts.Render("~/Scripts/bootstrap-datepicker.js")
 }

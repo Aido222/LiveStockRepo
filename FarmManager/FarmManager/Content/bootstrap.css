@@ -13,6 +13,11 @@
 
 }
 
+.floatLeft
+{
+    float: left;
+}
+
 .iconMargin
 {
 }
@@ -331,6 +336,16 @@ overflow-x:auto;
 }
 
 #overlay_form_Purchase
+{
+    position: absolute;
+    border: 1px solid green;
+    padding: 10px;
+    background: white;
+    width: 370px;
+    height: auto;
+}
+
+#overlay_form_Birth
 {
     position: absolute;
     border: 1px solid green;

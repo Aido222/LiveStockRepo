@@ -8,6 +8,7 @@
 
     <p>
                     @Html.ActionLink("Back", "Index",null, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.AIID }, new { @class = "btn btn-primary" })
 
     </p>
 <div id="cowDetails">
@@ -24,6 +25,11 @@
             <p>@Html.DisplayFor(model => model.TagNo)</p>
         </div>
 
+                <div class="inlineData">
+            <label>Bull ID</label>
+            <p>@Html.DisplayFor(model => model.BullID)</p>
+        </div>
+
         <div class="inlineData">
             <label>Date</label>
             <p>@Html.DisplayFor(model => model.Date)</p>
@@ -38,6 +44,8 @@
             <label>Expected Due Date</label>
             <p>@Html.DisplayFor(model => model.ExpectedDueDate)</p>
         </div>
+
+
 
         <div class="inlineData">
             <label>Is Born</label>

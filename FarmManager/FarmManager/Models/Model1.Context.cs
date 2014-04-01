@@ -42,5 +42,6 @@ namespace FarmManager.Models
         public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<Treatment> Treatments { get; set; }
         public DbSet<UserMedicine> UserMedicines { get; set; }
+        public DbSet<webpages_UsersInRoles> webpages_UsersInRoles { get; set; }
     }
 }

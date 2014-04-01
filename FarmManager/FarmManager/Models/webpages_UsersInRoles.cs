@@ -12,15 +12,9 @@ namespace FarmManager.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Sale
+    public partial class webpages_UsersInRoles
     {
-        public int SaleID { get; set; }
-        public Nullable<int> UserId { get; set; }
-        public string TagNo { get; set; }
-        public string LocationSold { get; set; }
-        public Nullable<System.DateTime> DateSold { get; set; }
-        public string SoldTo { get; set; }
-        public string Notes { get; set; }
-        public Nullable<decimal> Price { get; set; }
+        public int UserId { get; set; }
+        public int RoleId { get; set; }
     }
 }

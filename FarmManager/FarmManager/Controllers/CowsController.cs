@@ -15,10 +15,12 @@ using System.Data.Entity.Validation;
 
 namespace FarmManager.Controllers
 {
+    //The authorize attribute tag allows only users who have been registered or logged in through simple membership
     [Authorize]
     [InitializeSimpleMembership]
     public class CowsController : Controller
     {
+        //Makes connection to the farmmanagementdb in sql server, and also the simplemembership usercontext
         private FarmManagementDBEntities db = new FarmManagementDBEntities();
         private UsersContext Udb = new UsersContext();
 
@@ -28,22 +30,10 @@ namespace FarmManager.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            /*from animals in db.Animals
-                                  join breed in db.Breeds on animals.AnimalBreed equals breed.id
-                                  join birth in db.Births on animals.TagNo equals birth.TagNo into j0
-                                  from birth in j0.DefaultIfEmpty()
-                                  join purchase in db.Purchases on animals.TagNo equals purchase.TagNo into j1
-                                  from purchase in j1.DefaultIfEmpty()
-                                  where animals.TagNo == id && animals.UserId == WebSecurity.CurrentUserId*/
 
-
-
-            /*            List <CowIndexVM> myCowIndexVM = (from animals in db.Animals
-                                    join aBreed in db.Breeds on animals.AnimalBreed equals aBreed.id
-                                    where animals.Species == 2
-                                    & animals.UserId == WebSecurity.CurrentUserId
-                                    select new CowIndexVM*/
-
+            //Block of code below inistialises a List of type CowIndexVM, a viewmodel and fills it with a list of cows belonging to the user. 
+            //It contains multiple outter joins on the animals, breed, birth, purchase, sale, death and purchase table so it can return every cow the user has ever owned
+            //WebSecurity.CurrentUserId retrieved the current users user id and animal species = 2 makes sure the animals are cows
             List<CowIndexVM> myCowIndexVM = (from animals in db.Animals
                                              join breed in db.Breeds on animals.AnimalBreed equals breed.id
                                              join birth in db.Births on animals.TagNo equals birth.TagNo into j0
@@ -57,7 +47,7 @@ namespace FarmManager.Controllers
                                              join purch in db.Purchases on animals.TagNo equals purch.TagNo into j4
                                              from purch in j4.DefaultIfEmpty()
                                              where animals.UserId == WebSecurity.CurrentUserId && animals.Species == 2
-                      
+                      //Takes the rows from the query and inserts them into the view model fields
                                              select new CowIndexVM
                                              {
                                                  TagNo = animals.TagNo,
@@ -77,14 +67,13 @@ namespace FarmManager.Controllers
 
 
 
-
+            //Code pulls back a list of treatments for the users cows and only selects the ones where the animal will still be in withdrawal from the treatment
             List<SelectListItem> WithDrawalList = new List<SelectListItem>();
-
             var withdrawlPeriod = (from animal2 in db.Animals
                                    join treat in db.Treatments on animal2.TagNo equals treat.TagNo
                                    join userMed in db.UserMedicines on treat.UserMedicineID equals userMed.UserMedicineID
                                    join defMed in db.DefaultMedicines on userMed.MedicineID equals defMed.MedicineID
-                                   where DateTime.Now < System.Data.Objects.EntityFunctions.AddDays(treat.TreatmentDate, defMed.WithdrawalPeriod)
+                                   where DateTime.Now < System.Data.Objects.EntityFunctions.AddDays(treat.TreatmentDate, defMed.WithdrawalPeriod) && animal2.UserId == WebSecurity.CurrentUserId
                                    select new { treat, defMed }).ToArray();
 
             for (int i = 0; i < withdrawlPeriod.Length; i++)
@@ -96,79 +85,29 @@ namespace FarmManager.Controllers
                 });
             }
 
-
+            //Add the list of treatments to the ViewBag
             ViewBag.WithList = WithDrawalList;
 
-
-            /*List<SelectListItem> SoldList = new List<SelectListItem>();
-            var soldList = (from sold in db.Sales
-                            join animal in db.Animals on sold.TagNo equals animal.TagNo
-                            join breed in db.Breeds on animal.AnimalBreed equals breed.id
-                                where sold.UserId == (int)WebSecurity.CurrentUserId && animal.Species == 2
-                                select new { sold, breed }).ToArray();
-                        for (int i = 0; i < soldList.Length; i++)
-            {
-                SoldList.Add(new SelectListItem
-                {
-                    Text = soldList[i].breed.Breed1,
-                    Value = soldList[i].sold.TagNo
-                });
-            }
-
-                        //cowIndex.SoldCows = SoldList;
-                        cowIndex.SoldCows = SoldList;
-
-
-
-                        List<SelectListItem> OwnedList = new List<SelectListItem>();
-                        var ownedList = (from animal in db.Animals
-                                         join breed in db.Breeds on animal.AnimalBreed equals breed.id
-                                        where animal.UserId == (int)WebSecurity.CurrentUserId && animal.Species == 2 && animal.OwnershipStatus == 1
-                                        select new { animal, breed }).ToArray();
-                        for (int i = 0; i < ownedList.Length; i++)
-                        {
-                            OwnedList.Add(new SelectListItem
-                            {
-                                Text = ownedList[i].breed.Breed1,
-                                Value = ownedList[i].animal.TagNo
-                            });
-                        }
-
-                        cowIndex.OwnedCows = OwnedList;
-            */
-
-            
+            //Returns viewmodel to view
             return View("Index", myCowIndexVM);
         }
 
-        //
-        // GET: /Cows/Details/5
+
         [Authorize]
+        //actionresult recieves the tagnumber of the selected animal and retrieves data baed on that
+            //If id is invalid .net error handling displays an error page to the user
         public ActionResult Details(string id)
         {
 
-            //id = id.Trim();
  
 
             var isBorn = (from c in db.Animals
                           where c.TagNo == id && c.UserId == (int)WebSecurity.CurrentUserId
                           select c).FirstOrDefault();
 
-            /* join treat in db.Treatments on animal2.TagNo equals treat.TagNo
-                                   join userMed in db.UserMedicines on treat.UserMedicineID equals userMed.UserMedicineID
-                                   join defMed in db.DefaultMedicines on userMed.MedicineID equals defMed.MedicineID*/
-
-            /*from animals in db.Animals
-                                   join breed in db.Breeds on animals.AnimalBreed equals breed.id
-                                   join birth in db.Births on animals.TagNo equals birth.TagNo into j0
-                                   from birth in j0.DefaultIfEmpty()
-                                   join purchase in db.Purchases on animals.TagNo equals purchase.TagNo into j1
-                                   from purchase in j1.DefaultIfEmpty()
-                                   where animals.TagNo == id && animals.UserId == WebSecurity.CurrentUserId
-                                   orderby animals.DateAdded descending*/
 
 
-
+            //Pulls all details for the specific cow. From animals, and either purchase tbl or birth depending on the animal
              CowDetailVM animal = (from animals in db.Animals
                                    join breed in db.Breeds on animals.AnimalBreed equals breed.id
                                    join birth in db.Births on animals.TagNo equals birth.TagNo into j0
@@ -199,9 +138,9 @@ namespace FarmManager.Controllers
 
                                    }).FirstOrDefault();
 
+ 
 
-
-
+            //Retrieves a list of calfs for this cow if any
              List<SelectListItem> cowCalves = new List<SelectListItem>();
              var calfList = (from b in db.Births
                              where b.MotherTagNo == id && b.UserId == WebSecurity.CurrentUserId 
@@ -216,10 +155,11 @@ namespace FarmManager.Controllers
              }
 
          
-
+            //puts calf list in viewmodel
              animal.calvesList = cowCalves;
 
 
+            //retrieves a list of note sfor the animal
              List<SelectListItem> Notes = new List<SelectListItem>();
              var noteList = (from b in db.AnimalNotes
                              where b.TagNo == id && b.UserID == (int)WebSecurity.CurrentUserId
@@ -237,7 +177,7 @@ namespace FarmManager.Controllers
 
 
 
-
+            //
              List<SelectListItem> BullCalveList = new List<SelectListItem>();
              var bullcalveList = (from b in db.Births
                              where b.SireTagNo == id && b.UserId == (int)WebSecurity.CurrentUserId
@@ -256,6 +196,8 @@ namespace FarmManager.Controllers
              //                                  join birth in db.Births on animals.TagNo equals birth.TagNo into j0
 
 
+
+            //REtrieves the list of treatments for the animal
              List<SelectListItem> TreatList = new List<SelectListItem>();
 
              var treatList = (from treat in db.Treatments
@@ -278,7 +220,7 @@ namespace FarmManager.Controllers
 
 
 
-
+            //Retrieve only treatments where the animal is still in withdrawal
              List<SelectListItem> WithDrawalList = new List<SelectListItem>();
 
              var withdrawlPeriod = (from animal2 in db.Animals
@@ -297,30 +239,18 @@ namespace FarmManager.Controllers
                  });
              }
 
-             //	string sub = input.Substring(0, 3);
 
              animal.WithDrawalList = WithDrawalList;
 
-             /*var withDrawList = (from animal2 in db.Animals
-                                 join treat in db.Treatments on animal2.TagNo equals treat.TagNo
-                                 join userMed in db.UserMedicines on treat.UserMedicineID equals userMed.UserMedicineID
-                                 join defMed in db.DefaultMedicines on userMed.MedicineID equals defMed.MedicineID
-                                 where DateTime.Now < System.Data.Objects.EntityFunctions.AddDays(treat.))
-                                 select treat).ToArray();
-             */
 
-            if (animal == null)
-            {
-                return HttpNotFound();
-            }
+            //returns view model to view with all select list included
             return View("Details", animal);
           
 
 
         }
 
-        //
-        // GET: /Cows/Create
+
         [Authorize]
         public ActionResult Create()
         {
@@ -330,68 +260,68 @@ namespace FarmManager.Controllers
         
         // POST: /Cows/Create
         [Authorize]
-        [HttpPost]
-        public ActionResult Create(Animal animal, FormCollection collection)
-        {
-            if (ModelState.IsValid)
-            {
+        //[HttpPost]
+        //public ActionResult Create(Animal animal, FormCollection collection)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
                 
 
 
 
 
-                animal.Species = 2;
-                animal.OwnershipStatus = 1;
-                animal.DateAdded = DateTime.Now;
-                animal.UserId = (int)WebSecurity.CurrentUserId;
-                //animal.Sex = collection["Sex"];
-                animal.Sex = animal.Sex;
+        //        animal.Species = 2;
+        //        animal.OwnershipStatus = 1;
+        //        animal.DateAdded = DateTime.Now;
+        //        animal.UserId = (int)WebSecurity.CurrentUserId;
+        //        //animal.Sex = collection["Sex"];
+        //        animal.Sex = animal.Sex;
 
-                db.Animals.Add(animal);
-                db.SaveChanges();
+        //        db.Animals.Add(animal);
+        //        db.SaveChanges();
 
 
-                //Creating instance of animal in purchase tbl
-                Purchase Purch1 = new Purchase();
+        //        //Creating instance of animal in purchase tbl
+        //        Purchase Purch1 = new Purchase();
 
-                //Purch1.UserId = (int)Session["USERID"];
-                Purch1.TagNo = animal.TagNo;
-                Purch1.BoughtFrom = collection["PurchasedFrom"];
-                Purch1.Location = collection["PurchaseLocation"];
-                Purch1.DateBought = DateTime.Now;
-                Purch1.Notes = collection["Notes"];
-                Purch1.Price = decimal.Parse(collection["Price"]);
+        //        //Purch1.UserId = (int)Session["USERID"];
+        //        Purch1.TagNo = animal.TagNo;
+        //        Purch1.BoughtFrom = collection["PurchasedFrom"];
+        //        Purch1.Location = collection["PurchaseLocation"];
+        //        Purch1.DateBought = DateTime.Now;
+        //        Purch1.Notes = collection["Notes"];
+        //        Purch1.Price = decimal.Parse(collection["Price"]);
 
-                db.Purchases.Add(Purch1);
-                db.SaveChanges();
+        //        db.Purchases.Add(Purch1);
+        //        db.SaveChanges();
 
-                return RedirectToAction("Index");
-            }
+        //        return RedirectToAction("Index");
+        //    }
 
-            return View(animal);
-        }
+        //    return View(animal);
+        //}
 
         //
-        // GET: /Cows/Edit/5
+
+        //Edit animal purchase actionresult
         [Authorize]
         public ActionResult Edit(string id)
         {
-            //Animal animal = db.Animals.Find(id);
-            //if (animal == null)
-            //{
-            //    return HttpNotFound();
-            //}
 
+            //Returns row from animal table for this animal
             Animal myanimal = (from animals in db.Animals
                                where animals.TagNo == id && animals.UserId == WebSecurity.CurrentUserId
                                select animals).FirstOrDefault();
 
+            //Returns row from purchase table for this animal
             Purchase myPurch = (from purch in db.Purchases
                                 where purch.TagNo == id && purch.UserId == WebSecurity.CurrentUserId
                                 select purch).FirstOrDefault();
 
+            //declares new viewmodel
             CowPurchVM editCow = new CowPurchVM();
 
+            //populates viewmodel with data from the two tables
             editCow.TagNo = myanimal.TagNo;
             editCow.BirthDate = myanimal.DOB;
             editCow.Breed = Convert.ToString(myanimal.AnimalBreed);
@@ -412,7 +342,7 @@ namespace FarmManager.Controllers
             
 
 
-
+            //Send list of cow breeds to the view
             List<SelectListItem> BreedList = new List<SelectListItem>();
             BreedList.Add(new SelectListItem { Text = "Please select", Value = "Please select" });
             var breedsList = (from b in db.Breeds where b.SpeciesID == 2 select b).ToArray();
@@ -431,17 +361,20 @@ namespace FarmManager.Controllers
             return View(editCow);
         }
 
-        //
-        // POST: /Cows/Edit/5
+        
+        //purchase edit post actionresult
         [Authorize]
         [HttpPost]
+        //recieves the viewmodel returned from view
         public ActionResult Edit(CowPurchVM animal)
         {
+            //selects correct row from animals table so it can be updated
             var queryDetails = from a in db.Animals
                                where a.TagNo == animal.TagNo
                                select a;
 
 
+            //updates the retrieved row
             foreach (Animal a in queryDetails)
             {
                 a.AnimalBreed = Convert.ToInt32(animal.Breed);
@@ -477,7 +410,7 @@ namespace FarmManager.Controllers
 
 
 
-
+            //does the same as before except for the purchase table
             var queryPurch = from p in db.Purchases
                                where p.TagNo == animal.TagNo
                                select p;
@@ -517,12 +450,9 @@ namespace FarmManager.Controllers
         [HttpGet]
         public ActionResult EditBirth(string id)
         {
-            //Animal animal = db.Animals.Find(id);
-            //if (animal == null)
-            //{
-            //    return HttpNotFound();
-            //}
 
+
+            ///As above retrieves the correct row from both animals and birth table
             Animal myanimal = (from animals in db.Animals
                                where animals.TagNo == id && animals.UserId == WebSecurity.CurrentUserId
                                select animals).FirstOrDefault();
@@ -551,7 +481,7 @@ namespace FarmManager.Controllers
 
 
 
-
+            //Puts all breed into viewmodel so they can be selected in view
             List<SelectListItem> BreedList = new List<SelectListItem>();
             BreedList.Add(new SelectListItem { Text = "Please select", Value = "Please Select" });
             var breedsList = (from b in db.Breeds where b.SpeciesID == 2 select b).ToArray();
@@ -567,16 +497,13 @@ namespace FarmManager.Controllers
             editCow.BreedList = BreedList;
 
 
-            //Cow List
+            //Puts all alive currently owned female cows into a list
             List<SelectListItem> MotherList = new List<SelectListItem>();
             MotherList.Add(new SelectListItem { Text = "Please select", Value = "Please Select" });
             var motherList = (from b in db.Animals
-                              where b.Sex == false && b.UserId == (int)WebSecurity.CurrentUserId
+                              where b.Sex == false && b.UserId == (int)WebSecurity.CurrentUserId && b.OwnershipStatus == 1
                               select b).ToArray();
-            //foreach (var item in motherList)
-            //{
-            //  MotherList.Add(new SelectListItem { Text = item.TagNo.ToString(), Value = item.TagNo.ToString() });
-            //}
+
             for (int j = 0; j < motherList.Length; j++)
             {
                 MotherList.Add(new SelectListItem
@@ -584,7 +511,6 @@ namespace FarmManager.Controllers
                     //Assign Values to text
                     Text = motherList[j].TagNo,
                     Value = motherList[j].TagNo.ToString(),
-                    // Selected = (motherList[i].AnimalId == 1)
                 });
             }
 
@@ -595,11 +521,11 @@ namespace FarmManager.Controllers
 
 
 
-            //Bull List
+            //puts all male alive, owned bulls into list
             List<SelectListItem> BullList = new List<SelectListItem>();
             BullList.Add(new SelectListItem { Text = "Please select", Value = "Please Select" });
             var bullList = (from b in db.Animals
-                            where b.Sex == true && b.UserId == (int)WebSecurity.CurrentUserId
+                            where b.Sex == true && b.UserId == (int)WebSecurity.CurrentUserId && b.OwnershipStatus == 1
                             select b).ToArray();
             for (int i = 0; i < bullList.Length; i++)
             {
@@ -615,9 +541,12 @@ namespace FarmManager.Controllers
 
 
             //Sneds ai list to view
+            //sets the longest time an AI could be viable
             DateTime upperDate = DateTime.Now.AddMonths(-10);
+            //Sets the shortest amount of time when a calf could be born from te ai
             DateTime lowerDate = DateTime.Now.AddMonths(-4);
 
+            //select ai's that dates lie betrween the boundaries set
             List<SelectListItem> AIList = new List<SelectListItem>();
             AIList.Add(new SelectListItem { Text = "Please select", Value = "Please Select" });
             var aiList = (from b in db.AIs
@@ -629,7 +558,7 @@ namespace FarmManager.Controllers
                 {
                     Text = aiList[i].TagNo + " (" + aiList[i].Date + ")",
                     Value = aiList[i].AIID.ToString(),
-                    //Selected = (aiList[i].TagNo.ToString == 1)
+
 
 
                 });
@@ -646,10 +575,11 @@ namespace FarmManager.Controllers
         [HttpPost]
         public ActionResult EditBirth(CowBirthVM editCow, FormCollection fCollection)
         {
-
+            //Select srow in animals table for the animal being edited
             var queryDetails = from a in db.Animals
                                where a.TagNo == editCow.TagNo
                                select a;
+
 
 
             foreach (Animal a in queryDetails)
@@ -755,8 +685,6 @@ namespace FarmManager.Controllers
 
 
 
-        //
-        // GET: /Cows/Delete/5
         [Authorize]
         public ActionResult Delete(int id = 0)
         {
@@ -768,8 +696,8 @@ namespace FarmManager.Controllers
             return View(animal);
         }
 
-        //
-        // POST: /Cows/Delete/5
+        
+        
         [Authorize]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
@@ -789,14 +717,15 @@ namespace FarmManager.Controllers
 
         //MY Methods
         [Authorize]
+        //Creates new purchased cow
         public ActionResult CreatePurchase()
         {
-
+            //creates new CowPurchVM
             CowPurchVM cowPurch = new CowPurchVM();
           
 
 
-
+            //Puts all cow breed into a list
             List<SelectListItem> BreedList = new List<SelectListItem>();
             BreedList.Add(new SelectListItem { Text = "Please select", Value = "Please select" });
             var breedsList = (from b in db.Breeds where b.SpeciesID == 2 select b).ToArray();
@@ -811,7 +740,7 @@ namespace FarmManager.Controllers
 
             cowPurch.BreedList = BreedList;
 
-
+            //sends viewmodel to view
             return View(cowPurch);
         }
 
@@ -830,12 +759,10 @@ namespace FarmManager.Controllers
 
 
 
-
-
-            //if (ModelState.IsValid)
-           // {
+                //creates a new animal model
                 Animal animal = new Animal();
 
+                //populates animal model with data from view model from view 
                 animal.TagNo = cowPurc.TagNo;
                 animal.AnimalBreed = Convert.ToInt32(cowPurc.Breed);
 
@@ -870,6 +797,7 @@ namespace FarmManager.Controllers
                 //Creating instance of animal in purchase tbl
                 Purchase Purch1 = new Purchase();
 
+            //again takes data from viewmodel
                 Purch1.UserId = (int)WebSecurity.CurrentUserId;
                 Purch1.TagNo = animal.TagNo;
                 Purch1.BoughtFrom = cowPurc.BoughtFrom;
@@ -882,18 +810,18 @@ namespace FarmManager.Controllers
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
-            //}
-
-            //return View(cowPurc);
+           
         }
 
         
         [Authorize]
         public ActionResult CreateCowBirth()
         {
+
+            //creates new cowbirthvm
             CowBirthVM cowBirth = new CowBirthVM();
 
-
+            //puts breeds into list and send to view
             List<SelectListItem> BreedList = new List<SelectListItem>();
             BreedList.Add(new SelectListItem { Text = "Please select", Value = "Please Select" });
             var breedsList = (from b in db.Breeds where b.SpeciesID == 2 select b).ToArray();
@@ -913,7 +841,7 @@ namespace FarmManager.Controllers
             List<SelectListItem> MotherList = new List<SelectListItem>();
             MotherList.Add(new SelectListItem { Text = "Please select", Value = "Please Select" });
             var motherList = (from b in db.Animals
-                                  where b.Sex== false && b.UserId == (int)WebSecurity.CurrentUserId
+                                  where b.Sex== false && b.UserId == (int)WebSecurity.CurrentUserId && b.OwnershipStatus == 1
                                   select b).ToArray();
             //foreach (var item in motherList)
             //{
@@ -941,7 +869,7 @@ namespace FarmManager.Controllers
             List<SelectListItem> BullList = new List<SelectListItem>();
             BullList.Add(new SelectListItem { Text = "Please select", Value = "Please Select" });
             var bullList = (from b in db.Animals
-                            where b.Sex == true && b.UserId == (int)WebSecurity.CurrentUserId
+                            where b.Sex == true && b.UserId == (int)WebSecurity.CurrentUserId && b.OwnershipStatus == 1
                             select b).ToArray();
             for (int i = 0; i < bullList.Length; i++)
             {
@@ -956,8 +884,11 @@ namespace FarmManager.Controllers
             cowBirth.SireTagList = BullList;
 
 
+
             //Sneds ai list to view
+            //sets the longest time an AI could be viable
             DateTime upperDate = DateTime.Now.AddMonths(-10);
+            //Sets the shortest amount of time when a calf could be born from te ai
             DateTime lowerDate = DateTime.Now.AddMonths(-4);
 
             List<SelectListItem> AIList = new List<SelectListItem>();
@@ -971,7 +902,6 @@ namespace FarmManager.Controllers
                 {
                     Text = aiList[i].TagNo + " (" + aiList[i].Date + ")",
                     Value = aiList[i].AIID.ToString(),
-                    //Selected = (aiList[i].TagNo.ToString == 1)
 
                     
                 });
@@ -987,13 +917,13 @@ namespace FarmManager.Controllers
 
 
 
-
+        //Jsonresult action method recieves an Ajax request from view and an animal tag no
+        //it checks to see if this tagno already exists in the db and is currently owned by this farmer
+        //if so the user cannot add the animal again
         public JsonResult CheckTagNo(FormCollection form)
         {
             string name = Convert.ToString(form["TagNumber"]).ToUpper();
 
-            //if (name.Equals("Sumit"))
-              //  return Json(false);
 
             var dbCows = (from c in db.Animals
                           where c.TagNo == name && c.UserId == (int)WebSecurity.CurrentUserId
@@ -1019,24 +949,25 @@ namespace FarmManager.Controllers
         public ActionResult CreateCowBirth(CowBirthVM cowBith, FormCollection fCollection)
         {
             
-
+            //Determines if the calf wa born through natural or artificial insemination
             int selectedInseminationType = Convert.ToInt32(fCollection["InseminationType"]);
             
 
             Animal animal = new Animal();
             Birth birth = new Birth();
 
-
+            //if natural
             if (selectedInseminationType == 0)
             {
                 birth.MotherTagNo = cowBith.MotherTagNo;
                 birth.SireTagNo = cowBith.SireTagNo;
             }
+                //if artificial
             else
             {
                 birth.AIID = Convert.ToInt32(cowBith.AICow);
 
-                //works
+                //update ai record to show ai hass been born
                 var aiRecord = (from b in db.AIs
                                 where b.AIID == birth.AIID
                                 select b).ToArray();
@@ -1095,6 +1026,7 @@ namespace FarmManager.Controllers
         [Authorize]
         public ActionResult CowDeath(string id)
         {
+            //Sends list to view of possible causes of death on farm
             List<SelectListItem> DeathList = new List<SelectListItem>();
             DeathList.Add(new SelectListItem { Text = "Please select", Value = "Please select" });
             var deathList = (from b in db.DeathCauses select b).ToArray();
@@ -1135,28 +1067,29 @@ namespace FarmManager.Controllers
             ViewData["Cause"] = DeathList;
 
 
-
+            //Records death and adds it to the death tbl
             death.UserId = (int)WebSecurity.CurrentUserId;
             death.Cause = death.Cause;
             db.Deaths.Add(death);
             db.SaveChanges();
 
-
+            //update animal status in the animal table to reflect the animals death
             var animalStatus =
             (from c in db.Animals
              where c.TagNo == death.TagNo && c.UserId == (int)WebSecurity.CurrentUserId
              select c).First();
+            //OWnershipstatus = 3 means the animal has died
 
             animalStatus.OwnershipStatus = 3;
 
             db.SaveChanges();
-
+            //redirect to index
             return RedirectToAction("Index");
         }
 
 
 
-
+        //new note for cow
         public ActionResult AddCowNote(string id)
         {
             AnimalNote newNote =  new AnimalNote();
@@ -1170,18 +1103,21 @@ namespace FarmManager.Controllers
         [HttpPost]
         public ActionResult AddCowNote(AnimalNote animalNote)
         {
-
+            //populates genral note data
             animalNote.Date = DateTime.Now;
             animalNote.UserID = (int)WebSecurity.CurrentUserId;
+
+            //adds note and saves it
             db.AnimalNotes.Add(animalNote);
             db.SaveChanges();
 
 
+            //redirects to details page for the animal
             return RedirectToAction("Details/" + animalNote.TagNo);
         }
 
 
-
+        //Json actionresult retrieves note id from view and selects note from db where id equals retrieved note 
         public JsonResult RetrieveNote(FormCollection form)
         {
             int id = Convert.ToInt32((form["NoteID"]).ToUpper());
@@ -1191,23 +1127,10 @@ namespace FarmManager.Controllers
                           where c.NoteId == id && c.UserID == (int)WebSecurity.CurrentUserId
                           select c).FirstOrDefault();
 
-            /*
-            if (dbCows != 0)
-            {
-                return Json(true);
-            }
-            else
-            {
-                return Json(false);
-            }
-           * */
 
             DateTime? myDate = noteText.Date;
-
-            //myDate.Value.ToString("dd-MMM-yyyy"); 
-
             
-
+            //sends data back in an array
             string[] myArray = new string[] { noteText.Note, noteText.Description, Convert.ToString(myDate), noteText.NoteId.ToString()};
                 
 
@@ -1217,6 +1140,7 @@ namespace FarmManager.Controllers
 
 
         [Authorize]
+        //accepts note id and deletes the id from the db
         public ActionResult DeleteNote(int id = 0)
         {
             AnimalNote note = db.AnimalNotes.Find(id);
@@ -1233,6 +1157,7 @@ namespace FarmManager.Controllers
 
         [Authorize]
         [HttpGet]
+        //selects note where id = passe id and passes to view
         public ActionResult EditNote(int id = 0)
         {
             AnimalNote note = db.AnimalNotes.Find(id);
@@ -1246,6 +1171,7 @@ namespace FarmManager.Controllers
 
         [Authorize]
         [HttpPost]
+        //edits note where note id = passed id
         public ActionResult EditNote(AnimalNote editnote)
         {
 
@@ -1258,7 +1184,6 @@ namespace FarmManager.Controllers
             {
                 note.Note = editnote.Note;
                 note.Description = editnote.Description;
-                // Insert any additional changes to column values.
             }
 
             try
@@ -1281,6 +1206,7 @@ namespace FarmManager.Controllers
         }
 
 
+
         public ActionResult Sale(string id)
         {
 
@@ -1294,6 +1220,7 @@ namespace FarmManager.Controllers
 
 
         [HttpPost]
+        //adds new sale to the sale table
         public ActionResult Sale(Sale newSale)
         {
 
@@ -1308,7 +1235,8 @@ namespace FarmManager.Controllers
             (from c in db.Animals
              where c.TagNo == newSale.TagNo && c.UserId == (int)WebSecurity.CurrentUserId
                 select c).First();
-
+            //updates the animal status n the animal table to reflect the sale
+            //OWnershipstatus = 2 means the animal has been sold
             animalStatus.OwnershipStatus = 2;
             db.SaveChanges();
 
@@ -1318,7 +1246,7 @@ namespace FarmManager.Controllers
 
 
 
-
+        //REtrieves sale and sends it back to view in a Json result through ajax
         public JsonResult RetrieveSale(FormCollection form)
         {
             string id = Convert.ToString((form["TagNo"]).ToUpper());
@@ -1341,7 +1269,7 @@ namespace FarmManager.Controllers
      
 
 
-
+        //Actionresult is called by ajax. Retrieves info about the seath of this animal and sends it to the view via json
         public JsonResult RetrieveDeath(FormCollection form)
         {
             string id = Convert.ToString((form["TagNo"]).ToUpper());
@@ -1362,6 +1290,7 @@ namespace FarmManager.Controllers
 
 
 
+        //Actionresult is called by ajax. Retrieves info about the purchase of this animal and sends it to the view via json
 
         public JsonResult RetrieveCowPurch(FormCollection form)
         {
@@ -1382,6 +1311,7 @@ namespace FarmManager.Controllers
         }
 
 
+        //Actionresult is called by ajax. Retrieves info for a specific treatment where treatment = id and sends back via json result
 
         public JsonResult RetrieveTreatments(FormCollection form)
         {

@@ -23,6 +23,7 @@
           <EntitySet Name="sysdiagrams" EntityType="FarmManagementDBModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Treatments" EntityType="FarmManagementDBModel.Store.Treatments" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserMedicine" EntityType="FarmManagementDBModel.Store.UserMedicine" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="webpages_UsersInRoles" EntityType="FarmManagementDBModel.Store.webpages_UsersInRoles" store:Type="Tables" Schema="dbo" />
         </EntityContainer>
         <EntityType Name="AI">
           <Key>
@@ -162,6 +163,7 @@
           <Property Name="DateSold" Type="date" />
           <Property Name="SoldTo" Type="nvarchar(max)" />
           <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="Price" Type="money" />
         </EntityType>
         <EntityType Name="SheepWeights">
           <Key>
@@ -218,6 +220,14 @@
           <Property Name="DateOfPurchase" Type="date" />
           <Property Name="Notes" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="webpages_UsersInRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
@@ -241,6 +251,7 @@
           <EntitySet Name="sysdiagrams" EntityType="FarmManagementDBModel.sysdiagram" />
           <EntitySet Name="Treatments" EntityType="FarmManagementDBModel.Treatment" />
           <EntitySet Name="UserMedicines" EntityType="FarmManagementDBModel.UserMedicine" />
+          <EntitySet Name="webpages_UsersInRoles" EntityType="FarmManagementDBModel.webpages_UsersInRoles" />
         </EntityContainer>
         <EntityType Name="AI">
           <Key>
@@ -380,6 +391,7 @@
           <Property Name="DateSold" Type="DateTime" Precision="0" />
           <Property Name="SoldTo" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="SheepWeight">
           <Key>
@@ -435,6 +447,14 @@
           <Property Name="SuppliedBy" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="DateOfPurchase" Type="DateTime" Precision="0" />
           <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="webpages_UsersInRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -590,6 +610,7 @@
                 <ScalarProperty Name="DateSold" ColumnName="DateSold" />
                 <ScalarProperty Name="SoldTo" ColumnName="SoldTo" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -650,6 +671,14 @@
                 <ScalarProperty Name="SuppliedBy" ColumnName="SuppliedBy" />
                 <ScalarProperty Name="DateOfPurchase" ColumnName="DateOfPurchase" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_UsersInRoles">
+            <EntityTypeMapping TypeName="FarmManagementDBModel.webpages_UsersInRoles">
+              <MappingFragment StoreEntitySet="webpages_UsersInRoles">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

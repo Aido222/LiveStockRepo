@@ -24,6 +24,7 @@ namespace FarmManager.Controllers
         public ActionResult Index()
         {
 
+            //query selects all medicines from the db belonging to the user and puts them into the MedicineIndexVM
             List<MedicineIndexVM> medList = (from umed in db.UserMedicines
                                              join defMed in db.DefaultMedicines on umed.MedicineID equals defMed.MedicineID
                                              where umed.UserID == WebSecurity.CurrentUserId
@@ -51,7 +52,8 @@ namespace FarmManager.Controllers
 
         public ActionResult Details(int id = 0)
         {
-
+            //selects medicine details from db where id = id passed from querystring
+            //joins on the usermedicine and the default medicine to give all details related to the medicine
             MedicineDetailVM medDetails = (from umed in db.UserMedicines
                                            join dmed in db.DefaultMedicines on umed.MedicineID equals dmed.MedicineID
                                            join species in db.Species on dmed.TargetSpecies equals species.SpeciesID
@@ -79,35 +81,36 @@ namespace FarmManager.Controllers
                                                
                                                Species1 = species.Species1
                                            }).FirstOrDefault();
-            /*UserMedicine usermedicine = db.UserMedicines.Find(id);
-            if (usermedicine == null)
-            {
-                return HttpNotFound();
-            }*/
+   
+            //selects the every treatment the medicine was used for so the dossage can be added up
             var numberOfUses = (from c in db.Treatments
                                 where c.UserMedicineID == id && c.UserID == (int)WebSecurity.CurrentUserId
                                 select c).ToArray();
 
-
+            //if it has never been used
             if (numberOfUses != null)
             {
-
+                //amount used it set to 0
                 int? dosage = 0;
 
                 for (int i = 0; i < numberOfUses.Length; i++)
                 {
+                    //adds up ml's used
                     dosage += Convert.ToInt32(numberOfUses[i].DosageAmount);
                 }
 
+                // if amount used is > than bottle size. The bottle is empty
                 if (dosage > medDetails.BottleSize)
                 {
                     medDetails.RemainingML = 0;
                 }
                 else
+                //else amount left = bottle size - amount used (dosage)
                 {
                     medDetails.RemainingML = medDetails.BottleSize - dosage;
                 }
 
+                //number of avg doses left  = amount left / avgdose 
                 medDetails.NumberOfUsesLeft = medDetails.RemainingML / medDetails.AvgDose;
             }
             else
@@ -118,7 +121,7 @@ namespace FarmManager.Controllers
 
 
 
-
+            //list of treatemts foe the medicine gets sent to view
             List<Treatment> treatments = (from treat in db.Treatments
                                        where treat.UserID == WebSecurity.CurrentUserId && treat.UserMedicineID == medDetails.UserMedicineID
                                        select treat).ToList();
@@ -133,9 +136,10 @@ namespace FarmManager.Controllers
 
         public ActionResult Create()
         {
+            //create new CreateMedicineVM
             CreateMedicineVM createMed = new CreateMedicineVM();
 
-
+            //Select list of default medicines the user can select from 
             List<SelectListItem> DefMedList = new List<SelectListItem>();
             var defmedList = (from dmed in db.DefaultMedicines
                               select dmed).ToArray();
@@ -148,6 +152,7 @@ namespace FarmManager.Controllers
                 });
             }
 
+            //puts med list in vm
             createMed.MedList = DefMedList;
 
 
@@ -158,11 +163,14 @@ namespace FarmManager.Controllers
         // POST: /Medicines/Create
 
         [HttpPost]
+        //create post method
         public ActionResult Create(CreateMedicineVM usermedicineVM)
         {
 
+            //Create new UserMedicine Model
             UserMedicine userMedicine = new UserMedicine();
 
+            //populates fields in model with data passed back from create view in viewmodel
             userMedicine.MedicineID = usermedicineVM.MedicineID;
             userMedicine.UserID = WebSecurity.CurrentUserId;
             userMedicine.BatchNo = usermedicineVM.BatchNo;
@@ -177,12 +185,7 @@ namespace FarmManager.Controllers
             db.SaveChanges();
 
 
-            //if (ModelState.IsValid)
-            //{
-            //    db.UserMedicines.Add(usermedicine);
-            //    db.SaveChanges();
-            //    return RedirectToAction("Index");
-            //}
+
 
 
 
@@ -195,6 +198,7 @@ namespace FarmManager.Controllers
 
         public ActionResult Edit(int id = 0)
         {
+            //passes def med list foe edit view
             List<SelectListItem> DefMedList = new List<SelectListItem>();
             var defmedList = (from dmed in db.DefaultMedicines
                               select dmed).ToArray();
@@ -214,7 +218,7 @@ namespace FarmManager.Controllers
 
 
 
-
+            //selects medicine to be edited
             UserMedicine usermedicine = db.UserMedicines.Find(id);
             if (usermedicine == null)
             {
@@ -223,12 +227,12 @@ namespace FarmManager.Controllers
 
 
 
-
+            //send back name of medicine used initially
             var nameMed = (from umed in db.UserMedicines
                            join defmed in db.DefaultMedicines on umed.MedicineID equals defmed.MedicineID
                            where umed.UserMedicineID == id
                            select defmed).FirstOrDefault();
-
+            //puts name in viewbag
             ViewBag.MedName = nameMed.MedicineName;
 
 
@@ -241,13 +245,13 @@ namespace FarmManager.Controllers
         [HttpPost]
         public ActionResult Edit(UserMedicine usermedicine)
         {
-
+            //retrieves medicine to be edited
             var query =
             from umed in db.UserMedicines
             where umed.UserMedicineID == usermedicine.UserMedicineID
             select umed;
 
-
+            //updates record from data passed from view in model
             foreach (UserMedicine umed in query)
             {
                 umed.BatchNo = usermedicine.BatchNo;
@@ -270,17 +274,11 @@ namespace FarmManager.Controllers
             }
 
             
-            //if (ModelState.IsValid)
-            //{
-            //    db.Entry(usermedicine).State = EntityState.Modified;
-            //    db.SaveChanges();
-            //    return RedirectToAction("Index");
-            //}
+
             return RedirectToAction("Details/" + usermedicine.UserMedicineID);
         }
 
         //
-        // GET: /Medicines/Delete/5
 
         public ActionResult Delete(int id = 0)
         {

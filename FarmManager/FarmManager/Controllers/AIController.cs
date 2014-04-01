@@ -13,6 +13,8 @@ namespace FarmManager.Controllers
 {
     public class AIController : Controller
     {
+
+        //creates connection to farm management db
         private FarmManagementDBEntities db = new FarmManagementDBEntities();
 
         //
@@ -20,6 +22,7 @@ namespace FarmManager.Controllers
 
         public ActionResult Index()
         {
+            //displays list of ai's in index view
             return View(db.AIs.ToList());
         }
 
@@ -28,6 +31,7 @@ namespace FarmManager.Controllers
 
         public ActionResult Details(int id = 0)
         {
+            //returns the details of a specific ai
             AI ai = db.AIs.Find(id);
             if (ai == null)
             {
@@ -39,13 +43,16 @@ namespace FarmManager.Controllers
         //
         // GET: /AI/Create
 
+        //actionresult below creates a new ai in the ai table for the tagno of the animal passed in
         public ActionResult Create(string id)
         {
+
             AICreate ai = new AICreate();
 
             
             ai.TagNo = id;
 
+            //takes all breeds from breeds table and sends to view
             List<SelectListItem> BreedList = new List<SelectListItem>();
             BreedList.Add(new SelectListItem { Text = "Please select", Value = "Please Select" });
             var breedsList = (from b in db.Breeds where b.SpeciesID == 2 select b).ToArray();
@@ -57,10 +64,10 @@ namespace FarmManager.Controllers
                     Value = breedsList[i].id.ToString(),
                 });
             }
-
+            //puts breedlist into vm
             ai.BreedList = BreedList;
 
-
+            //sends vm to view
             return View(ai);
         }
 
@@ -68,10 +75,12 @@ namespace FarmManager.Controllers
         // POST: /AI/Create
 
         [HttpPost]
+        //create ai post event
         public ActionResult Create(AI ai)
         {
             if (ModelState.IsValid)
             {
+                //creates ai and populates it from the passed model
                 AI newAI = new AI();
 
                 newAI.UserID = (int)WebSecurity.CurrentUserId;
@@ -92,7 +101,7 @@ namespace FarmManager.Controllers
 
         //
         // GET: /AI/Edit/5
-
+        //select ai from db based on passed id and then sends to edit view
         public ActionResult Edit(int id = 0)
         {
             var aiQuery = (from a in db.AIs
@@ -108,11 +117,6 @@ namespace FarmManager.Controllers
             ai.TagNo = aiQuery.TagNo;
             ai.AIID = id;
 
-            //AI ai = db.AIs.Find(id);
-            //if (ai == null)
-            //{
-            //    return HttpNotFound();
-            //}
 
             List<SelectListItem> BreedList = new List<SelectListItem>();
             BreedList.Add(new SelectListItem { Text = "Please select", Value = "Please Select" });
@@ -135,15 +139,16 @@ namespace FarmManager.Controllers
         // POST: /AI/Edit/5
 
         [HttpPost]
+        //edit AI
         public ActionResult Edit(AICreate ai)
         {
 
-
+            //selects row to be updated
             var queryAI = from a in db.AIs
                                where a.AIID == ai.AIID
                                select a;
 
-
+            //updates the fields of the selected row with data from the model
             foreach (AI a in queryAI)
             {
                 a.AIOperator = ai.AIOperator;
@@ -167,18 +172,11 @@ namespace FarmManager.Controllers
             }
 
 
-            //if (ModelState.IsValid)
-            //{
-            //    db.Entry(ai).State = EntityState.Modified;
-            //    db.SaveChanges();
-            //    return RedirectToAction("Index");
-            //}
             return RedirectToAction("Index");
         }
 
-        //
-        // GET: /AI/Delete/5
 
+        //Deletes ai
         public ActionResult Delete(int id = 0)
         {
             AI ai = db.AIs.Find(id);

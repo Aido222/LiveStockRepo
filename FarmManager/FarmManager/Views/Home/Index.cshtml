@@ -3,7 +3,51 @@
     ViewBag.Title = "Home Page";
 }
 
-      <div class="jumbotron">
-        <h2 class="hTop">Welcome to Live-Stock, the farm management tool </h2>
-          <p>Keep track of animals on your farm, treatments, medicines used,expected birth dates and relationships</p>
-      </div>
+<script src="~/Scripts/Chart.min.js"></script>
+<script src="~/Scripts/Chart.js"></script>
+
+<div>
+    <h3>Purchases</h3>
+		<canvas id="canvas2" height="300" width="450"></canvas>
+</div>
+
+<div >
+    <h3>Sales</h3>
+    		<canvas id="canvas" height="300" width="450"></canvas>
+</div>
+
+<div style="width:50%;">
+    <h3>Deaths</h3>
+        <div id="legendDiv">
+            <ul id="pieLegendList" style="font-size: 15px;">
+                <li id="li1" style="color: #F38630">Disease</li>
+                <li id="li2" style="color: #E0E4CC">Illness</li>
+                <li id="li3" style="color: #69D2E7">Birth Defects/Premature</li>
+                <li id="li4" style="color: #9E0900">Unknown</li>
+                <li id="li5" style="color: #000FA7">Died Giving Birth</li>
+                <li id="li6" style="color: #FAFF00">Accident</li>
+
+            </ul>
+
+        </div>
+
+    		<div id="pieDiv">
+                <canvas id="canvas3" height="300" width="450"></canvas>
+
+    		</div>
+</div>
+<br style="clear: both;" />
+
+<div>
+    <canvas id="canvas4" height="300" width="450"></canvas>
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/jquery.validate.min.js")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
+    @Scripts.Render("~/Scripts/Mine/Home.js")
+
+}

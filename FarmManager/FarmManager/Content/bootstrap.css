@@ -13,6 +13,23 @@
 
 }
 
+#pieDiv
+{
+/*background-color: black;*/
+float: left;
+width: 70%;
+}
+
+#legendDiv
+{
+    float: left;
+/*background-color: green;*/
+width: 30%;
+
+}
+
+
+
 .floatLeft
 {
     float: left;

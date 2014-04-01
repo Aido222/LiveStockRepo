@@ -149,6 +149,7 @@
           <ScalarProperty Name="DateSold" ColumnName="DateSold" />
           <ScalarProperty Name="SoldTo" ColumnName="SoldTo" />
           <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -209,6 +210,14 @@
           <ScalarProperty Name="SuppliedBy" ColumnName="SuppliedBy" />
           <ScalarProperty Name="DateOfPurchase" ColumnName="DateOfPurchase" />
           <ScalarProperty Name="Notes" ColumnName="Notes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="webpages_UsersInRoles">
+      <EntityTypeMapping TypeName="FarmManagementDBModel.webpages_UsersInRoles">
+        <MappingFragment StoreEntitySet="webpages_UsersInRoles">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

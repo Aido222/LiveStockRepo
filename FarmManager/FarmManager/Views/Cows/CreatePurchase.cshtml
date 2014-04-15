@@ -89,7 +89,7 @@
         </div>
         <div class="editor-field">
             @Html.TextBoxFor(model => model.Price, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Price)        
+@*            @Html.ValidationMessageFor(model => model.Price)        *@
         </div>
         <div id="selectPriceWarning" class="alert alert-danger collapse">Please enter price paid for animal in Euros</div>
 
@@ -102,7 +102,7 @@
         </div>
         <br />
         <p>
-            <input class="btn btn-success" type="submit" value="Create" />
+            <input class="btn btn-success" id="btnSubmit" type="submit" value="Create" />
             @Html.ActionLink("Cancel","Index","Cows",null, new { @class="btn btn-default"})
         </p>
     

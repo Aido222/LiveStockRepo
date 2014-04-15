@@ -1,6 +1,6 @@
 ﻿jQuery(document).ready(function () {
 
-
+    
     var TopResult;
 
     $('.datepicker').datepicker({
@@ -56,10 +56,10 @@
 
 
 
-    $("form").on('submit', function (e) {
+    $("#btnSubmit").click(function () {
         $("#Sex option:selected").text();
 
-
+  
 
         if (TopResult == true) {
             event.preventDefault();

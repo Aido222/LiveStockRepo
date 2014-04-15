@@ -1,5 +1,6 @@
 ﻿jQuery(document).ready(function () {
 
+
     var TopResult;
     var DateOkCheck;
 
@@ -25,7 +26,7 @@
    });
 
 
-    $("form").on('submit', function (e) {
+    $("#btnSubmit").click(function () {
   
 
         
@@ -77,7 +78,15 @@
 
         }
 
+        var price = $("#Price").val();
+        if (price.match(/^\d+$/)) {
 
+            $("#selectPriceWarning").slideUp("slow");
+        }
+        else {
+            $("#selectPriceWarning").slideDown("slow");
+            event.preventDefault();
+        }
        
 
 

@@ -249,6 +249,7 @@
     <Compile Include="ViewModels\CowDetailVM.cs" />
     <Compile Include="ViewModels\CowIndexVM.cs" />
     <Compile Include="ViewModels\CowPurchVM.cs" />
+    <Compile Include="ViewModels\HomeIndexVM.cs" />
     <Compile Include="ViewModels\MedicineDetailVM.cs" />
     <Compile Include="ViewModels\MedicineIndexVM.cs" />
     <Compile Include="ViewModels\CreateMedicineVM.cs" />

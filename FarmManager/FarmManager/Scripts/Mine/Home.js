@@ -11,7 +11,7 @@ function (data) {
 				},
 				{
 				    value: parseInt(data[1]),
-				    color: "#E0E4CC"
+				    color: "#2CD123"
 				},
 				{
 				    value: parseInt(data[2]),
@@ -27,7 +27,7 @@ function (data) {
                 },
                 {
                     value: parseInt(data[5]),
-                    color: "#FAFF00"
+                    color: "#FED600"
                 },
 
 
@@ -56,8 +56,8 @@ function (data) {
                labels: [data[0].MotherTagNo, data[1].MotherTagNo, data[2].MotherTagNo, data[3].MotherTagNo, data[4].MotherTagNo],
                datasets: [
                    {
-                       fillColor: "rgba(220,220,220,0.5)",
-                       strokeColor: "rgba(220,220,220,1)",
+                       fillColor: "rgba(3, 69, 252, 0.1)",
+                       strokeColor: "rgba(3, 69, 252, 0.5)",
                        data: [data[0].Count, data[1].Count, data[2].Count, data[3].Count, data[4].Count]
                    }
                ]
@@ -74,6 +74,12 @@ function (data) {
                scaleStepWidth: 1,
                //Number - The scale starting value
                scaleStartValue: 0,
+               scaleGridLineColor: "rgba(3, 69, 252, 0.1)",
+               scaleLineColor: "rgba(3, 69, 252, 0.1)",
+
+               scaleFontColor: "#0059ae",
+
+
            }
 
            var myLine = new Chart(document.getElementById("canvas4").getContext("2d")).Bar(barChartData, barOptions);
@@ -83,11 +89,6 @@ function (data) {
 
     $.post("/Home/PurchData", {},
            function (data) {
-
-
-               
-
-
 
 
 
@@ -118,9 +119,9 @@ function (data) {
 
         //** Required if scaleOverride is true **
         //Number - The number of steps in a hard coded scale
-        scaleSteps: 15,
+        scaleSteps: 10,
         //Number - The value jump in the hard coded scale
-        scaleStepWidth: 500,
+        scaleStepWidth: 1000,
         //Number - The scale starting value
         scaleStartValue: 0,
         scaleGridLineColor: "rgba(3, 69, 252, 0.1)",
@@ -177,9 +178,9 @@ function (data) {
 
                //** Required if scaleOverride is true **
                //Number - The number of steps in a hard coded scale
-               scaleSteps: 15,
+               scaleSteps: 10,
                //Number - The value jump in the hard coded scale
-               scaleStepWidth: 500,
+               scaleStepWidth: 1000,
                //Number - The scale starting value
                scaleStartValue: 0,
                scaleGridLineColor: "rgba(3, 69, 252, 0.1)",

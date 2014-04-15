@@ -34,12 +34,20 @@
         </div>
         <div id="selectBuyerWarning" class="alert alert-danger collapse">Please who the animal was sold to</div>
 
+                <div class="editor-label">
+            <label>Price</label>
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Price, new { @class = "form-control" })
+        </div>
+        <div id="selectPriceWarning" class="alert alert-danger collapse">Please enter price animal was sold for</div>
+
 
         <div class="editor-label">
             <label>Date Sold</label>
         </div>
         <div class="editor-field">
-            <input name="DateSold" class="datepicker form-control" id="DateSold" size="16" type="text" value="Please select">
+            <input name="DateSold" class="datepicker form-control" readonly="true" id="DateSold" size="16" type="text" value="Please select">
         </div>
         <div id="selectDateWarning" class="alert alert-danger collapse">Please select the date of sale</div>
         <div id="greaterDateWarning" class="alert alert-danger collapse">The sale date cannot be after todays date</div>
@@ -55,7 +63,7 @@
         </div>
         <br />
         <p>
-            <input type="submit" value="Sell" class="btn btn-success" />
+            <input id="btnSubmit" type="submit" value="Sell" class="btn btn-success" />
             @Html.ActionLink("Cancel", "Details", new { controller = "Cows", id = Model.TagNo }, new { @class = "btn btn-default" })
 
         </p>

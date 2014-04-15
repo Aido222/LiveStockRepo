@@ -4,13 +4,93 @@
  * Licensed under http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/*! normalize.css v2.1.3 | MIT License | git.io/normalize */
+
 #cowIndexOwnedList
 {
     width: 49%;
     float: left;
 
 
+}
+
+#purchaseOverView
+{
+    width: 48%;
+    margin-right: 20px;
+    margin-top: 20px;
+
+    float:left;
+
+}
+
+#saleOverview
+{
+    width: 48%;
+    margin-top: 20px;
+    float:left;
+
+}
+
+#birthOverview
+{
+    width: 48%;
+    margin-top: 20px;
+    float:left;
+
+
+}
+
+#deathsOverview
+{
+    width: 48%;
+    margin-top: 20px;
+    float:left;
+        margin-right: 20px;
+
+
+}
+
+#canvas3
+{
+
+}
+
+
+
+#canvas2
+{
+    margin-left: -40px;
+}
+
+#graphDetails
+{
+    width: 100px;
+}
+
+#treatOverview
+{
+    width: 33%;
+    margin-right: 20px;
+    float:left;
+
+}
+
+#medicineOverview
+{
+    float:left;
+    width: 31%;
+}
+
+#generalOverview
+{
+    float:left;
+    width: 30%;
+    margin-right: 20px;
+}
+
+.topDetils
+{
+    min-height: 250px;
 }
 
 #pieDiv
@@ -23,11 +103,22 @@ width: 70%;
 #legendDiv
 {
     float: left;
-/*background-color: green;*/
-width: 30%;
-
+font-size: 9px;
+width: 30px;
+margin-left: 45px;
 }
 
+#canvas3
+{
+    margin-left: -20px;
+}
+
+
+
+.liItems
+{
+    color: black;
+}
 
 
 .floatLeft

@@ -128,11 +128,24 @@ else
 
                             <label>Most Expensive</label>
 @*                             <a id="purchLink" href="../Cows/Details/ + @Html.DisplayFor(model => model.MostValuablePurchased)>@Html.DisplayFor(model => model.MostValuablePurchased)</a>*@
-                           @Html.ActionLink(Model.MostValuablePurchased, "Details", "Cows", new { id = Model.MostValuablePurchased }, null)
-                             
+                           @if(Model.MostValuablePurchased != "-")
+                           {
+                            @Html.ActionLink(Model.MostValuablePurchased, "Details", "Cows", new { id = Model.MostValuablePurchased }, null)
+                           }
+                            else
+                            {
+                               <p>-</p>
+                           } 
 
                         <label>Latest Purchase</label>
+                            @if(Model.LatestPurchased != "-")
+                            {
                            @Html.ActionLink(Model.LatestPurchased, "Details", "Cows", new { id = Model.LatestPurchased }, null)
+                            }
+                            else
+                            {
+                                <p>-</p>
+                            }
                             </div>
                         </div>
 
@@ -162,12 +175,25 @@ else
         <p>€@Html.DisplayFor(model => model.SumSales)</p>
 
                             <label>Biggest Sale</label>
-@*                             <a id="purchLink" href="../Cows/Details/ + @Html.DisplayFor(model => model.MostValuablePurchased)>@Html.DisplayFor(model => model.MostValuablePurchased)</a>*@
+                            @if(Model.HighestSales != "-")
+                            {
                            @Html.ActionLink(Model.HighestSales, "Details", "Cows", new { id = Model.HighestSales }, null)
+                            }
+                            else
+                            {
+                                <p>-</p>
+                            }
                              
 
                         <label>Latest Sale</label>
-                           @Html.ActionLink(Model.LatestSales, "Details", "Cows", new { id = Model.LatestPurchased }, null)
+                            @if(Model.LatestSales != "-")
+                            {
+                           @Html.ActionLink(Model.LatestSales, "Details", "Cows", new { id = Model.LatestSales }, null)
+                            }
+                            else
+                            {
+                                <p>-</p>
+                            }
                             </div>
                         </div>
 
@@ -200,7 +226,14 @@ else
 
           <div class="inlineData">
       <label>Latest Death</label>
+              @if(Model.LatestDeath != "-")
+              {
       <p>@Html.ActionLink(Model.LatestDeath, "Details", "Cows", new { id = Model.LatestDeath }, null)</p>
+              }
+              else
+              {
+                  <p>-</p>
+              }
       </div>
 
                     <br style="clear: both;" />

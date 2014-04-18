@@ -53,6 +53,20 @@
 
 
 
+    $('#BirthDate').datepicker()
+.on('changeDate', function (ev) {
+    if (ev.date.valueOf() > new Date()) {
+        $("#greaterDateWarning").slideDown("slow");
+
+        DateOkCheck = false;
+    }
+    else {
+        $("#greaterDateWarning").slideUp("slow");
+
+        DateOkCheck = true;
+    }
+});
+
 
 
 
@@ -68,6 +82,17 @@
 
 
 
+
+        if ($("#BirthDate").val() == "Please select") {
+            $("#enterAgeWarning").slideDown("slow");
+
+            event.preventDefault();
+
+        }
+        else {
+            $("#enterAgeWarning").slideUp("slow");
+
+        }
 
         
 
@@ -97,16 +122,7 @@
         }
 
 
-        if ($("#DOB").val() == "Please select") {
-            $("#enterAgeWarning").slideDown("slow");
-
-            event.preventDefault();
-
-        }
-        else {
-            $("#enterAgeWarning").slideUp("slow");
-
-        }
+ 
 
 
         if ($("#Sex option:selected").text() == "Please select") {

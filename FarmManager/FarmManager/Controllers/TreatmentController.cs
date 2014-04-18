@@ -277,6 +277,27 @@ namespace FarmManager.Controllers
             treatment.UserID = (int)WebSecurity.CurrentUserId;
 
 
+
+            var openDate = (from med in db.UserMedicines
+                            where med.UserMedicineID == treatment.UserMedicineID
+                            select med).First();
+
+            
+
+            if (openDate.OpenDate == null)
+            {
+                var updateDate = from umed in db.UserMedicines
+                                 where umed.UserMedicineID == treatment.UserMedicineID
+                                 select umed;
+
+                foreach (UserMedicine med in updateDate)
+                {
+                    
+                    med.OpenDate = treatment.TreatmentDate;
+
+                }
+            }
+
             db.Treatments.Add(treatment);
             db.SaveChanges();
 

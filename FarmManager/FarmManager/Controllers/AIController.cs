@@ -23,7 +23,13 @@ namespace FarmManager.Controllers
         public ActionResult Index()
         {
             //displays list of ai's in index view
-            return View(db.AIs.ToList());
+            //return View(db.AIs.Where())ToList());
+
+            List<AI> aiList = (from ai in db.AIs
+                               where ai.UserID == WebSecurity.CurrentUserId
+                               select ai).ToList();
+
+            return View(aiList);
         }
 
         //

@@ -16,7 +16,13 @@ namespace FarmManager.Controllers
         private FarmManagementDBEntities db = new FarmManagementDBEntities();
 
         public ActionResult Index()
+        
         {
+
+            //WebSecurity.Logout();
+            //return RedirectToAction("Index", "Home");
+
+
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 
 
@@ -41,8 +47,10 @@ namespace FarmManager.Controllers
                           orderby items.Count descending
                           select items).Take(5).ToArray();
 
-                string tag = q[0].Count.ToString();
-
+                //if (q2 != null)
+                //{
+                //    string tag = q[0].Count.ToString();
+                //}
                 
                 ViewBag.MotherData = q2;
 
@@ -68,11 +76,11 @@ namespace FarmManager.Controllers
                                                     select totalTreatsPre).Count().ToString();
 
                 indexModel.OfWhichBorn = (from bornCows in db.Animals
-                                          where bornCows.UserId == WebSecurity.CurrentUserId && bornCows.BornOnFarm == true
+                                          where bornCows.UserId == WebSecurity.CurrentUserId && bornCows.BornOnFarm == true && bornCows.OwnershipStatus == 1
                                           select bornCows).Count().ToString();
 
                 indexModel.OfWhichPurchased = (from purchCows in db.Animals
-                                               where purchCows.UserId == WebSecurity.CurrentUserId && purchCows.BornOnFarm == false
+                                               where purchCows.UserId == WebSecurity.CurrentUserId && purchCows.BornOnFarm == false && purchCows.OwnershipStatus == 1
                                                select purchCows).Count().ToString();
 
 
@@ -85,13 +93,14 @@ namespace FarmManager.Controllers
                 indexModel.MostValuablePurchased = (from purch in db.Purchases
                                                     where purch.UserId == WebSecurity.CurrentUserId && purch.DateBought.Value.Year == DateTime.Now.Year
                                                     orderby purch.Price descending
-                                                    select purch.TagNo).First().ToString();
-
+                                                    select purch.TagNo).FirstOrDefault();
+                indexModel.MostValuablePurchased = indexModel.MostValuablePurchased ?? "-";
 
                 indexModel.LatestPurchased = (from purch in db.Purchases
                                               where purch.UserId == WebSecurity.CurrentUserId
                                               orderby purch.DateBought descending
-                                              select purch.TagNo).First().ToString();
+                                              select purch.TagNo).FirstOrDefault();
+                indexModel.LatestPurchased = indexModel.LatestPurchased ?? "-";
 
                 indexModel.NoOfPurchases = (from purch in db.Purchases
                                             where purch.UserId == WebSecurity.CurrentUserId && purch.DateBought.Value.Year == DateTime.Now.Year
@@ -106,14 +115,16 @@ namespace FarmManager.Controllers
                 indexModel.HighestSales = (from sale in db.Sales
                                            where sale.UserId == WebSecurity.CurrentUserId && sale.DateSold.Value.Year == DateTime.Now.Year
                                            orderby sale.Price descending
-                                           select sale.TagNo).First().ToString();
-
+                                           select sale.TagNo).FirstOrDefault();
+                indexModel.HighestSales = indexModel.HighestSales ?? "-";
 
 
                 indexModel.LatestSales = (from sale in db.Sales
-                                          where sale.UserId == WebSecurity.CurrentUserId 
+                                          where sale.UserId == WebSecurity.CurrentUserId
                                           orderby sale.DateSold descending
-                                          select sale.TagNo).First().ToString();
+                                          select sale.TagNo).FirstOrDefault();
+                indexModel.LatestSales = indexModel.LatestSales ?? "-";
+
 
                 indexModel.NoOfSales = (from sale in db.Sales
                                         where sale.UserId == WebSecurity.CurrentUserId && sale.DateSold.Value.Year == DateTime.Now.Year
@@ -173,18 +184,23 @@ namespace FarmManager.Controllers
                                     .Take(5)
                                     .Select(g => g.Key).ToList();
 
+
+
                 int deathCauseID = Convert.ToInt32(mostcommonDeathID[0]);
 
                 var deathName = (from death in db.DeathCauses
                                  where death.Id == deathCauseID
                                  select death.DeathCauses).FirstOrDefault();
 
+
                 indexModel.MostCommonDeaths = deathName;
+                indexModel.MostCommonDeaths = indexModel.MostCommonDeaths ?? "-";
 
 
                 indexModel.LatestDeath = (from d in db.Deaths
                                           where d.UserId == WebSecurity.CurrentUserId
-                                          select d.TagNo).First().ToString();
+                                          select d.TagNo).FirstOrDefault();
+                indexModel.LatestDeath = indexModel.LatestDeath ?? "-";
 
                 indexModel.BirthThisYear = (from b in db.Births
                                             join a in db.Animals on b.TagNo equals a.TagNo

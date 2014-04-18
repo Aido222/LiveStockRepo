@@ -26,6 +26,20 @@
   });*/
 
 
+    $('#BirthDate').datepicker()
+.on('changeDate', function (ev) {
+    if (ev.date.valueOf() > new Date()) {
+        $("#selectDateWarning").slideDown("slow");
+
+        DateOkCheck = false;
+    }
+    else {
+        $("#selectDateWarning").slideUp("slow");
+
+        DateOkCheck = true;
+    }
+});
+
 
     //Tag No check
     $("#TagNo").focusout(function () {
@@ -66,6 +80,18 @@
         }
 
         
+
+
+        if ($("#BirthDate").val() == "Please select") {
+            $("#enterAgeWarning").slideDown("slow");
+
+            event.preventDefault();
+
+        }
+        else {
+            $("#enterAgeWarning").slideUp("slow");
+
+        }
 
 
         if ($("#confirmTag").val() != $("#TagNo").val()) {

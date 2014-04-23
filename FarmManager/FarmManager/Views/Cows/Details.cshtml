@@ -88,19 +88,22 @@
             </div>
             </div>
             
-            
+            if (Model.MotherTagNo != "" && Model.AIID == null)
+                {
             <div class="inlineData">
             <div class="display-label">
                 <label>Mother</label>
             </div>
             
             <div class="display-field">
+                
                 @Html.ActionLink(Model.MotherTagNo, "Details", new { id = Model.MotherTagNo }, new { @class = "listItems" })<br />
+                
             </div>
             </div>
+                }
             
-            
-            if (Model.SireTagNo != "")
+            if (Model.SireTagNo != "" && Model.AIID == null)
             { <div class="inlineData">
             <div class="display-label">
                 <label>Sire</label>
@@ -116,11 +119,22 @@
             {
               <div class="inlineData">
             <div class="display-label">
-                <label>AI ID</label>
+                <label>AI Mother</label>
             </div>
             
             <div class="display-field">
-                <p>@Html.DisplayFor(model => model.AIID)</p>
+                @Html.ActionLink(Model.aiMother, "Details", new { id = Model.aiMother })<br />
+
+            </div>
+            </div> 
+            
+                          <div class="inlineData">
+            <div class="display-label">
+                <label>AI Sire</label>
+            </div>
+            
+            <div class="display-field">
+    @Html.ActionLink(Model.aiBull, "Details", new { controller = "AI",  id = Model.AIID }) <span>  </span>
 
             </div>
             </div>  

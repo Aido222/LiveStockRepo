@@ -34,6 +34,7 @@ namespace FarmManager.Models
         public DbSet<DeathCaus> DeathCauses { get; set; }
         public DbSet<Death> Deaths { get; set; }
         public DbSet<DefaultMedicine> DefaultMedicines { get; set; }
+        public DbSet<MartPrice> MartPrices { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<Sale> Sales { get; set; }
@@ -42,6 +43,5 @@ namespace FarmManager.Models
         public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<Treatment> Treatments { get; set; }
         public DbSet<UserMedicine> UserMedicines { get; set; }
-        public DbSet<webpages_UsersInRoles> webpages_UsersInRoles { get; set; }
     }
 }

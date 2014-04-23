@@ -10,6 +10,7 @@
     <EntitySet Name="DeathCauses" EntityType="FarmManagementDBModel.Store.DeathCauses" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Deaths" EntityType="FarmManagementDBModel.Store.Deaths" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="DefaultMedicine" EntityType="FarmManagementDBModel.Store.DefaultMedicine" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MartPrices" EntityType="FarmManagementDBModel.Store.MartPrices" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Medicines" EntityType="FarmManagementDBModel.Store.Medicines" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Purchases" EntityType="FarmManagementDBModel.Store.Purchases" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Sales" EntityType="FarmManagementDBModel.Store.Sales" store:Type="Tables" Schema="dbo" />
@@ -18,7 +19,6 @@
     <EntitySet Name="sysdiagrams" EntityType="FarmManagementDBModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Treatments" EntityType="FarmManagementDBModel.Store.Treatments" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="UserMedicine" EntityType="FarmManagementDBModel.Store.UserMedicine" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="webpages_UsersInRoles" EntityType="FarmManagementDBModel.Store.webpages_UsersInRoles" store:Type="Tables" Schema="dbo" />
   </EntityContainer>
   <EntityType Name="AI">
     <Key>
@@ -121,6 +121,16 @@
     <Property Name="AvgDosage" Type="int" />
     <Property Name="Notes" Type="nvarchar(max)" />
   </EntityType>
+  <EntityType Name="MartPrices">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Breed" Type="nvarchar" MaxLength="50" />
+    <Property Name="Weight" Type="nvarchar" MaxLength="50" />
+    <Property Name="Date" Type="date" />
+    <Property Name="Price" Type="money" />
+  </EntityType>
   <EntityType Name="Medicines">
     <Key>
       <PropertyRef Name="MedicineId" />
@@ -214,13 +224,5 @@
     <Property Name="SuppliedBy" Type="nvarchar" MaxLength="50" />
     <Property Name="DateOfPurchase" Type="date" />
     <Property Name="Notes" Type="nvarchar(max)" />
-  </EntityType>
-  <EntityType Name="webpages_UsersInRoles">
-    <Key>
-      <PropertyRef Name="UserId" />
-      <PropertyRef Name="RoleId" />
-    </Key>
-    <Property Name="UserId" Type="int" Nullable="false" />
-    <Property Name="RoleId" Type="int" Nullable="false" />
   </EntityType>
 </Schema>

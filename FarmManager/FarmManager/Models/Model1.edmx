@@ -15,6 +15,7 @@
           <EntitySet Name="DeathCauses" EntityType="FarmManagementDBModel.Store.DeathCauses" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Deaths" EntityType="FarmManagementDBModel.Store.Deaths" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DefaultMedicine" EntityType="FarmManagementDBModel.Store.DefaultMedicine" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MartPrices" EntityType="FarmManagementDBModel.Store.MartPrices" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Medicines" EntityType="FarmManagementDBModel.Store.Medicines" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Purchases" EntityType="FarmManagementDBModel.Store.Purchases" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Sales" EntityType="FarmManagementDBModel.Store.Sales" store:Type="Tables" Schema="dbo" />
@@ -23,7 +24,6 @@
           <EntitySet Name="sysdiagrams" EntityType="FarmManagementDBModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Treatments" EntityType="FarmManagementDBModel.Store.Treatments" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserMedicine" EntityType="FarmManagementDBModel.Store.UserMedicine" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="webpages_UsersInRoles" EntityType="FarmManagementDBModel.Store.webpages_UsersInRoles" store:Type="Tables" Schema="dbo" />
         </EntityContainer>
         <EntityType Name="AI">
           <Key>
@@ -126,6 +126,16 @@
           <Property Name="AvgDosage" Type="int" />
           <Property Name="Notes" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="MartPrices">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Breed" Type="nvarchar" MaxLength="50" />
+          <Property Name="Weight" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Price" Type="money" />
+        </EntityType>
         <EntityType Name="Medicines">
           <Key>
             <PropertyRef Name="MedicineId" />
@@ -220,14 +230,6 @@
           <Property Name="DateOfPurchase" Type="date" />
           <Property Name="Notes" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="webpages_UsersInRoles">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="RoleId" />
-          </Key>
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="RoleId" Type="int" Nullable="false" />
-        </EntityType>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
@@ -243,6 +245,7 @@
           <EntitySet Name="DeathCauses" EntityType="FarmManagementDBModel.DeathCaus" />
           <EntitySet Name="Deaths" EntityType="FarmManagementDBModel.Death" />
           <EntitySet Name="DefaultMedicines" EntityType="FarmManagementDBModel.DefaultMedicine" />
+          <EntitySet Name="MartPrices" EntityType="FarmManagementDBModel.MartPrice" />
           <EntitySet Name="Medicines" EntityType="FarmManagementDBModel.Medicine" />
           <EntitySet Name="Purchases" EntityType="FarmManagementDBModel.Purchase" />
           <EntitySet Name="Sales" EntityType="FarmManagementDBModel.Sale" />
@@ -251,7 +254,6 @@
           <EntitySet Name="sysdiagrams" EntityType="FarmManagementDBModel.sysdiagram" />
           <EntitySet Name="Treatments" EntityType="FarmManagementDBModel.Treatment" />
           <EntitySet Name="UserMedicines" EntityType="FarmManagementDBModel.UserMedicine" />
-          <EntitySet Name="webpages_UsersInRoles" EntityType="FarmManagementDBModel.webpages_UsersInRoles" />
         </EntityContainer>
         <EntityType Name="AI">
           <Key>
@@ -354,6 +356,16 @@
           <Property Name="AvgDosage" Type="Int32" />
           <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
         </EntityType>
+        <EntityType Name="MartPrice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Breed" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Weight" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
         <EntityType Name="Medicine">
           <Key>
             <PropertyRef Name="MedicineId" />
@@ -447,14 +459,6 @@
           <Property Name="SuppliedBy" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="DateOfPurchase" Type="DateTime" Precision="0" />
           <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="webpages_UsersInRoles">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="RoleId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="RoleId" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -572,6 +576,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="MartPrices">
+            <EntityTypeMapping TypeName="FarmManagementDBModel.MartPrice">
+              <MappingFragment StoreEntitySet="MartPrices">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Breed" ColumnName="Breed" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Medicines">
             <EntityTypeMapping TypeName="FarmManagementDBModel.Medicine">
               <MappingFragment StoreEntitySet="Medicines">
@@ -671,14 +686,6 @@
                 <ScalarProperty Name="SuppliedBy" ColumnName="SuppliedBy" />
                 <ScalarProperty Name="DateOfPurchase" ColumnName="DateOfPurchase" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="webpages_UsersInRoles">
-            <EntityTypeMapping TypeName="FarmManagementDBModel.webpages_UsersInRoles">
-              <MappingFragment StoreEntitySet="webpages_UsersInRoles">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

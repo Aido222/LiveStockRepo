@@ -165,6 +165,7 @@
 
             $.post("/Cows/RetrieveSale", { TagNo: tagNo },
                  function (data) {
+                     alert("yip");
 
 
 
@@ -177,7 +178,7 @@
 
 
                      var sub = data[2].substring(0, 10);
-
+                     
 
                      $('#dateSold').text(sub);
                      $('#soldTo').text(data[3]);

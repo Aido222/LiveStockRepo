@@ -111,6 +111,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="MartPrices">
+      <EntityTypeMapping TypeName="FarmManagementDBModel.MartPrice">
+        <MappingFragment StoreEntitySet="MartPrices">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Breed" ColumnName="Breed" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Medicines">
       <EntityTypeMapping TypeName="FarmManagementDBModel.Medicine">
         <MappingFragment StoreEntitySet="Medicines">
@@ -210,14 +221,6 @@
           <ScalarProperty Name="SuppliedBy" ColumnName="SuppliedBy" />
           <ScalarProperty Name="DateOfPurchase" ColumnName="DateOfPurchase" />
           <ScalarProperty Name="Notes" ColumnName="Notes" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="webpages_UsersInRoles">
-      <EntityTypeMapping TypeName="FarmManagementDBModel.webpages_UsersInRoles">
-        <MappingFragment StoreEntitySet="webpages_UsersInRoles">
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -1,5 +1,44 @@
 ﻿jQuery(document).ready(function () {
 
+    var toggle = 0;
+
+
+    $("#openMart").click(function () {
+
+        //$.post("/Home/MartSaleData", {},
+        //        function (data) {
+
+
+        //            //alert(data[1].Breed);
+
+        //            $("#overlay_form").fadeIn(1000);
+        //            positionPopup();
+
+
+        //        });
+
+        if (toggle == 0) {
+
+            $("#martData").slideDown("slow");
+
+            $("#graphandDetails").slideUp("slow");
+
+            toggle = 1;
+        }
+        else {
+
+            $("#martData").slideUp("slow");
+
+            $("#graphandDetails").slideDown("slow");
+
+            toggle = 0;
+
+        }
+    });
+    
+
+
+
     $.post("/Home/DeathData", {},
 function (data) {
 

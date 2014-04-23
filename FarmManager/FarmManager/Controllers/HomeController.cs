@@ -7,6 +7,8 @@ using FarmManager.Filters;
 using FarmManager.Models;
 using FarmManager.ViewModels;
 using WebMatrix.WebData;
+using FarmManager.ServiceReference1;
+
 namespace FarmManager.Controllers
 {
         [InitializeSimpleMembership]
@@ -19,11 +21,25 @@ namespace FarmManager.Controllers
         
         {
 
-            //WebSecurity.Logout();
-            //return RedirectToAction("Index", "Home");
-
-
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
+
+            //ServiceReference1.Service1Client client = new
+            //ServiceReference1.Service1Client();
+
+            
+
+
+
+
+            Service1 client = new Service1();
+
+            List<MartData> dataList = client.retrievePrices();
+
+            MartData[] nn = dataList.ToArray();
+
+            ViewBag.PriceList = dataList;
+
+
 
 
             if (WebSecurity.CurrentUserId != -1)
@@ -442,6 +458,7 @@ namespace FarmManager.Controllers
                 var causes = Enumerable.Range(1, 6);
 
                 var q = (from p in db.Deaths
+                         where p.UserId == WebSecurity.CurrentUserId
                         group p by p.Cause
                             into g
                             select new { DeathID = g.Key, Count = g.Count() }).ToArray();
@@ -462,6 +479,23 @@ namespace FarmManager.Controllers
             }
 
         }
+
+
+
+        //    public JsonResult MartSaleData()
+        //{
+
+
+
+        //    Service1 client = new Service1();
+
+        //    List<MartData> dataList = client.retrievePrices();
+
+        //    MartData[] newArray = dataList.ToArray();
+
+        //    return Json(newArray);
+
+        //    }
 
     }
 }

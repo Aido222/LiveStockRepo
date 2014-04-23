@@ -10,6 +10,7 @@
     <EntitySet Name="DeathCauses" EntityType="FarmManagementDBModel.DeathCaus" />
     <EntitySet Name="Deaths" EntityType="FarmManagementDBModel.Death" />
     <EntitySet Name="DefaultMedicines" EntityType="FarmManagementDBModel.DefaultMedicine" />
+    <EntitySet Name="MartPrices" EntityType="FarmManagementDBModel.MartPrice" />
     <EntitySet Name="Medicines" EntityType="FarmManagementDBModel.Medicine" />
     <EntitySet Name="Purchases" EntityType="FarmManagementDBModel.Purchase" />
     <EntitySet Name="Sales" EntityType="FarmManagementDBModel.Sale" />
@@ -18,7 +19,6 @@
     <EntitySet Name="sysdiagrams" EntityType="FarmManagementDBModel.sysdiagram" />
     <EntitySet Name="Treatments" EntityType="FarmManagementDBModel.Treatment" />
     <EntitySet Name="UserMedicines" EntityType="FarmManagementDBModel.UserMedicine" />
-    <EntitySet Name="webpages_UsersInRoles" EntityType="FarmManagementDBModel.webpages_UsersInRoles" />
   </EntityContainer>
   <EntityType Name="AI">
     <Key>
@@ -121,6 +121,16 @@
     <Property Name="AvgDosage" Type="Int32" />
     <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
   </EntityType>
+  <EntityType Name="MartPrice">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Breed" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Weight" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+  </EntityType>
   <EntityType Name="Medicine">
     <Key>
       <PropertyRef Name="MedicineId" />
@@ -214,13 +224,5 @@
     <Property Name="SuppliedBy" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="DateOfPurchase" Type="DateTime" Precision="0" />
     <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
-  </EntityType>
-  <EntityType Name="webpages_UsersInRoles">
-    <Key>
-      <PropertyRef Name="UserId" />
-      <PropertyRef Name="RoleId" />
-    </Key>
-    <Property Name="UserId" Type="Int32" Nullable="false" />
-    <Property Name="RoleId" Type="Int32" Nullable="false" />
   </EntityType>
 </Schema>

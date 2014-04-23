@@ -30,6 +30,8 @@ namespace FarmManager.ViewModels
         public Nullable<bool> Difficult { get; set; }
         public Nullable<int> AIID { get; set; }
 
+        public string aiMother { get; set; }
+        public string aiBull { get; set; }
 
 
         public IEnumerable<SelectListItem> calvesList { get; set; }

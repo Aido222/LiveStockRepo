@@ -46,7 +46,8 @@ namespace FarmManager.Controllers
                                              from death in j3.DefaultIfEmpty()
                                              join purch in db.Purchases on animals.TagNo equals purch.TagNo into j4
                                              from purch in j4.DefaultIfEmpty()
-                                             where animals.UserId == WebSecurity.CurrentUserId && animals.Species == 2
+                                             where animals.UserId == WebSecurity.CurrentUserId && animals.Species == 2 //&& birth.UserId == WebSecurity.CurrentUserId && purchase.UserId == WebSecurity.CurrentUserId
+                                            // && sale.UserId == WebSecurity.CurrentUserId && death.UserId == WebSecurity.CurrentUserId && purch.UserId == WebSecurity.CurrentUserId
                       //Takes the rows from the query and inserts them into the view model fields
                                              select new CowIndexVM
                                              {
@@ -63,7 +64,7 @@ namespace FarmManager.Controllers
 
 
 
-                                             }).ToList();
+                                             }).Distinct().ToList();
 
 
 
@@ -73,7 +74,7 @@ namespace FarmManager.Controllers
                                    join treat in db.Treatments on animal2.TagNo equals treat.TagNo
                                    join userMed in db.UserMedicines on treat.UserMedicineID equals userMed.UserMedicineID
                                    join defMed in db.DefaultMedicines on userMed.MedicineID equals defMed.MedicineID
-                                   where DateTime.Now < System.Data.Objects.EntityFunctions.AddDays(treat.TreatmentDate, defMed.WithdrawalPeriod) && animal2.UserId == WebSecurity.CurrentUserId
+                                   where DateTime.Now < System.Data.Objects.EntityFunctions.AddDays(treat.TreatmentDate, defMed.WithdrawalPeriod) && animal2.UserId == WebSecurity.CurrentUserId && treat.UserID == WebSecurity.CurrentUserId
                                    select new { treat, defMed }).ToArray();
 
             for (int i = 0; i < withdrawlPeriod.Length; i++)
@@ -114,6 +115,8 @@ namespace FarmManager.Controllers
                                    from birth in j0.DefaultIfEmpty()
                                    join purchase in db.Purchases on animals.TagNo equals purchase.TagNo into j1
                                    from purchase in j1.DefaultIfEmpty()
+                                   join ai in db.AIs on birth.AIID equals ai.AIID into j2
+                                   from ai in j2.DefaultIfEmpty()
                                    where animals.TagNo == id
                                    orderby animals.DateAdded descending
 
@@ -134,7 +137,10 @@ namespace FarmManager.Controllers
                                        MotherTagNo = birth.MotherTagNo,
                                        SireTagNo = birth.SireTagNo,
                                        AIID = birth.AIID,
-                                       Difficult = birth.Difficult
+                                       Difficult = birth.Difficult,
+
+                                       aiMother = ai.TagNo,
+                                       aiBull = ai.BullID
 
                                    }).FirstOrDefault();
 
@@ -227,7 +233,7 @@ namespace FarmManager.Controllers
                                     join treat in db.Treatments on animal2.TagNo equals treat.TagNo
                                     join userMed in db.UserMedicines on treat.UserMedicineID equals userMed.UserMedicineID
                                     join defMed in db.DefaultMedicines on userMed.MedicineID equals defMed.MedicineID
-                                    where animal2.TagNo == id && DateTime.Now < System.Data.Objects.EntityFunctions.AddDays(treat.TreatmentDate, defMed.WithdrawalPeriod)
+                                    where animal2.TagNo == id && DateTime.Now < System.Data.Objects.EntityFunctions.AddDays(treat.TreatmentDate, defMed.WithdrawalPeriod) && treat.UserID == WebSecurity.CurrentUserId
                                     select new { treat, defMed }).ToArray();
 
              for (int i = 0; i < withdrawlPeriod.Length; i++)
@@ -1320,7 +1326,7 @@ namespace FarmManager.Controllers
 
             var treatments = (from t in db.Treatments
                               join um in db.UserMedicines on t.UserMedicineID equals um.UserMedicineID
-                              join dm in db.DefaultMedicines on um.UserMedicineID equals dm.MedicineID
+                              join dm in db.DefaultMedicines on um.MedicineID equals dm.MedicineID
                               where t.TreatmentId == id && t.UserID == (int)WebSecurity.CurrentUserId
                               select new { t, dm, um }).FirstOrDefault();
            

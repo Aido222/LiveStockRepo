@@ -12,9 +12,12 @@ namespace FarmManager.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class webpages_UsersInRoles
+    public partial class MartPrice
     {
-        public int UserId { get; set; }
-        public int RoleId { get; set; }
+        public int ID { get; set; }
+        public string Breed { get; set; }
+        public string Weight { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
+        public Nullable<decimal> Price { get; set; }
     }
 }
